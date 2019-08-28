@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,13 +16,36 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/core-style.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/style.css">
+
 
     <!-- Responsive CSS -->
     <link href="<?php echo base_url() ?>assets/template/css/responsive.css" rel="stylesheet">
-    <?php if(function_exists("custom_css")){
-  		custom_css();
-  	}?>
+    <?php if(function_exists("custom_head")){
+  		custom_head();
+  	}
+    ?>
+    <style type="text/css">
+      .content-dalam{
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+
+      .judul_halaman{
+          color:white;
+          margin-top: 5px;
+          margin-bottom: 5  px;
+          text-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;
+          display: inline-block;
+      }
+
+      .main-content-tambahan{
+        padding-top: 10px
+      }
+
+
+    </style>
 
 </head>
 
@@ -42,21 +64,28 @@
           include "menu.php";
          ?>
     </header>
+    <div style="background-color:#b5cdf2">
+        <div class="container" style="padding-top:5px;background-image:url('<?php echo base_url() ?>assets/template/img/menpan.JPG');">
+          <div class="col-md-12" style="text-align:left">
+                <h4 style="text-align:left;padding:10px" class="judul_halaman"><b><?= $judul ?></b></h4>
+          </div>
+        </div>
+    </div>
+
     <!-- Header Area End -->
 
     <!-- Welcome Blog Slide Area Start -->
-    <?php
-      //include "news_slider.php";
-    ?>
-    <div class="row">
-      <div class="col-12" style="background-color:#b5cdf2">
-        <center>
-        <iframe style="margin-top:20px" src="https://calendar.google.com/calendar/embed?src=inspektorat.menpanrb%40gmail.com&ctz=Asia%2FJakarta" style="border-width:0"
-        width="1300" height="850" frameborder="0" scrolling="no"></iframe>
-      </center>
-      </div>
-    </div>
+    <section class="main-content-wrapper main-content-tambahan">
+      <?php
+          include $content;
+      ?>
 
+    </section>
+
+    <!-- Catagory Posts Area End -->
+
+
+    <!-- Footer Area Start -->
     <?php
       include "footer.php";
     ?>
@@ -66,6 +95,10 @@
 
     <?php
       include "jquery_footer.php";
+    ?>
+    <?php if(function_exists("custom_footer")){
+  		custom_footer();
+  	}
     ?>
 </body>
 

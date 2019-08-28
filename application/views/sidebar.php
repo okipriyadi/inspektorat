@@ -6,12 +6,12 @@
         </div>
         <!-- Single Breaking News Widget -->
         <div class="single-breaking-news-widget">
-            <img src="<?php echo base_url() ?>assets/template/img/blog-img/bn-1.jpg" alt="">
+            <img src="<?php echo base_url() ?>assets/template/img/bg-img/2.jpg" alt="">
             <div class="breakingnews-title">
                 <p>breaking news</p>
             </div>
             <div class="breaking-news-heading gradient-background-overlay">
-                <h5 class="font-pt">China leads new global skyscraper record</h5>
+                <h5 class="font-pt">Wujudkan Good Governance</h5>
             </div>
         </div>
         <!-- Single Breaking News Widget -->
@@ -21,7 +21,7 @@
                 <p>breaking news</p>
             </div>
             <div class="breaking-news-heading gradient-background-overlay">
-                <h5 class="font-pt">Can a zebra crossing change its stripes?</h5>
+                <h5 class="font-pt">Survei Integritas</h5>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <img src="<?php echo base_url() ?>assets/template/img/blog-img/dm-1.jpg" alt="">
             </div>
             <div class="dont-miss-post-content">
-                <a href="#" class="font-pt">EU council reunites</a>
+                <a href="#" class="font-pt">Pelatihan Auditor</a>
                 <span>Nov 29, 2017</span>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 <img src="<?php echo base_url() ?>assets/template/img/blog-img/dm-2.jpg" alt="">
             </div>
             <div class="dont-miss-post-content">
-                <a href="#" class="font-pt">A new way to travel the world</a>
+                <a href="#" class="font-pt">Berita hari ini</a>
                 <span>March 29, 2016</span>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 <img src="<?php echo base_url() ?>assets/template/img/blog-img/dm-3.jpg" alt="">
             </div>
             <div class="dont-miss-post-content">
-                <a href="#" class="font-pt">Why choose a bank?</a>
+                <a href="#" class="font-pt">Auditor/Konsultan ?</a>
                 <span>March 29, 2016</span>
             </div>
         </div>

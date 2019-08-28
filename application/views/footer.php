@@ -1,111 +1,18 @@
-<footer class="footer-area bg-img background-overlay" style="background-image: url(img/bg-img/4.jpg);">
+<footer class="footer-area bg-img background-overlay" style="background-image: url('<?php echo base_url() ?>assets/template/img/menpan.JPG');">
     <!-- Top Footer Area -->
     <div class="top-footer-area section_padding_100_70">
         <div class="container">
             <div class="row">
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">Regions</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">U.S.</a></li>
-                            <li><a href="#">Africa</a></li>
-                            <li><a href="#">Americas</a></li>
-                            <li><a href="#">Asia</a></li>
-                            <li><a href="#">China</a></li>
-                            <li><a href="#">Europe</a></li>
-                            <li><a href="#">Middle</a></li>
-                            <li><a href="#">East</a></li>
-                            <li><a href="#">Opinion</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">Fashion</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">Election 2016</a></li>
-                            <li><a href="#">Nation</a></li>
-                            <li><a href="#">World</a></li>
-                            <li><a href="#">Our Team</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">Politics</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Markets</a></li>
-                            <li><a href="#">Tech</a></li>
-                            <li><a href="#">Luxury</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">Featured</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">Football</a></li>
-                            <li><a href="#">Golf</a></li>
-                            <li><a href="#">Tennis</a></li>
-                            <li><a href="#">Motorsport</a></li>
-                            <li><a href="#">Horseracing</a></li>
-                            <li><a href="#">Equestrian</a></li>
-                            <li><a href="#">Sailing</a></li>
-                            <li><a href="#">Skiing</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">FAQ</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">Aviation</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Traveller</a></li>
-                            <li><a href="#">Destinations</a></li>
-                            <li><a href="#">Features</a></li>
-                            <li><a href="#">Food/Drink</a></li>
-                            <li><a href="#">Hotels</a></li>
-                            <li><a href="#">Partner Hotels</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Single Footer Widget -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                    <div class="single-footer-widget">
-                        <div class="footer-widget-title">
-                            <h4 class="font-pt">+More</h4>
-                        </div>
-                        <ul class="footer-widget-menu">
-                            <li><a href="#">Fashion</a></li>
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Architecture</a></li>
-                            <li><a href="#">Arts</a></li>
-                            <li><a href="#">Autos</a></li>
-                            <li><a href="#">Luxury</a></li>
-                        </ul>
-                    </div>
+                <div class="col-md-12" style="color:white">
+                    <h5 style="color:white">Kementerian Pendayagunaan Aparatur Negara dan Reformasi Birokrasi </h5>
+                    Jl. Jendral Sudirman Kav.69 Jakarta Selatan - 12190 Indonesia <br>
+                    Telp. (+6221) 739381 -89 <br />
+                    E-mail : inspektorat@menpan.go.id
+
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Bottom Footer Area -->
     <div class="bottom-footer-area">
         <div class="container h-100">

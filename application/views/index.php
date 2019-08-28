@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +20,8 @@
 
     <!-- Responsive CSS -->
     <link href="<?php echo base_url() ?>assets/template/css/responsive.css" rel="stylesheet">
-    <?php if(function_exists("custom_css")){
-  		custom_css();
+    <?php if(function_exists("custom_head")){
+  		custom_head();
   	}?>
 
 </head>
@@ -83,13 +82,13 @@
 
     <!-- Video Posts Area Start -->
       <?php
-        include "post_area.php";
+        //include "post_area.php";
       ?>
     <!-- Video Posts Area End -->
 
     <!-- Editorial Area Start -->
     <?php
-      include "editorial_area.php";
+       //include "editorial_area.php"; -->
     ?>
     <!-- Editorial Area End -->
 

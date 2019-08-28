@@ -21,28 +21,33 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url()?>/event" >Event</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>event" >Event</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Task</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="<?php echo base_url()?>task/semuaTugas">Semua Tugas</a>
+                                        <a class="dropdown-item" href="<?php echo base_url()?>task" >Perorang</a>
+                                        <a class="dropdown-item" href="<?php echo base_url()?>task/perproyek">Perproyek</a>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url()?>/event" >Task</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>evalrb_ext" target="_blank">Evalrb</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="http://evalrb.menpan.go.id" target="_blank">Evalrb</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>emas" target="_blank">E-MAS</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Inventaris</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>survei">SURVEI</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">E-ARSIP</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="http://e-mas.hekya.id" target="_blank">E-MAS</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="http://wbs.menpan.go.id" target="_blank">WBS</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Buku Tamu</a>
+                                    <a class="nav-link" href="#">E-Consulting</a>
                                 </li>
                             </ul>
                             <!-- Search Form -->
