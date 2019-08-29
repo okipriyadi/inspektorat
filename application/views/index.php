@@ -12,7 +12,7 @@
     <title>Inspektorat</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="<?php echo base_url() ?>assets/template/img/logo_inspektorat.ico">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/core-style.css">

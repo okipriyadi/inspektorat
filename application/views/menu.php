@@ -35,10 +35,16 @@
                                     <a class="nav-link" href="<?php echo base_url()?>evalrb_ext" target="_blank">Evalrb</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url()?>emas" target="_blank">E-MAS</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>isma" target="_blank">ISMA</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url()?>survei">SURVEI</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url()?>evalsakip" target="_blank">EVALSAKIP</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url()?>apip" target="_blank">PMLKA</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">E-ARSIP</a>
