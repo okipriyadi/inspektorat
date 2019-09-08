@@ -27,10 +27,18 @@
   	}
     ?>
     <style type="text/css">
+      .box_shadow{
+        box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;
+      }
+
+      .display_block{
+        display: block;
+      }
       .content-dalam{
         margin-left: 30px;
         margin-right: 30px;
       }
+
 
       .judul_halaman{
           color:white;
@@ -44,6 +52,9 @@
         padding-top: 10px
       }
 
+      .body-here{
+        margin: 40px
+      }
 
     </style>
 
@@ -64,7 +75,7 @@
           include "menu.php";
          ?>
     </header>
-    <div style="background-color:#b5cdf2">
+    <div style="background-color:#9bdaeb">
         <div class="container" style="padding-top:5px;background-image:url('<?php echo base_url() ?>assets/template/img/menpan.JPG');">
           <div class="col-md-12" style="text-align:left">
                 <h4 style="text-align:left;padding:10px" class="judul_halaman"><b><?= $judul ?></b></h4>

@@ -7,7 +7,7 @@
 :: 4.0 Header Area CSS
     :: 4.1.0 Top Header Area CSS
     :: 4.2.0 Middle Header Area CSS
-    :: 4.3.0 Bottom Header Area CSS 
+    :: 4.3.0 Bottom Header Area CSS
 :: 5.0 Welocome Post Area CSS
 :: 6.0 News Marquee Area CSS
 :: 7.0 Sidebar Area CSS
@@ -1167,13 +1167,6 @@ img {
     text-transform: uppercase;
 }
 
-.form-control {
-    height: 50px;
-    border: none;
-    border-radius: 0;
-    padding: 15px 30px;
-    font-size: 14px;
-}
 
 .gazette-contact-area .form-control {
     background-color: #f6f6f6;

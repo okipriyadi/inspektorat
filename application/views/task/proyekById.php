@@ -85,23 +85,28 @@
 <div class="row body-low-bg ">
 	<div class="col-md-12 content-dalam">
 		<div class="row">
-					<div class="col-md-9">
+					<div class="col-md-9" style="box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2; overflow:auto">
 						<div class=" task-board">
 						<?php
 								foreach ($status as $statusRow) {
 										?>
 										<div class="status-card">
-												<div class="card-header">
-														<span class="card-header-text"><?php echo $statusRow["status_name"]; ?></span>
+												<div class="card-header" style="background:green; color:white; height:40px">
+														<span class="card-header-text"><i class="fa fa-arrows-alt"> </i> <?php echo $statusRow["status_name"]; ?></span>
 												</div>
-												<ul class="sortable ui-sortable" id="sort<?php echo $statusRow["id_status"]; ?>" data-status-id="<?php echo $statusRow["id_status"]; ?>">
+												<ul class="sortable ui-sortable" id="sort<?php echo $statusRow["id_status"]; ?>" data-status-id="<?php echo $statusRow["id_status"]; ?>" >
 														<?php
 														if (! empty($task)) {
 															foreach ($task as $taskRow) {
 																if ($statusRow["id_status"] == $taskRow["id_status"]){
 																?>
-																 <li class="text-row ui-sortable-handle ui-li-shadow" data-task-id="<?php echo $taskRow["id_detail"]; ?>">
+																 <li class="text-row ui-sortable-handle ui-li-shadow" data-task-id="<?php echo $taskRow["id_detail"]; ?>"
+																	 style=" border-top-style: solid; border-top-color: coral;">
 																	 		<?php echo $taskRow["title"]; ?>
+																			<br><br>
+																			<img src="<?php echo base_url("assets/template/img/crew/".$this->session->userdata('foto_iman'))?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
+																			<span style=" display: inline-block;margin-left:0px"><?= $this->session->userdata('nama_iman')?></span>
+																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
 																 </li>
 															 <?php
 																}
@@ -115,23 +120,120 @@
 						?>
 						</div>
 					</div>
+					<!-- Modal tambah pekerjaan ----------------------------- -->
+					<div id="modal_tambah_pekerjaan" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header" style="background:#007bff; ">
+									<h4 class="modal-title" style="color:white">Tambah Pekerjaan</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+								</div>
+								<form  action="<?=base_url('index.php/task/tambah_pekerjaan/'.$id_proyek)?>" method="POST">
+										<div class="modal-body biru-langit" style="">
+												<div class="form-group ">
+													<label ><b>Nama Pekerjaan:</b></label> &nbsp;&nbsp;
+													<input type="text" class="form-control" name="title">
+													<label ><b>Deskripsi Pekerjaan:</b></label> &nbsp;&nbsp;
+													<input type="text" class="form-control" name="description">
+													<div class="form-group">
+														<div class ="row">
+															<div class="col-md-6">
+														    <label ><b>Tanggal Mulai Proyek:</b></label> &nbsp;&nbsp;
+														    <input type="date" class="form-control" name="start_date">
+															</div>
+															<div class="col-md-6">
+														    <label ><b>Tanggal Akhir Proyek:</b></label> &nbsp;&nbsp;
+														    <input type="date" class="form-control" name="end_date">
+															</div>
+														</div>
+												  </div>
+												</div>
+												<div class="form-group ">
+													<label>Masuk kedalam status</label>
+													<select name="id_status" class="form-control">
+														<?php
+															foreach ($status as $statusRow) {
+														?>
+																<option value="<?= $statusRow["id_status"]?>"><?= $statusRow["status_name"]?></option>
+
+														<?php
+															}
+														?>
+													</select>
+												</div>
+										</div>
+										<div class="modal-footer " style="background:#007bff">
+											<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+											<input type="submit" class="btn btn-default" value="Simpan">
+										</div>
+									</form>
+							</div>
+						</div>
+					</div>
+					<!-- ------------------------------------ modal end ---------------------------- -->
+			<!-- Modal tambah status ----------------------------- -->
+			<div id="modal_tambah_status" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header" style="background:#007bff; ">
+							<h4 class="modal-title" style="color:white">Tambah Status</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+						</div>
+						<form  action="<?=base_url('index.php/task/tambah_status/'.$id_proyek)?>" method="POST">
+								<div class="modal-body biru-langit" style="">
+										<div class="form-group ">
+											<label ><b>Nama Status:</b></label> &nbsp;&nbsp;
+											<input type="text" class="form-control" name="nama_status">
+										</div>
+										<div class="form-group">
+											<select class="form-control" id="sel1" name="id_state" placeholder="status ini termasuk ke dalam">
+												<option value=1>Akan</option>
+												<option value=2>Sedang</option>
+												<option value=1>Selesai</option>
+											</select>
+										</div>
+								</div>
+								<div class="modal-footer " style="background:#007bff">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+									<input type="submit" class="btn btn-default" value="Simpan">
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+			<!-- ------------------------------------ modal tambah status end ---------------------------- -->
 					<div class="col-md-3">
 							<div class=" task-board" >
+								<button class="btn btn-primary" style=""><i class="fa fa-plus"  data-toggle="modal" data-target="#modal_tambah_pekerjaan"> Pekerjaan</i></button>
+								<button class="btn btn-success"><i class="fa fa-plus"  data-toggle="modal" data-target="#modal_tambah_status"> Status</i></button>
+
+								<br>
+								<br>
+
 								<div class="status-card" style="background:red">
 										<div class="card-header">
 												<span class="card-header-text" style="color:white">History</span>
 										</div>
 										<ul class="sortable ui-sortable">
-											<li class="text-row ui-sortable-handle history-li">
-												<h6 style="color:blue"><u><b>Proyek RDK</b> </u></h6>
-												Oki menambahkan komentar pada tugas "pekerjaan1"<br>
-												<div style="text-align:right;"> 09.00 -- 12 Maret 2019  </div>
-											</li>
-											<li class="text-row ui-sortable-handle history-li" >
-												<h6 style="color:blue"><u><b>Proyek RDK</b> </u></h6>
-												Oki memindahkan tugas "pekerjaan1" dari todo ke progress
-												<div style="text-align:right;"> 08.30 -- 12 Maret 2019  </div>
-											</li>
+											<?php
+												foreach ($histories as $history) {
+											?>
+													<a href="<?= base_url('index.php/task/proyek/'.$history["id_project"])?>">
+														<li class="text-row ui-sortable-handle history-li">
+															<h6 style="color:blue"><u><b><?= $history["project_name"]?></b></u></h6>
+															<?= $history["history_name"]?><br>
+															<div style="text-align:right;"> <?= $history["date_creation"]?> </div>
+														</li>
+													</a>
+												<?php
+													}
+												?>
 										</ul>
 										<!-- <div class="row">
 											<div class="col-md-12" style="word-wrap: break-word; background:white">
@@ -159,8 +261,7 @@
 			              var status_id = $(ui.item).parent(".sortable").data("status-id");
 			              var task_id = $(ui.item).data("task-id");
 										var url = "<?= base_url()."task/updateTaskStatus/" ?>";
-										url = url+task_id+'/'+status_id ;
-										alert(url);
+										url = url+task_id+'/'+status_id;
 			              $.ajax({
 			                  url: url ,
 			                  success: function(response){}

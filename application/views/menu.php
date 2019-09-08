@@ -13,7 +13,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Berita</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="index.html">Home</a>
+                                        <a class="dropdown-item" href="<?= base_url()?>">Home</a>
                                         <a class="dropdown-item" href="catagory.html">Catagory</a>
                                         <a class="dropdown-item" href="single-post.html">Single Post</a>
                                         <a class="dropdown-item" href="about-us.html">About Us</a>
@@ -55,6 +55,19 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">E-Consulting</a>
                                 </li>
+                                <li class="nav-item">
+                                  <?php
+                                    if($this->session->userdata('login_iman')==true){
+                                  ?>
+                                      <a class="nav-link" href="<?= base_url()?>index.php/welcome/logout" >Logout</a>
+                                  <?php
+                                  }else{
+                                    ?>
+                                      <a class="nav-link" href="#" onclick="show_login_form()">Login</a>
+                                  <?php
+                                  }
+                                  ?>
+                                </li>
                             </ul>
                             <!-- Search Form -->
                             <div class="header-search-form mr-auto">
@@ -74,3 +87,10 @@
         </div>
     </div>
 </div>
+
+<script>
+function show_login_form(){
+  $("#login-form").css("display","inline-block");
+  $("#username").focus();
+}
+</script>
