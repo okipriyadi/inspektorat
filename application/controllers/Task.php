@@ -21,6 +21,7 @@ class Task extends CI_Controller {
 	public function index()
 	{
 		$users = $this->user_model->get_user_by_role("insp");
+		$tasks = $this->task_model->getAllTask();
 		$hitungan_proyeks = array();
 		foreach ($users as $user ) {
 			$hitungan_proyeks[$user["nama"]] = array(
@@ -33,7 +34,9 @@ class Task extends CI_Controller {
 			'content'=>'task/perorang.php',
 			'judul'=>'Task Perorang',
 			'hitungan_proyeks'=>$hitungan_proyeks,
-			'users'=>$users
+			'tasks' => $tasks,
+			'users'=>$users,
+
 		);
 		$this->load->view('index_all', $data);
 	}

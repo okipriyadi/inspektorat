@@ -159,7 +159,16 @@
 		 .bgpemisah{
 			 color:grey;
 		 }
+		 .listwoy{
+			 list-style-type: decimal;
+			 margin-left:20px
+		 }
+		 .hr-stylewoy{
+			 border-bottom-color: rgba(0, 0, 0, 0.1);
+			 border-bottom-style: solid;
+			 border-bottom-width: 1px;
 
+		 }
 	 }
 	</style>
 
@@ -185,7 +194,7 @@
 							</div>
 
 							<ul class="social">
-								<li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Lihat List Pekerjaan</button></li>
+								<li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#user<?= $user['user_id']?>">Lihat List Pekerjaan</button></li>
 							</ul>
 							<div class="tag center">
 								<!--
@@ -210,6 +219,89 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- Modal -->
+					<div id="user<?= $user['user_id'] ?>" class="modal fade" role="dialog">
+					  <div class="modal-dialog modal-lg">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header ">
+									<h4 class="modal-title">List Pekerjaan <?= $user['nama'] ?></h4>
+					        <button type="button" class="close button-hide" data-dismiss="modal">&times;</button>
+					      </div>
+					      <div class="modal-body">
+									<?php
+											$inc_todo = 1;
+											$inc_progress = 1;
+											$inc_done = 1;
+
+											foreach($tasks as $task){
+												if($task["id_petugas"] == $user["user_id"]){
+													if($task["id_state"] == 1 ){
+														if ($inc_todo === 1){
+																echo '<h3> Todo : </h3>';
+																echo "<ol>";
+														}
+														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														if ($inc_todo ==  $hitungan_proyeks[$user['nama']]["todo"]["jml"] ){
+																echo "</ol>";
+																echo "<hr>";
+														}
+														$inc_todo++;
+													}elseif ($task["id_state"] == 2 ){
+														if ($inc_progress === 1){
+																echo "<h3>Progress : </h3>";
+																echo "<ol style='list-style-type:decimal'>";
+														}
+														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														if ($inc_progress ==  $hitungan_proyeks[$user['nama']]["progress"]["jml"] ){
+																echo "</ol>";
+																echo "<hr>";
+														}
+														$inc_progress++;
+													}elseif($task["id_state"] == 3 ){
+														if ($inc_done === 1){
+																echo "<h3>Done : </h3>";
+																echo "<ol style='list-style-type:decimal'>";
+														}
+														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														if ($inc_done ==  $hitungan_proyeks[$user['nama']]["done"]["jml"] ){
+																echo "</ol>";
+																echo "<hr>";
+														}
+														$inc_done++;
+													}
+
+													if($inc_todo == 1){ #karena sudah di order by maka jika inc_todo kosong artinya orang tersebut tidak punya kegiatan yang berstate todo
+															echo "<h3>Todo : </h3>";
+															echo "Belum Ada Tugas yang akan dikerjakan";
+															echo "<hr>";
+													}
+													if($inc_progress == 1){
+															echo "<h3>Progress : </h3>";
+															echo "Belum Ada Tugas yang sedang dikerjakan";
+															echo "<hr class='hr-stylewoy'>";
+													}
+													if($inc_done == 1){
+															echo "<h3>Done : </h3>";
+															echo "Belum Ada Tugas yang selesai dikerjakan";
+															
+													}
+
+									?>
+
+
+									<?php
+												}
+											}
+									?>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default button-hide" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 			<?php
 					if( $p%5 == 0){
 						echo '<div class="col-md-1 col-sm-6" >';
@@ -230,24 +322,7 @@
 
 	</div>
 
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog modal-lg">
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header ">
-					<h4 class="modal-title">List Pekerjaan</h4>
-	        <button type="button" class="close button-hide" data-dismiss="modal">&times;</button>
-	      </div>
-	      <div class="modal-body">
-	        <p>Some text in the modal.</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default button-hide" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 <?php
 	function custom_footer(){
 ?>

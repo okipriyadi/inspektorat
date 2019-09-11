@@ -10,6 +10,16 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+    public function getAllTask(){
+        $this->db->select('*');
+        $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+        $this->db->order_by("task_detail.id_petugas", "asc");
+        $this->db->order_by("task_status.id_state", "asc");
+        $this->db->order_by("task_detail.last_update", "asc");
+        $query = $this->db->get_where('task_detail',array());
+		    return $query->result_array();
+    }
+
 
 
     public function getProjectById($id_project){
