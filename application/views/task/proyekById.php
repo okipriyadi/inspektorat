@@ -104,8 +104,8 @@
 																	 style=" border-top-style: solid; border-top-color: coral;">
 																	 		<?php echo $taskRow["title"]; ?>
 																			<br><br>
-																			<img src="<?php echo base_url("assets/template/img/crew/".$this->session->userdata('foto_iman'))?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
-																			<span style=" display: inline-block;margin-left:0px"><?= $this->session->userdata('nama_iman')?></span>
+																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
+																			<span style=" display: inline-block;margin-left:0px"><?= $taskRow["nama"]?></span>
 																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
 																 </li>
 															 <?php
@@ -120,32 +120,32 @@
 						?>
 						</div>
 					</div>
-					<!-- Modal tambah pekerjaan ----------------------------- -->
-					<div id="modal_tambah_pekerjaan" class="modal fade" role="dialog">
+					<!-- Modal tambah tugas ----------------------------- -->
+					<div id="modal_tambah_tugas" class="modal fade" role="dialog">
 						<div class="modal-dialog">
 
 							<!-- Modal content-->
 							<div class="modal-content">
 								<div class="modal-header" style="background:#007bff; ">
-									<h4 class="modal-title" style="color:white">Tambah Pekerjaan</h4>
+									<h4 class="modal-title" style="color:white">Tambah Tugas</h4>
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 
 								</div>
-								<form  action="<?=base_url('index.php/task/tambah_pekerjaan/'.$id_proyek)?>" method="POST">
+								<form  action="<?=base_url('index.php/task/tambah_tugas/'.$id_proyek)?>" method="POST">
 										<div class="modal-body biru-langit" style="">
 												<div class="form-group ">
-													<label ><b>Nama Pekerjaan:</b></label> &nbsp;&nbsp;
+													<label ><b>Nama Tugas:</b></label> &nbsp;&nbsp;
 													<input type="text" class="form-control" name="title">
-													<label ><b>Deskripsi Pekerjaan:</b></label> &nbsp;&nbsp;
+													<label ><b>Deskripsi Tugas:</b></label> &nbsp;&nbsp;
 													<input type="text" class="form-control" name="description">
 													<div class="form-group">
 														<div class ="row">
 															<div class="col-md-6">
-														    <label ><b>Tanggal Mulai Proyek:</b></label> &nbsp;&nbsp;
+														    <label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
 														    <input type="date" class="form-control" name="start_date">
 															</div>
 															<div class="col-md-6">
-														    <label ><b>Tanggal Akhir Proyek:</b></label> &nbsp;&nbsp;
+														    <label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
 														    <input type="date" class="form-control" name="end_date">
 															</div>
 														</div>
@@ -163,7 +163,20 @@
 															}
 														?>
 													</select>
-												</div>
+											 </div>
+											 <div class="form-group ">
+												 <label>Ditugaskan kepada</label>
+												 <select name="id_petugas" class="form-control">
+													 <?php
+														 foreach ($users as $user) {
+													 ?>
+															 <option value="<?= $user["user_id"]?>"><?= $user	["nama"]?></option>
+
+													 <?php
+														 }
+													 ?>
+												 </select>
+											</div>
 										</div>
 										<div class="modal-footer " style="background:#007bff">
 											<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
@@ -210,8 +223,8 @@
 			<!-- ------------------------------------ modal tambah status end ---------------------------- -->
 					<div class="col-md-3">
 							<div class=" task-board" >
-								<button class="btn btn-primary" style=""><i class="fa fa-plus"  data-toggle="modal" data-target="#modal_tambah_pekerjaan"> Pekerjaan</i></button>
-								<button class="btn btn-success"><i class="fa fa-plus"  data-toggle="modal" data-target="#modal_tambah_status"> Status</i></button>
+								<button class="btn btn-primary" style="" data-toggle="modal" data-target="#modal_tambah_tugas"><i class="fa fa-plus"> Tugas</i></button>
+								<button class="btn btn-success" data-toggle="modal" data-target="#modal_tambah_status"><i class="fa fa-plus"  > Status</i></button>
 
 								<br>
 								<br>

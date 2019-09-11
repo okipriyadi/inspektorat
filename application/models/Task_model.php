@@ -56,6 +56,7 @@ class Task_model extends CI_Model{
       $this->db->select('*');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+      $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
       $this->db->order_by("task_status.id_status"); //order ini tidak boleh berubah karena digunakan sepaket dengan view agar tersusun dengan benar
       $query = $this->db->get_where("task_detail", array('task_status.id_project'=>$id_project));
       return $query->result_array();
@@ -71,6 +72,7 @@ class Task_model extends CI_Model{
       $this->db->select('*');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+      $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
       $query = $this->db->get_where("task_detail", array('id_detail'=>$id_task));
       return $query->row_array();
     }
@@ -99,7 +101,19 @@ class Task_model extends CI_Model{
     }
 
 
+    public function count_status_by_state($id_state, $id_project){
+      $this->db->select('count("id_detail") as jml ');
+      $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+      $query = $this->db->get_where('task_detail',array("task_status.id_state"=>$id_state,"task_status.id_project"=>$id_project));
+      return $query->row_array();
+    }
 
+    public function count_status_by_user($id_state, $user_id){
+      $this->db->select('count("id_detail") as jml ');
+      $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+      $query = $this->db->get_where('task_detail',array("task_status.id_state"=>$id_state,"task_detail.id_petugas"=>$user_id));
+      return $query->row_array();
+    }
 
     public function get_pilihan($id_pilihan){
       $this->db->select('*');
@@ -127,7 +141,7 @@ class Task_model extends CI_Model{
         return $insert_id;
     }
 
-    public function create_pekerjaan($data){
+    public function create_tugas($data){
         $this->db->insert("task_detail",$data);
         $insert_id = $this->db->insert_id();
         return $insert_id;

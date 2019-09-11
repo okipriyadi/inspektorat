@@ -192,12 +192,18 @@
 												<td>#</td>
 												<td><?= $proyek["project_name"]?></td>
 												<td>
-														<span class="fa fa-list" style="color:blue"></span> Todo : <br>
-														<span class="fa fa-hourglass" style="color:green"></span> progress : <br>
-														<span class="fa fa-check-circle" style="color:red"></span> Done : <br>
+														<span class="fa fa-list" style="color:blue"></span>
+														Todo : <?php echo $hitungan_proyeks[$proyek["project_name"]]["todo"]["jml"]; ?>
+														<br>
+														<span class="fa fa-hourglass" style="color:green"></span>
+														progress : <?php echo $hitungan_proyeks[$proyek["project_name"]]["progress"]["jml"]; ?>
+														<br>
+														<span class="fa fa-check-circle" style="color:red"></span>
+														Done : <?php echo $hitungan_proyeks[$proyek["project_name"]]["done"]["jml"]; ?>
+														<br>
 												</td>
-												<td><?= $proyek["start_date"]?></td>
-												<td><?= $proyek["end_date"]?></td>
+												<td><?= date('d/m/Y', strtotime($proyek["start_date"]))?></td>
+												<td><?= date('d/m/Y', strtotime($proyek["end_date"]))?></td>
 												<td><?= $proyek["nama"]?></td>
 												<td style="text-align:center">
 														Edit | Hapus <br>
@@ -232,11 +238,6 @@
 												<?php
 													}
 												?>
-											<li class="text-row ui-sortable-handle history-li" >
-												<h6 style="color:blue"><u><b>Proyek RDK</b> </u></h6>
-												Oki mengubah status "pekerjaan1" dari todo ke progress
-												<div style="text-align:right;"> 08.30 -- 12 Maret 2019  </div>
-											</li>
 										</ul>
 										<!-- <div class="row">
 											<div class="col-md-12" style="word-wrap: break-word; background:white">

@@ -46,7 +46,7 @@
 		 width : 130px;
 		 height: 130px;
 		 position: relative;
-		 margin-bottom: 30px;
+		 margin-bottom: 20px;
 		 z-index: 1;
 	 	}
 
@@ -93,7 +93,7 @@
 		 }
 
 		 .our-team .team-content{
-			 margin-bottom: 30px;
+			 margin-bottom: 0px;
 		 }
 
 		 .our-team .title{
@@ -144,299 +144,89 @@
 			 background: #f7f5ec;
 			 text-decoration: none;
 		 }
+		 .bgtodo{
+			 	color:white;
+		 }
+
+		 .bginpro{
+			 color:yellow;
+		 }
+
+		 .bgdone{
+			 color:white;
+		 }
+
+		 .bgpemisah{
+			 color:grey;
+		 }
 
 	 }
 	</style>
 
-<!--
 <div class="row">
-		<div class="col-md-3 center" >
-			<div class="column left bgclr">
-        <img class="circular--square" src="<?php echo base_url() ?>assets/template/img/crew/oki2.jpg"  />
-				<div class="tag">halllllooooo
+		<?php
+			$i = 5;
+			$p = 1;
+			foreach ($users as $user){
+					if( $i%5 == 0){
 
-				</div>
-      </div>
-		</div>
-		<div class="col-md-3">
-			<div class="column left bgclr">
-        <img class="circular--square" src="<?php echo base_url() ?>assets/template/img/crew/oki.jpg"  />
-				<div class="tag">halllllooooo
-				</div>
-      </div>
-		</div>
-		<div class="col-md-3">
-			hallo
-		</div>
-		<div class="col-md-3">
-			hallo
-		</div>
-</div>
--->
+						echo '<div class="col-md-1 col-sm-6" >';
+						echo '</div>';
+					}
+			?>
+					<div class="col-md-2 col-sm-6" >
+						<div class="our-team" id="oki">
+							<div class="pic">
+								<img src="<?php echo base_url('assets/template/img/crew/'.$user['foto']) ?>" >
+							</div>
+							<div class="team-content">
+								<h3 class="title"><?= $user['nama'] ?></h3>
+								<span class="post"><?= $user['jabatan'] ?></span>
+							</div>
 
-<div class="row">
-		<div class="col-md-1 col-sm-6" >
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team" id="oki">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/oki2.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Oki Priyadi</h3>
-					<span class="post">Analis Sistem Informasi</span>
-				</div>
+							<ul class="social">
+								<li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Lihat List Pekerjaan</button></li>
+							</ul>
+							<div class="tag center">
+								<!--
+								<div class="row">
+									<div class="col-md-3"style="border-radius:25px	; background:red">
+										Todo
+										<?= $hitungan_proyeks[$user['nama']]["todo"]["jml"]; ?>
+									</div>
+									<div class="col-md-5" style="margin-left:8px;border-radius:25px; background:yellow; color:red">
+										Progress
+										<?= $hitungan_proyeks[$user['nama']]["progress"]["jml"]; ?>
+									</div>
+									<div class="col-md-3" style="margin-left:8px;border-radius:25px; background:green; color:yellow">
+										<span style="margin-left:-5px">Done</span>
+										<?= $hitungan_proyeks[$user['nama']]["done"]["jml"]; ?>
+									</div>
+								</div>
+							-->
+								<span class="bgtodo">Todo: <?= $hitungan_proyeks[$user['nama']]["todo"]["jml"]; ?></span>  &nbsp;<span class="bgpemisah"></span>
+								<span class="bginpro">PG: <?= $hitungan_proyeks[$user['nama']]["progress"]["jml"]; ?> </span> &nbsp; <span class="bgpemisah"></span>
+								<span class="bgdone">Done: <?= $hitungan_proyeks[$user['nama']]["done"]["jml"]; ?> </span>
+							</div>
+						</div>
+					</div>
+			<?php
+					if( $p%5 == 0){
+						echo '<div class="col-md-1 col-sm-6" >';
+						echo '</div>';
+						echo "<div style='clear:both'>";
+						echo '</div>';
+						echo "<div class='col-md-12'>";
+						echo "<br>&nbsp<br>";
+						echo '</div>';
 
-				<ul class="social">
-					<li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Lihat List Pekerjaan</button></li>
-				</ul>
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-      </div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/fikri2.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Fikri Azardi</h3>
-					<span class="post">Analis Pengelola Keuangan </span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-				<div class="tag center">
-					<span class="bgtodo">TD: 3</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 2 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 6 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/sinta.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Hiasinta</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
+					}
+					$i++;
+					$p++;
+		 	};
+		 ?>
 
-				<div class="tag center">
-					<span class="bgtodo">TD: 5</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 3 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 4 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/dian2.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Dian Ismiarti</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
 
-				<div class="tag center">
-					<span class="bgtodo">TD: 6</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 3 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 2 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/aji22.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Aji</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 7</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 4 </span>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-1 col-sm-6" >
-		</div>
-	</div>
-
-	<br><br>
-	<div class="row">
-		<div class="col-md-1 col-sm-6" >
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/dani.jpeg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Dani</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/bagas.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Bagas</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/azizah.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Azizah</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/naomi.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Naomi</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/refitri.jpg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Reffitri</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-1 col-sm-6" >
-		</div>
-	</div>
-	<br><br>
-	<div class="row">
-		<div class="col-md-1 col-sm-6" >
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/vioni.jpeg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Vioni</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-6" >
-			<div class="our-team">
-				<div class="pic">
-					<img src="<?php echo base_url() ?>assets/template/img/crew/widay.jpeg"  />
-				</div>
-				<div class="team-content">
-					<h3 class="title">Widay</h3>
-					<span class="post">Analis Pengelola Keuangan</span>
-				</div>
-				<ul class="social">
-					<li><a href="#">Lihat List Pekerjaan</a></li>
-				</ul>
-
-				<div class="tag center">
-					<span class="bgtodo">TD: 8</span>  &nbsp;<span class="bgpemisah">I</span>
-					<span class="bginpro">PG: 4 </span> &nbsp; <span class="bgpemisah">I</span>
-					<span class="bgdone">DN: 5 </span>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-1 col-sm-6" >
-		</div>
 
 	</div>
 

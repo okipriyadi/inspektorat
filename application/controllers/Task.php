@@ -20,7 +20,21 @@ class Task extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data = array('content'=>'task/perorang.php', 'judul'=>'Task Perorang');
+		$users = $this->user_model->get_user_by_role("insp");
+		$hitungan_proyeks = array();
+		foreach ($users as $user ) {
+			$hitungan_proyeks[$user["nama"]] = array(
+				"todo"=> $this->task_model->count_status_by_user(1, $user["user_id"]),
+				"progress"=>$this->task_model->count_status_by_user(2, $user["user_id"]),
+				"done"=>$this->task_model->count_status_by_user(3, $user["user_id"])
+			);
+		};
+		$data = array(
+			'content'=>'task/perorang.php',
+			'judul'=>'Task Perorang',
+			'hitungan_proyeks'=>$hitungan_proyeks,
+			'users'=>$users
+		);
 		$this->load->view('index_all', $data);
 	}
 
@@ -41,11 +55,24 @@ class Task extends CI_Controller {
 			$proyeks = $this->task_model->getAllProject();
 			$jumlah_proyek =  count($proyeks);
 			$history = $this->task_model->get_history($jumlah_proyek);
+			$hitungan_proyeks = array();
+			foreach ($proyeks as $proyek ) {
+				// echo "<pre>";
+				// print_r($proyek);
+				// echo "</pre>";
+				$hitungan_proyeks[$proyek["project_name"]] = array(
+					"todo"=> $this->task_model->count_status_by_state(1,$proyek["id_project"]),
+					"progress"=>$this->task_model->count_status_by_state(2,$proyek["id_project"]),
+					"done"=>$this->task_model->count_status_by_state(3,$proyek["id_project"])
+				);
+			}
+
 			$data = array(
 			 	'content'=>'task/perproyek.php',
 			 	'judul'=>'Task Perproyek',
 			 	'proyeks' => $proyeks,
-				'histories' => $history
+				'histories' => $history,
+				"hitungan_proyeks"=>$hitungan_proyeks
 			);
 			$this->load->view('index_all', $data);
 	}
@@ -56,13 +83,19 @@ class Task extends CI_Controller {
 			$status = $this->task_model->getSatatusByProjectId($id_project);
 			$task = $this->task_model->getTaskByProject($id_project);
 			$history = $this->task_model->get_history_by_id_project($id_project);
+			$users = $this->user_model->getAllUser();
+			// echo "<pre>";
+			// print_r($task);
+			// echo "</pre>";
+			// die();
 			$data = array(
 				'content'=>'task/proyekById.php',
 				'id_proyek'=>$id_project,
 				'judul'=>$proyek["project_name"],
 				'status'=> $status,
 				'task' => $task,
-				'histories' => $history
+				'histories' => $history,
+				'users' => $users
 			);
 			$this->load->view('index_all', $data);
 	}
@@ -77,7 +110,7 @@ class Task extends CI_Controller {
 			$id_user = $this->session->userdata()['user_id_iman'];
 			$nama_user = $this->session->userdata()['nama_iman'];
 			$data_history = array(
-				"history_name" => $nama_user." memindahkan status pekerjaan dari ". $status_awal ." menjadi ". $status_baru,
+				"history_name" => $nama_user." memindahkan tugas ". $task_detail["nama"]  ."  '". $task_detail["title"] ."' dari status ". $status_awal ." menjadi ". $status_baru,
 				"id_creator" => $id_user,
 				"id_project" => $id_proyek,
 				"id_task" => $id_detail
@@ -116,7 +149,7 @@ class Task extends CI_Controller {
 
 		if($result){
 			$data_history = array(
-				"history_name" => $nama_user." membuat proyek ".$_POST["nama_proyek"] ,
+				"history_name" => $nama_user." membuat proyek '".$_POST["nama_proyek"] ."'" ,
 				"id_creator" => $id_user,
 				"id_project" => $result,
 			);
@@ -148,14 +181,18 @@ class Task extends CI_Controller {
 		redirect(base_url("index.php/task/proyek/".$id_proyek));
 	}
 
-	public function tambah_pekerjaan($id_proyek)
+	public function tambah_tugas($id_proyek)
 	{
 		$id_user = $this->session->userdata()['user_id_iman'];
 		$nama_user = $this->session->userdata()['nama_iman'];
-		$result = $this->task_model->create_pekerjaan(array(
+		$petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
+		//print_r($petugas["nama"]);
+		//die();
+		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
 			"description" => $_POST["description"],
 			"id_creator" => $id_user,
+			"id_petugas" => $_POST["id_petugas"],
 			"id_status" => $_POST["id_status"],
 			"start_date" => $_POST["start_date"],
 			"end_date" => $_POST["end_date"],
@@ -163,7 +200,7 @@ class Task extends CI_Controller {
 
 		if($result){
 			$data_history = array(
-				"history_name" => $nama_user." membuat pekerjaan ".$_POST["title"] ,
+				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $petugas["nama"]  ,
 				"id_creator" => $id_user,
 				"id_project" => $id_proyek,
 				"id_task" => $_POST["id_status"]

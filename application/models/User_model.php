@@ -9,6 +9,18 @@ class User_model extends CI_Model{
 		return $query;
     }
 
+
+    public function getAllUser(){
+        $query = $this->db->get('user');
+        return $query->result_array();
+    }
+
+    public function get_user_by_role($role){
+        $this->db->select('*');
+        $query = $this->db->get_where('user',array('role'=>$role));
+        return $query->result_array();
+    }
+
     public function getUserEmail($username){
         $login = false;
         $query = $this->db->get_where('user',array('email'=>$this->input->post('username')));
@@ -25,11 +37,7 @@ class User_model extends CI_Model{
         }
     }
 
-    public function get_user_by_role($role){
-        $this->db->select('*');
-        $query = $this->db->get_where('user',array('role'=>$role));
-		return $query->result_array();
-    }
+
 
     public function get_user_by_id($user_id){
         $this->db->select('*');
