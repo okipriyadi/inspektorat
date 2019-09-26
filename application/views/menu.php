@@ -35,17 +35,6 @@
                                     <a class="nav-link" href="<?php echo base_url()?>evalrb_ext" target="_blank">Evalrb</a>
                                 </li>
                                 <li class="nav-item">
-<<<<<<< HEAD
-                                    <a class="nav-link" href="<?php echo base_url()?>/evalrb_ext" target="_blank">Evalrb</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url()?>/emas" target="_blank">E-MAS</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url()?>/survei">Survei</a>
-                                </li>
-                                <li class="nav-item">
-=======
                                     <a class="nav-link" href="<?php echo base_url()?>isma" target="_blank">ISMA</a>
                                 </li>
                                 <li class="nav-item">
@@ -58,7 +47,6 @@
                                     <a class="nav-link" href="<?php echo base_url()?>apip" target="_blank">PMLKA</a>
                                 </li>
                                 <li class="nav-item">
->>>>>>> 602fac5502960789594e6576dde3c61fc98b2970
                                     <a class="nav-link" href="#">E-ARSIP</a>
                                 </li>
                                 <li class="nav-item">
