@@ -27,16 +27,16 @@
                                     <a class="nav-link" href="<?php echo base_url()?>/event" >Task</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="http://evalrb.menpan.go.id" target="_blank">Evalrb</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>/evalrb_ext" target="_blank">Evalrb</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Inventaris</a>
+                                    <a class="nav-link" href="<?php echo base_url()?>/emas" target="_blank">E-MAS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?php echo base_url()?>/survei">Survei</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">E-ARSIP</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="http://e-mas.hekya.id" target="_blank">E-MAS</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="http://wbs.menpan.go.id" target="_blank">WBS</a>

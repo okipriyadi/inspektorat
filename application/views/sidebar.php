@@ -6,12 +6,12 @@
         </div>
         <!-- Single Breaking News Widget -->
         <div class="single-breaking-news-widget">
-            <img src="<?php echo base_url() ?>assets/template/img/blog-img/bn-1.jpg" alt="">
+            <img src="<?php echo base_url() ?>assets/template/img/bg-img/2.jpg" alt="">
             <div class="breakingnews-title">
                 <p>breaking news</p>
             </div>
             <div class="breaking-news-heading gradient-background-overlay">
-                <h5 class="font-pt">China leads new global skyscraper record</h5>
+                <h5 class="font-pt">Wujudkan Good Governance</h5>
             </div>
         </div>
         <!-- Single Breaking News Widget -->
