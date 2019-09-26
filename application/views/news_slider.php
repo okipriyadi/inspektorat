@@ -8,7 +8,7 @@
             </div>
             <h3><a href="#" class="font-pt">Kementerian PANRB Raih WTP Kelima Kali</a></h3>
             <div class="date">
-                <a href="#">17 Jun 2019</a>
+                <a href="#">17 Agustus 2019</a>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
             </div>
             <h3><a href="#" class="font-pt">Wujudkan Good Governance, Kementerian PANRB Lakukan Identifikasi Benturan Kepentingan</a></h3>
             <div class="date">
-                <a href="#">15 April 2019</a>
+                <a href="#">15 Agustus 2019</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
             </div>
             <h3><a href="#" class="font-pt">Financial advices </a></h3>
             <div class="date">
-                <a href="#">29 Maret 2019</a>
+                <a href="#">29 Juli 2019</a>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
             </div>
             <h3><a href="#" class="font-pt">The latest news live</a></h3>
             <div class="date">
-                <a href="#">March 29, 2018</a>
+                <a href="#">01 September 2019</a>
             </div>
         </div>
     </div>

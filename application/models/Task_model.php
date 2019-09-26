@@ -13,6 +13,8 @@ class Task_model extends CI_Model{
     public function getAllTask(){
         $this->db->select('*');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+        $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+        $this->db->join('user', 'user.user_id = task_detail.id_petugas','left');
         $this->db->order_by("task_detail.id_petugas", "asc");
         $this->db->order_by("task_status.id_state", "asc");
         $this->db->order_by("task_detail.last_update", "asc");

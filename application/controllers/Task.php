@@ -43,14 +43,34 @@ class Task extends CI_Controller {
 
 	public function semuaTugas()
 	{
-		$statusResult = $this->task_model->getAllStatus();
-		$taskDetail = $this->task_model->getAllStatus();
+		// $statusResult = $this->task_model->getAllStatus();
+		// $tasks = $this->task_model->getAllTask();
+		// $data = array(
+		// 	'content'=>'task/semua_tugas.php',
+		// 	'judul'=>'Task Pertugas',
+		// 	'statusResult'=>$statusResult,
+		// 	'tasks' => $tasks
+		// );
+		// $this->load->view('index_all', $data);
+		$status = $this->task_model->getSatatusByProjectId(12);
+		$task = $this->task_model->getAllTask();
+		$history = $this->task_model->get_history(20);
+		$users = $this->user_model->getAllUser();
+		// echo "<pre>";
+		// print_r($task);
+		// echo "</pre>";
+		// die();
 		$data = array(
 			'content'=>'task/semua_tugas.php',
-			'judul'=>'Task Pertugas',
-			'statusResult'=>$statusResult
+			'id_proyek'=>12,
+			'judul'=>"Semua Tugas",
+			'status'=> $status,
+			'task' => $task,
+			'histories' => $history,
+			'users' => $users
 		);
 		$this->load->view('index_all', $data);
+
 	}
 
 	public function perproyek()

@@ -13,7 +13,7 @@
 
 			.status-card {
 					width: 250px;
-					margin-right: 8px;
+					margin-right: 30px;
 					background: #a6d9ec;
 					box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;
 					border-radius: 3px;

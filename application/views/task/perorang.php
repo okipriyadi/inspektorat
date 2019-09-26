@@ -46,7 +46,7 @@
 		 width : 130px;
 		 height: 130px;
 		 position: relative;
-		 margin-bottom: 20px;
+		 margin-bottom: 30px;
 		 z-index: 1;
 	 	}
 
@@ -93,7 +93,7 @@
 		 }
 
 		 .our-team .team-content{
-			 margin-bottom: 0px;
+			 margin-bottom: 30px;
 		 }
 
 		 .our-team .title{
@@ -234,7 +234,7 @@
 											$inc_todo = 1;
 											$inc_progress = 1;
 											$inc_done = 1;
-
+											$j = 0;
 											foreach($tasks as $task){
 												if($task["id_petugas"] == $user["user_id"]){
 													if($task["id_state"] == 1 ){
@@ -242,57 +242,72 @@
 																echo '<h3> Todo : </h3>';
 																echo "<ol>";
 														}
-														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														echo "<li class='listwoy'>". $task["title"] ."<a href=". base_url("index.php/task/proyek/".$task["id_project"]) ."> #".$task["project_name"]. "</a></li>";
 														if ($inc_todo ==  $hitungan_proyeks[$user['nama']]["todo"]["jml"] ){
 																echo "</ol>";
 																echo "<hr>";
 														}
 														$inc_todo++;
 													}elseif ($task["id_state"] == 2 ){
+														if($hitungan_proyeks[$user['nama']]["todo"]["jml"] == 0  and $inc_todo == 1){ #karena sudah di order by maka jika inc_todo kosong artinya orang tersebut tidak punya kegiatan yang berstate todo
+																echo "<h3>Todo : </h3>";
+																echo "Belum Ada Tugas yang akan dikerjakan";
+																echo "<hr>";
+																$inc_todo++;
+														}
 														if ($inc_progress === 1){
 																echo "<h3>Progress : </h3>";
 																echo "<ol style='list-style-type:decimal'>";
 														}
-														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														echo "<li class='listwoy'>". $task["title"]. "<a href=". base_url("index.php/task/proyek/".$task["id_project"]) ."> #".$task["project_name"]. "</a></li>";
 														if ($inc_progress ==  $hitungan_proyeks[$user['nama']]["progress"]["jml"] ){
 																echo "</ol>";
 																echo "<hr>";
 														}
 														$inc_progress++;
 													}elseif($task["id_state"] == 3 ){
-														if ($inc_done === 1){
+														if($hitungan_proyeks[$user['nama']]["todo"]["jml"] == 0 and $inc_todo == 1){ #karena sudah di order by maka jika inc_todo kosong artinya orang tersebut tidak punya kegiatan yang berstate todo
+																echo "<h3>Todo : </h3>";
+																echo "Belum Ada Tugas yang akan dikerjakan";
+																echo "<hr>";
+																$inc_todo++;
+														}
+														if(($hitungan_proyeks[$user['nama']]["progress"]["jml"] == 0) and $j == $hitungan_proyeks[$user['nama']]["todo"]["jml"]){
+																echo "<h3>Progress : </h3>";
+																echo "Belum Ada Tugas yang sedang dikerjakan";
+																echo "<hr class='hr-stylewoy'>";
+																$inc_progress++;
+														}
+														if ($inc_done == 1){
 																echo "<h3>Done : </h3>";
 																echo "<ol style='list-style-type:decimal'>";
 														}
-														echo "<li class='listwoy'>". $task["title"] ."</li>";
+														echo "<li class='listwoy'>". $task["title"] ."<a href=". base_url("index.php/task/proyek/".$task["id_project"]) ."> #".$task["project_name"]. "</a></li>";
 														if ($inc_done ==  $hitungan_proyeks[$user['nama']]["done"]["jml"] ){
 																echo "</ol>";
-																echo "<hr>";
 														}
 														$inc_done++;
 													}
-
-													if($inc_todo == 1){ #karena sudah di order by maka jika inc_todo kosong artinya orang tersebut tidak punya kegiatan yang berstate todo
-															echo "<h3>Todo : </h3>";
-															echo "Belum Ada Tugas yang akan dikerjakan";
-															echo "<hr>";
-													}
-													if($inc_progress == 1){
-															echo "<h3>Progress : </h3>";
-															echo "Belum Ada Tugas yang sedang dikerjakan";
-															echo "<hr class='hr-stylewoy'>";
-													}
-													if($inc_done == 1){
+													$j++;
+													// echo $j;
+													// echo $hitungan_proyeks[$user['nama']]["todo"]["jml"]+$hitungan_proyeks[$user['nama']]["progress"]["jml"];
+													// echo "<br>";
+													if(($hitungan_proyeks[$user['nama']]["done"]["jml"] == 0) and $j == $hitungan_proyeks[$user['nama']]["todo"]["jml"]+$hitungan_proyeks[$user['nama']]["progress"]["jml"]){
 															echo "<h3>Done : </h3>";
 															echo "Belum Ada Tugas yang selesai dikerjakan";
-															
 													}
 
-									?>
-
-
-									<?php
 												}
+												// else{
+												// 	echo "<h3>Todo : </h3>";
+												// 	echo "Belum Ada Tugas yang akan dikerjakan";
+												// 	echo "<hr>";
+												// 	echo "<h3>Progress : </h3>";
+												// 	echo "Belum Ada Tugas yang sedang dikerjakan";
+												// 	echo "<hr class='hr-stylewoy'>";
+												// 	echo "<h3>Done : </h3>";
+												// 	echo "Belum Ada Tugas yang selesai dikerjakan";
+												// }
 											}
 									?>
 					      </div>
@@ -321,6 +336,7 @@
 
 
 	</div>
+	<br><br>
 
 
 <?php
