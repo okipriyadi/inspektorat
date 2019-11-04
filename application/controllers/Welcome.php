@@ -23,6 +23,24 @@ class Welcome extends CI_Controller {
 		$this->load->view('index');
 	}
 
+	public function sop_isma()
+	{
+		$data = array('content'=>'dokumen/sop_isma.php', 'judul'=>'SOP ISMA' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function sop_tl()
+	{
+		$data = array('content'=>'dokumen/sop_tl.php', 'judul'=>'SOP Tindak Lanjut Audit' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function piagam_audit()
+	{
+		$data = array('content'=>'dokumen/piagam_audit.php', 'judul'=>'Internal Audit Charter' );
+		$this->load->view('index_all', $data);
+	}
+
 	public function do_login(){
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST'){
 			$login = $this->user_model->login($this->input->post('username'), $this->input->post('password'));

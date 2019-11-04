@@ -11,13 +11,11 @@
                                     <a class="nav-link" href="<?= base_url()?>">Beranda <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Berita</a>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dokumen</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="<?= base_url()?>">Home</a>
-                                        <a class="dropdown-item" href="catagory.html">Catagory</a>
-                                        <a class="dropdown-item" href="single-post.html">Single Post</a>
-                                        <a class="dropdown-item" href="about-us.html">About Us</a>
-                                        <a class="dropdown-item" href="contact.html">Contact</a>
+                                        <a class="dropdown-item" href="<?= base_url()?>index.php/welcome/sop_isma">SOP ISMA</a>
+                                        <a class="dropdown-item" href="<?= base_url()?>index.php/welcome/sop_tl">SOP Pemantauan TL</a>
+                                        <a class="dropdown-item" href="<?= base_url()?>index.php/welcome/piagam_audit">Internal Audit Charter</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -53,7 +51,7 @@
                                     <a class="nav-link" href="http://wbs.menpan.go.id" target="_blank">WBS</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">E-Consulting</a>
+                                    <a class="nav-link" href="http://inspektorat.menpan.go.id/e-consulting">E-Consulting</a>
                                 </li>
                                 <li class="nav-item">
                                   <?php
