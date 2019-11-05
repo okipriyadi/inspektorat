@@ -106,7 +106,7 @@
 																				 <div class="col-sm-10">
 																					<?php echo $taskRow["title"]; ?>
 																				 </div>
-																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
+																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" onclick="onClickModal()" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
 																			 </div>
 																	 		<div class="row">
 																				 <div class="col-sm-10">
@@ -317,6 +317,9 @@
 		      }).disableSelection();
 		   });
 		});
+		function onClickModal(){
+			$.ajax
+		}
 		</script>
 <?php
 	}
