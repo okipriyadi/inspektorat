@@ -123,6 +123,15 @@ class Task extends CI_Controller {
 			$this->load->view('index_all', $data);
 	}
 
+	public function editlampiran($id){
+		$task_detail = $this->task_model->getTaskByTaskId($id);
+		$data = array(
+			'content'=>'task/tambah_lampiran.php',
+			'judul'=> "Tambah Lampiran"
+		);
+		$this->load->view('index_all', $data);
+	}
+
 	public function updateTaskStatus($id_detail, $id_status)//dipake ajax untuk update
 	{
 			$task_detail = $this->task_model->getTaskByTaskId($id_detail);

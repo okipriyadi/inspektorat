@@ -102,7 +102,23 @@
 																?>
 																 <li class="text-row ui-sortable-handle ui-li-shadow" data-task-id="<?php echo $taskRow["id_detail"]; ?>"
 																	 style=" border-top-style: solid; border-top-color: coral;">
-																	 		<?php echo $taskRow["title"]; ?>
+																	 		<div class="row">
+																				 <div class="col-sm-10">
+																					<?php echo $taskRow["title"]; ?>
+																				 </div>
+																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
+																			 </div>
+																	 		<div class="row">
+																				 <div class="col-sm-10">
+																					 <?php
+																						 $task_lampiran = $this->task_model->getLampiranTask($taskRow['id_detail']);
+																						 if(isset($task_lampiran)){
+																							 echo "<p>Lampiran (".count($task_lampiran).")</p>";
+																							 echo "<p>Read More</p>";
+																						 }
+																					 ?>
+																				 </div>
+																			 </div>
 																			<br><br>
 																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
 																			<span style=" display: inline-block;margin-left:0px"><?= $taskRow["nama"]?></span>
@@ -118,6 +134,24 @@
 										<?php
 								}
 						?>
+						</div>
+					</div>
+					<!-- Modal di Task Dinamis ----------------------------- -->
+					<div id="modal_task" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-header" style="background:#007bff; ">
+								<h4 class="modal-title text-white">Tambah aja</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-content">
+								<form action="">
+									Lampiran
+								</form>
+							</div>
+							<div class="modal-footer " style="background:#007bff">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+								<input type="submit" class="btn btn-default" value="Simpan">
+							</div>
 						</div>
 					</div>
 					<!-- Modal tambah tugas ----------------------------- -->

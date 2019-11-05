@@ -112,6 +112,14 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+    public function getLampiranTask($id){
+      $this->db->select('*');
+      $query = $this->db->get_where('task_lampiran',array('id_task_detail'=>$id));
+      if($query->num_rows() > 0){
+        return $query->result_array();
+      }
+      return NULL;
+    }
 
     public function count_status_by_state($id_state, $id_project){
       $this->db->select('count("id_detail") as jml ');
@@ -170,5 +178,20 @@ class Task_model extends CI_Model{
         return $insert_id;
     }
 
+    public function create_lampiran($data){
+      $ins = $this->db->insert("task_lampiran",$data);
+      if($ins){
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+      }
+      return NULL;
+    }
+    public function remove_lampiran($id_data){
+      $del = $this->db->delete('task_lampiran', array('id_task_lampiran' => $id_data));
+      if($del){
+        return true;
+      }
+      return NULL;
+    }
 }
 ?>
