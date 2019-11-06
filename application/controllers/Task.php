@@ -132,6 +132,94 @@ class Task extends CI_Controller {
 		$this->load->view('index_all', $data);
 	}
 
+	public function add_lampiran(){
+		// Count total files
+		$countfiles = count($_FILES['lampiran']['name']);
+	 
+		// Looping all files
+		$task_details = $this->task_model->getTaskByTaskId($this->input->post('id_task_detail'));
+		$task_detail = isset($task_details)?$task_details:[];
+		for($i=0;$i<$countfiles;$i++){
+   
+		  if(!empty($_FILES['lampiran']['name'][$i])){
+   
+			// Define new $_FILES array - $_FILES['file']
+			$_FILES['file']['name'] = $_FILES['lampiran']['name'][$i];
+			$_FILES['file']['type'] = $_FILES['lampiran']['type'][$i];
+			$_FILES['file']['tmp_name'] = $_FILES['lampiran']['tmp_name'][$i];
+			$_FILES['file']['error'] = $_FILES['lampiran']['error'][$i];
+			$_FILES['file']['size'] = $_FILES['lampiran']['size'][$i];
+  
+			// Set preference
+			$config['upload_path'] = 'assets/task/id_detail_'.$task_detail['id_detail']; 
+			$config['allowed_types'] = '*';
+			$config['max_size'] = '20000'; // max_size in kb
+			$config['encrypt_name'] = TRUE;
+			if(is_dir($config['upload_path'])===false){
+				mkdir($config['upload_path'],0777, true);
+			}
+			//Load upload library
+			$this->load->library('upload',$config); 
+   
+			// File upload
+			if($this->upload->do_upload('file')){
+			  // Get data about the file
+			  $uploadData = $this->upload->data();
+			  $filename = $uploadData['full_path'];
+
+			  // Initialize array
+			  if($filename!=""){
+				$this->task_model->create_lampiran(array('nama'=>$filename,'link'=>'','id_task_detail'=>$this->input->post('id_task_detail')));
+			  }
+			  
+			}
+			else{
+				echo "error";
+				print_r($_FILES['file']);
+			}
+		  }
+   
+		}
+		$link = explode(",",$this->input->post('link'));
+		foreach ($link as $key => $value) {
+			# code...
+			if($value!="")
+			{$this->task_model->create_lampiran(array('nama'=>'','link'=>$value,'id_task_detail'=>$this->input->post('id_task_detail')));}
+		}
+		return redirect(base_url()."index.php/task/perproyek");
+	}
+
+	public function hapuslampiran(){
+		$this->task_model->remove_lampiran($this->input->post('id_task_lampiran'));
+		$lams = $this->task_model->getLampiranTask($this->input->post('id_task_detail'));
+		if($lams){
+			foreach ($lams as $key => $value) {
+				# code...
+				$no = $key +1;
+				echo '<a href="'.$value['link'].$value['nama'].'">Lampiran '.$no.'</a><button class="btn btn-danger" onclick="hapusLampiran('.$value['id_task_lampiran'].','.$value['id_task_detail'].')">Hapus</button>';
+				echo "<br>";
+			}
+		}
+	}
+	public function getmodal($id){
+		$task_lampiran = $this->task_model->getLampiranTask($id);
+		$data = array(
+			'task_lampiran'=> $task_lampiran,
+			'id_detail'=>$id
+		);
+		$this->load->view('task/modal_lampiran.php',$data);
+	}
+
+	public function getmodaluser(){
+		$users = $this->user_model->getAllUser();
+		$user = $this->task_model->getTaskByTaskId($this->input->post('id_task_detail'));
+		$data = array(
+			'user'=>$user,
+			'users'=> $users
+		);
+		$this->load->view('task/modal_user.php',$data);
+	}
+
 	public function updateTaskStatus($id_detail, $id_status)//dipake ajax untuk update
 	{
 			$task_detail = $this->task_model->getTaskByTaskId($id_detail);

@@ -106,7 +106,7 @@
 																				 <div class="col-sm-10">
 																					<?php echo $taskRow["title"]; ?>
 																				 </div>
-																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" onclick="onClickModal()" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
+																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" onclick="onClickModal(<?php echo $taskRow['id_detail'];?>)" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
 																			 </div>
 																	 		<div class="row">
 																				 <div class="col-sm-10">
@@ -139,19 +139,7 @@
 					<!-- Modal di Task Dinamis ----------------------------- -->
 					<div id="modal_task" class="modal fade" role="dialog">
 						<div class="modal-dialog">
-							<div class="modal-header" style="background:#007bff; ">
-								<h4 class="modal-title text-white">Tambah aja</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<div class="modal-content">
-								<form action="">
-									Lampiran
-								</form>
-							</div>
-							<div class="modal-footer " style="background:#007bff">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-								<input type="submit" class="btn btn-default" value="Simpan">
-							</div>
+							
 						</div>
 					</div>
 					<!-- Modal tambah tugas ----------------------------- -->
@@ -295,7 +283,7 @@
 	</div>
 </div>
 
-
+<input type="hidden" name="url" value="<?php echo base_url(); ?>">
 <?php
 	function custom_footer(){
 ?>
@@ -317,8 +305,28 @@
 		      }).disableSelection();
 		   });
 		});
-		function onClickModal(){
-			$.ajax
+		function onClickModal(id){
+			var url = $('input[name=url]').val();
+			$.ajax({
+				method: "POST",
+				url: url+"index.php/task/getmodal/"+id,
+				data: { name: "John", location: "Boston" }
+			})
+			.done(function( msg ) {
+				$("#modal_task .modal-dialog").html(msg);
+			});
+		}
+		function hapusLampiran(id,id_detail){
+			var url = $('input[name=url]').val();
+			$.ajax({
+				method: "POST",
+				url: url+"index.php/task/hapuslampiran",
+				data: { id_task_lampiran: id, id_task_detail : id_detail }
+			})
+			.done(function( msg ) {
+				// alert(msg);
+				$("#modal_task #lampir").html(msg);
+			});
 		}
 		</script>
 <?php
