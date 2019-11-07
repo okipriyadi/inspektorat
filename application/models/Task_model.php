@@ -93,6 +93,10 @@ class Task_model extends CI_Model{
       $this->db->update("task_detail",array("id_status"=>$id_status), array("id_detail" =>$id_detail));
       return 1;
     }
+    public function updateTask($id_detail, $data){
+      $this->db->update("task_detail",$data, array("id_detail" =>$id_detail));
+      return 1;
+    }
 
     public function getProjectTaskByStatus($status_id){
       $this->db->select('*');
@@ -118,7 +122,26 @@ class Task_model extends CI_Model{
       if($query->num_rows() > 0){
         return $query->result_array();
       }
-      return NULL;
+      return false;
+    }
+
+    public function getLampiranLinkTask($id){
+      $this->db->select('*');
+      $query = $this->db->get_where('task_lampiran_link',array('id_task_detail'=>$id));
+      if($query->num_rows() > 0){
+        return $query->result_array();
+      }
+      return false;
+    }
+
+    public function getPetugasTask($id){
+      $this->db->select('*');
+      $this->db->join('user', 'user_task_detail.id_user = user.user_id','left');
+      $query = $this->db->get_where("user_task_detail", array('id_task_detail'=>$id));
+      if($query->num_rows() > 0){
+        return $query->result_array();
+      }
+      return false;
     }
 
     public function count_status_by_state($id_state, $id_project){
@@ -183,6 +206,30 @@ class Task_model extends CI_Model{
       if($ins){
         $insert_id = $this->db->insert_id();
         return $insert_id;
+      }
+      return NULL;
+    }
+
+    public function create_lampiran_link($data){
+      $ins = $this->db->insert("task_lampiran_link",$data);
+      if($ins){
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+      }
+      return NULL;
+    }
+    public function create_petugas($data){
+      $ins = $this->db->insert("user_task_detail",$data);
+      if($ins){
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+      }
+      return NULL;
+    }
+    public function remove_lampiran_link($id_data){
+      $del = $this->db->delete('task_lampiran_link', array('id_task_lampiran_link' => $id_data));
+      if($del){
+        return true;
       }
       return NULL;
     }

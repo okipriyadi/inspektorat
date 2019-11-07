@@ -80,6 +80,10 @@
 				background: white;
 				padding-bottom:0px;
 			}
+			
+			.box-checkbox{
+				height: 400px;
+			}
 	</style>
 
 <div class="row body-low-bg ">
@@ -112,15 +116,17 @@
 																				 <div class="col-sm-10">
 																					 <?php
 																						 $task_lampiran = $this->task_model->getLampiranTask($taskRow['id_detail']);
-																						 if(isset($task_lampiran)){
-																							 echo "<p>Lampiran (".count($task_lampiran).")</p>";
+																						 $task_lampiran_link = $this->task_model->getLampiranLinkTask($taskRow['id_detail']);
+																						 $jml_lam = ($task_lampiran ? count($task_lampiran) : 0) + ($task_lampiran_link ? count($task_lampiran_link) : 0);
+																						 if($jml_lam > 0){
+																							 echo "<p>Lampiran (".$jml_lam.")</p>";
 																							 echo "<p>Read More</p>";
 																						 }
 																					 ?>
 																				 </div>
 																			 </div>
 																			<br><br>
-																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
+																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="onClickModalUser(<?php echo $taskRow['id_detail'];?>)" data-toggle="modal">
 																			<span style=" display: inline-block;margin-left:0px"><?= $taskRow["nama"]?></span>
 																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
 																 </li>
@@ -171,7 +177,7 @@
 														    <input type="date" class="form-control" name="end_date">
 															</div>
 														</div>
-												  </div>
+													</div>
 												</div>
 												<div class="form-group ">
 													<label>Masuk kedalam status</label>
@@ -316,6 +322,17 @@
 				$("#modal_task .modal-dialog").html(msg);
 			});
 		}
+		function onClickModalUser(id){
+			var url = $('input[name=url]').val();
+			$.ajax({
+				method: "POST",
+				url: url+"index.php/task/getmodaluser/"+id,
+				data: { name: "John", location: "Boston" }
+			})
+			.done(function( msg ) {
+				$("#modal_task .modal-dialog").html(msg);
+			});
+		}
 		function hapusLampiran(id,id_detail){
 			var url = $('input[name=url]').val();
 			$.ajax({
@@ -326,6 +343,18 @@
 			.done(function( msg ) {
 				// alert(msg);
 				$("#modal_task #lampir").html(msg);
+			});
+		}
+		function hapusLampiranLink(id,id_detail){
+			var url = $('input[name=url]').val();
+			$.ajax({
+				method: "POST",
+				url: url+"index.php/task/hapuslampiranlink",
+				data: { id_task_lampiran_link: id, id_task_detail : id_detail }
+			})
+			.done(function( msg ) {
+				// alert(msg);
+				$("#modal_task #lampir-link").html(msg);
 			});
 		}
 		</script>

@@ -137,6 +137,7 @@ class Task extends CI_Controller {
 		$countfiles = count($_FILES['lampiran']['name']);
 	 
 		// Looping all files
+		$this->task_model->updateTask($this->input->post('id_task_detail'),array('title'=>$this->input->post('title'),'description'=>$this->input->post('description'),'start_date'=>$this->input->post('start_date'),'end_date'=>$this->input->post('end_date')));
 		$task_details = $this->task_model->getTaskByTaskId($this->input->post('id_task_detail'));
 		$task_detail = isset($task_details)?$task_details:[];
 		for($i=0;$i<$countfiles;$i++){
@@ -169,7 +170,7 @@ class Task extends CI_Controller {
 
 			  // Initialize array
 			  if($filename!=""){
-				$this->task_model->create_lampiran(array('nama'=>$filename,'link'=>'','id_task_detail'=>$this->input->post('id_task_detail')));
+				$this->task_model->create_lampiran(array('link'=>$filename,'id_task_detail'=>$this->input->post('id_task_detail')));
 			  }
 			  
 			}
@@ -184,7 +185,7 @@ class Task extends CI_Controller {
 		foreach ($link as $key => $value) {
 			# code...
 			if($value!="")
-			{$this->task_model->create_lampiran(array('nama'=>'','link'=>$value,'id_task_detail'=>$this->input->post('id_task_detail')));}
+			{$this->task_model->create_lampiran_link(array('link'=>$value,'id_task_detail'=>$this->input->post('id_task_detail')));}
 		}
 		return redirect(base_url()."index.php/task/perproyek");
 	}
@@ -201,25 +202,52 @@ class Task extends CI_Controller {
 			}
 		}
 	}
+	public function hapuslampiranlink(){
+		$this->task_model->remove_lampiran_link($this->input->post('id_task_lampiran_link'));
+		$lams = $this->task_model->getLampiranLinkTask($this->input->post('id_task_detail'));
+		if($lams){
+			foreach ($lams as $key => $value) {
+				# code...
+				$no = $key +1;
+				echo '<a href="'.$value['link'].'">Lampiran '.$no.'</a><button class="btn btn-danger" onclick="hapusLampiranLink('.$value['id_task_lampiran_link'].','.$value['id_task_detail'].')">Hapus</button>';
+				echo "<br>";
+			}
+		}
+	}
 	public function getmodal($id){
+		$task = $this->task_model->getTaskByTaskId($id);
 		$task_lampiran = $this->task_model->getLampiranTask($id);
+		$task_lampiran_link = $this->task_model->getLampiranLinkTask($id);
 		$data = array(
+			'task'=>$task,
 			'task_lampiran'=> $task_lampiran,
+			'task_lampiran_link'=>$task_lampiran_link,
 			'id_detail'=>$id
 		);
 		$this->load->view('task/modal_lampiran.php',$data);
 	}
 
-	public function getmodaluser(){
+	public function getmodaluser($id){
 		$users = $this->user_model->getAllUser();
-		$user = $this->task_model->getTaskByTaskId($this->input->post('id_task_detail'));
+		$user = $this->task_model->getTaskByTaskId($id);
+		$petugas = $this->task_model->getPetugasTask($id);
+		// var_dump($id);
+		
+		// exit;
 		$data = array(
 			'user'=>$user,
-			'users'=> $users
+			'users'=> $users,
+			'petugas'=>$petugas
 		);
 		$this->load->view('task/modal_user.php',$data);
 	}
 
+	public function addpetugas(){
+		foreach ($this->input->post('petugas') as $key => $value) {
+			# code...
+			$this->task_model->create_petugas(array(''));
+		}
+	}
 	public function updateTaskStatus($id_detail, $id_status)//dipake ajax untuk update
 	{
 			$task_detail = $this->task_model->getTaskByTaskId($id_detail);
