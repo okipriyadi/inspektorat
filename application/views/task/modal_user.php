@@ -4,6 +4,7 @@
 </div>
 <div class="modal-content">
     <form action="<?php echo base_url();?>index.php/task/addpetugas" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id_task_detail" value="<?php echo $id_task_detail;?>">
         <div class="row" style="padding:4px;">
             <div class="col-sm-3">
             Dibuat Oleh : 
@@ -23,6 +24,7 @@
         <div class="row" style="padding:4px;">
             <div class="col-sm-8">
                 <?php
+                if($petugas){
                 foreach ($petugas as $key => $value) {
                     # code...
                     
@@ -33,7 +35,7 @@
                         </div>
                     </div>
                     <?php
-                }
+                }}
                 ?>
             </div>
         </div>
@@ -50,6 +52,7 @@
             </div>
             <div class="col-sm-4">
                 <?php
+                if($petugas){
                 foreach ($petugas as $pkey => $pvalue) {
                     # code...
                     if($pvalue['user_id']==$value['user_id']){
@@ -58,7 +61,7 @@
                         <input type="checkbox" name="petugas[]" id="" value="<?php echo $value['user_id'];?>" checked>
                         <?php
                     }
-                }
+                }}
                 if(!$ketemu){
                     ?>
                     <input type="checkbox" name="petugas[]" id="" value="<?php echo $value['user_id'];?>">

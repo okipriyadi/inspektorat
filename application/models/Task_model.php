@@ -240,5 +240,19 @@ class Task_model extends CI_Model{
       }
       return NULL;
     }
+    public function remove_task($id_data){
+      $del = $this->db->delete('task_detail', array('id_detail' => $id_data));
+      if($del){
+        return true;
+      }
+      return NULL;
+    }
+    public function remove_petugasbyIdTask($id_data){
+      $del = $this->db->delete('user_task_detail', array('id_task_detail' => $id_data));
+      if($del){
+        return true;
+      }
+      return NULL;
+    }
 }
 ?>

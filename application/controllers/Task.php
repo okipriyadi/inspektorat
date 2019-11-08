@@ -237,16 +237,19 @@ class Task extends CI_Controller {
 		$data = array(
 			'user'=>$user,
 			'users'=> $users,
-			'petugas'=>$petugas
+			'petugas'=>$petugas,
+			'id_task_detail'=>$id
 		);
 		$this->load->view('task/modal_user.php',$data);
 	}
 
 	public function addpetugas(){
+		$this->task_model->remove_petugasbyIdTask($this->input->post('id_task_detail'));
 		foreach ($this->input->post('petugas') as $key => $value) {
 			# code...
-			$this->task_model->create_petugas(array(''));
+			$this->task_model->create_petugas(array('id_task_detail'=>$this->input->post('id_task_detail'),'id_user'=>$value));
 		}
+		return redirect(base_url()."index.php/task/perproyek");
 	}
 	public function updateTaskStatus($id_detail, $id_status)//dipake ajax untuk update
 	{
@@ -294,6 +297,7 @@ class Task extends CI_Controller {
 			"id_project" => $result,
 			"id_state" => 3
 		));
+		
 
 		if($result){
 			$data_history = array(
@@ -329,26 +333,41 @@ class Task extends CI_Controller {
 		redirect(base_url("index.php/task/proyek/".$id_proyek));
 	}
 
+	public function hapus_task(){
+		$this->task_model->remove_task($this->input->post('id_task_detail'));
+		redirect(base_url("index.php/task/perproyek"));
+	}
+
 	public function tambah_tugas($id_proyek)
 	{
+		
 		$id_user = $this->session->userdata()['user_id_iman'];
 		$nama_user = $this->session->userdata()['nama_iman'];
-		$petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
+		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
 		//print_r($petugas["nama"]);
 		//die();
+		
 		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
 			"description" => $_POST["description"],
 			"id_creator" => $id_user,
-			"id_petugas" => $_POST["id_petugas"],
+			"id_petugas" => '',
 			"id_status" => $_POST["id_status"],
 			"start_date" => $_POST["start_date"],
 			"end_date" => $_POST["end_date"],
 		));
+		// var_dump($result);
+		// exit;
+		$nama ='';
+		foreach ($this->input->post('id_petugas') as $key => $value) {
+			# code...
+			$this->task_model->create_petugas(array('id_task_detail'=>$result,'id_user'=>$value));
+			$nama .= $this->user_model->get_user_by_id($value)['nama'].", ";
+		}
 
 		if($result){
 			$data_history = array(
-				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $petugas["nama"]  ,
+				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $nama  ,
 				"id_creator" => $id_user,
 				"id_project" => $id_proyek,
 				"id_task" => $_POST["id_status"]

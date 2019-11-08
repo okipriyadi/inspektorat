@@ -80,10 +80,20 @@
 				background: white;
 				padding-bottom:0px;
 			}
-			
+
 			.box-checkbox{
 				height: 400px;
 			}
+
+			.btn-text {
+				background: none!important;
+				border: none;
+				padding: 0!important;
+				/*optional*/
+				font-family: arial, sans-serif;
+				/*input has OS specific font-family*/
+				cursor: pointer;
+				}
 	</style>
 
 <div class="row body-low-bg ">
@@ -107,10 +117,17 @@
 																 <li class="text-row ui-sortable-handle ui-li-shadow" data-task-id="<?php echo $taskRow["id_detail"]; ?>"
 																	 style=" border-top-style: solid; border-top-color: coral;">
 																	 		<div class="row">
-																				 <div class="col-sm-10">
+																				 <div class="col-sm-8">
 																					<?php echo $taskRow["title"]; ?>
 																				 </div>
-																				 <div class="col-sm-2"><p class="text-right"><a data-toggle="modal" onclick="onClickModal(<?php echo $taskRow['id_detail'];?>)" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p></div>
+																				 <div class="col-sm-1"><p class="text-right"><a data-toggle="modal" onclick="onClickModal(<?php echo $taskRow['id_detail'];?>)" href="#modal_task"><span><i class="fa fa-pencil"></i></span></a></p>
+																				</div>
+																				 <div class="col-sm-2 text-left">
+																				 <form action="<?php echo base_url();?>index.php/task/hapus_task" method="post" enctype="multipart/form-data">
+																					<input type="hidden" name="id_task_detail" value="<?php echo $taskRow['id_detail'];?>">
+																					<button type="submit" class="btn-text"><i class="fa fa-trash"></i></button>
+																				</form>
+																				 </div>
 																			 </div>
 																	 		<div class="row">
 																				 <div class="col-sm-10">
@@ -120,7 +137,6 @@
 																						 $jml_lam = ($task_lampiran ? count($task_lampiran) : 0) + ($task_lampiran_link ? count($task_lampiran_link) : 0);
 																						 if($jml_lam > 0){
 																							 echo "<p>Lampiran (".$jml_lam.")</p>";
-																							 echo "<p>Read More</p>";
 																						 }
 																					 ?>
 																				 </div>
@@ -194,7 +210,7 @@
 											 </div>
 											 <div class="form-group ">
 												 <label>Ditugaskan kepada</label>
-												 <select name="id_petugas" class="form-control">
+												 <select name="id_petugas[]" class="form-control" multiple>
 													 <?php
 														 foreach ($users as $user) {
 													 ?>
@@ -269,7 +285,7 @@
 														<li class="text-row ui-sortable-handle history-li">
 															<h6 style="color:blue"><u><b><?= $history["project_name"]?></b></u></h6>
 															<?= $history["history_name"]?><br>
-															<div style="text-align:right;"> <?= $history["date_creation"]?> </div>
+															<div style="text-align:right;"> <?= date("d F y H:i:s",strtotime($history["date_creation"]))?> </div>
 														</li>
 													</a>
 												<?php

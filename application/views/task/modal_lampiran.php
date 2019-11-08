@@ -79,13 +79,13 @@
         }?>
         </div>
         <div id="form-task" style="padding:4px;">
-            <div class="row">
+            <div class="row" style="padding:4px;">
                 <div class="col-sm-4">File</div>
                 <div class="col-sm-8">
                     <input type="file" name="lampiran[]" multiple>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="padding:4px;">
                 <div class="col-sm-4">Url</div>
                 <div class="col-sm-8">
                     <input type="text" name="link" id="" class="form-control">
