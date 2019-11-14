@@ -42,7 +42,7 @@
             ?>
             <div class="row" style="margin-bottm:4px;">
                 <div class="col-sm-8">
-                <a href="<?php echo $value['link'];?>">Lampiran <?php echo 1+$key;?></a>
+                <a href="<?php echo base_url().$value['link'];?>">Lampiran <?php echo 1+$key;?></a>
                 </div>
                 <div class="col-sm-4">
                 <button class="btn btn-danger" type="button" onclick="hapusLampiran(<?php echo $value['id_task_lampiran'];?>,<?php echo $value['id_task_detail'];?>)">Hapus</button>

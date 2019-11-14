@@ -166,7 +166,7 @@ class Task extends CI_Controller {
 			if($this->upload->do_upload('file')){
 			  // Get data about the file
 			  $uploadData = $this->upload->data();
-			  $filename = $uploadData['full_path'];
+			  $filename = $config['upload_path'].'/'.$uploadData['file_name'];
 
 			  // Initialize array
 			  if($filename!=""){
@@ -197,7 +197,7 @@ class Task extends CI_Controller {
 			foreach ($lams as $key => $value) {
 				# code...
 				$no = $key +1;
-				echo '<a href="'.$value['link'].$value['nama'].'">Lampiran '.$no.'</a><button class="btn btn-danger" onclick="hapusLampiran('.$value['id_task_lampiran'].','.$value['id_task_detail'].')">Hapus</button>';
+				echo '<a href="'.base_url().$value['link'].'">Lampiran '.$no.'</a><button class="btn btn-danger" onclick="hapusLampiran('.$value['id_task_lampiran'].','.$value['id_task_detail'].')">Hapus</button>';
 				echo "<br>";
 			}
 		}
