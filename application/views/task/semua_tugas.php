@@ -92,22 +92,27 @@
 										?>
 										<div class="status-card">
 												<div class="card-header" style="background:green; color:white; height:40px">
-														<span class="card-header-text"><i class="fa fa-arrows-alt"> </i> <?php echo $statusRow["status_name"]; ?></span>
+														<span class="card-header-text"><i class="fa fa-arrows-alt"> </i> <?php echo $statusRow["state"]; ?></span>
 												</div>
-												<ul class="sortable ui-sortable" id="sort<?php echo $statusRow["id_status"]; ?>" data-status-id="<?php echo $statusRow["id_status"]; ?>" >
+												<ul class="sortable ui-sortable" id="sort<?php echo $statusRow["id_state"]; ?>" data-status-id="<?php echo $statusRow["id_state"]; ?>" >
 														<?php
 														if (! empty($task)) {
 															foreach ($task as $taskRow) {
-																if ($statusRow["id_status"] == $taskRow["id_status"]){
+																if ($statusRow["id_state"] == $taskRow["id_state"]){
 																?>
 																 <li class="text-row ui-sortable-handle ui-li-shadow" data-task-id="<?php echo $taskRow["id_detail"]; ?>"
 																	 style=" border-top-style: solid; border-top-color: coral;">
 																	 		<a href="<?= base_url('index.php/task/proyek/'.$taskRow["id_project"]) ?>">#<?= $taskRow["project_name"]?><br></a>
 																			<?php echo $taskRow["title"]; ?>
 																			<br><br>
-
-																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; ">
-																			<span style=" display: inline-block;margin-left:0px"><?= $taskRow["nama"]?></span>
+																			<?php
+																			$user_task_detail = $this->task_model->getUserTaskDetail($taskRow['id_detail']) ;
+																			foreach ($user_task_detail as $key => $value) {
+																			?>
+																				<img src="<?php echo base_url("assets/template/img/crew/".$value['foto'])?>" title="<?= $value['nama']?>"  style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="onClickModalUser(<?php echo $taskRow['id_detail'];?>)" data-toggle="modal">
+																			<?php
+																			}
+																			?>
 																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
 																 </li>
 															 <?php
@@ -159,7 +164,7 @@
 														<?php
 															foreach ($status as $statusRow) {
 														?>
-																<option value="<?= $statusRow["id_status"]?>"><?= $statusRow["status_name"]?></option>
+																<option value="<?= $statusRow["id_state"]?>"><?= $statusRow["state"]?></option>
 
 														<?php
 															}

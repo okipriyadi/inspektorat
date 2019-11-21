@@ -14,13 +14,23 @@ class Task_model extends CI_Model{
         $this->db->select('*');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
         $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
-        $this->db->join('user', 'user.user_id = task_detail.id_petugas','left');
-        $this->db->order_by("task_detail.id_petugas", "asc");
+        $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
         $this->db->order_by("task_status.id_state", "asc");
         $this->db->order_by("task_detail.last_update", "asc");
         $query = $this->db->get_where('task_detail',array());
 		    return $query->result_array();
     }
+
+    public function getAllTaskGroupByTask(){
+        $this->db->select('*');
+        $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+        $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+        $this->db->order_by("task_status.id_state", "asc");
+        $this->db->order_by("task_detail.last_update", "asc");
+        $query = $this->db->get_where('task_detail',array());
+        return $query->result_array();
+    }
+
 
 
 
@@ -69,6 +79,7 @@ class Task_model extends CI_Model{
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
+      //$this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
       $this->db->order_by("task_status.id_status"); //order ini tidak boleh berubah karena digunakan sepaket dengan view agar tersusun dengan benar
       $query = $this->db->get_where("task_detail", array('task_status.id_project'=>$id_project));
       return $query->result_array();
@@ -87,6 +98,12 @@ class Task_model extends CI_Model{
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
       $query = $this->db->get_where("task_detail", array('id_detail'=>$id_task));
       return $query->row_array();
+    }
+
+    public function getTaskState(){
+      $this->db->select('*');
+      $query = $this->db->get_where("task_state", array('id_state <='=>3));
+      return $query->result_array();
     }
 
     public function updateTaskStatus($id_detail, $id_status){
@@ -114,6 +131,17 @@ class Task_model extends CI_Model{
         $this->db->order_by("task_detail.id_status");
         $query = $this->db->get_where('task_detail',array());
 		    return $query->result_array();
+    }
+
+    public function getUserTaskDetail($taskDetailId){
+      $this->db->select('*');
+      $this->db->join('user', 'user.user_id = user_task_detail.id_user');
+      $query = $this->db->get_where('user_task_detail',array('id_task_detail'=>$taskDetailId));
+
+      if($query->num_rows() > 0){
+        return $query->result_array();
+      }
+      return false;
     }
 
     public function getLampiranTask($id){
@@ -154,7 +182,8 @@ class Task_model extends CI_Model{
     public function count_status_by_user($id_state, $user_id){
       $this->db->select('count("id_detail") as jml ');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
-      $query = $this->db->get_where('task_detail',array("task_status.id_state"=>$id_state,"task_detail.id_petugas"=>$user_id));
+      $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+      $query = $this->db->get_where('task_detail',array("task_status.id_state"=>$id_state,"user_task_detail.id_user"=>$user_id));
       return $query->row_array();
     }
 

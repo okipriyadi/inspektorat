@@ -236,7 +236,7 @@
 											$inc_done = 1;
 											$j = 0;
 											foreach($tasks as $task){
-												if($task["id_petugas"] == $user["user_id"]){
+												if($task["id_user"] == $user["user_id"]){
 													if($task["id_state"] == 1 ){
 														if ($inc_todo === 1){
 																echo '<h3> Todo : </h3>';

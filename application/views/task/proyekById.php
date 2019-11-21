@@ -138,12 +138,20 @@
 																						 if($jml_lam > 0){
 																							 echo "<p>Lampiran (".$jml_lam.")</p>";
 																						 }
+																						 $user_task_detail = $this->task_model->getUserTaskDetail($taskRow['id_detail']) ;
+																						 //print_r($user_task_detail);
 																					 ?>
 																				 </div>
 																			 </div>
 																			<br><br>
-																			<img src="<?php echo base_url("assets/template/img/crew/".$taskRow['foto'])?>" style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="onClickModalUser(<?php echo $taskRow['id_detail'];?>)" data-toggle="modal">
-																			<span style=" display: inline-block;margin-left:0px"><?= $taskRow["nama"]?></span>
+																			<?php // print_r($taskRow)?>
+																			<?php
+																			foreach ($user_task_detail as $key => $value) {
+																			?>
+																				<img src="<?php echo base_url("assets/template/img/crew/".$value['foto'])?>" title="<?= $value['nama']?>"  style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="onClickModalUser(<?php echo $taskRow['id_detail'];?>)" data-toggle="modal">
+																			<?php
+																			}
+																			?>
 																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
 																 </li>
 															 <?php
@@ -161,7 +169,7 @@
 					<!-- Modal di Task Dinamis ----------------------------- -->
 					<div id="modal_task" class="modal fade" role="dialog">
 						<div class="modal-dialog">
-							
+
 						</div>
 					</div>
 					<!-- Modal tambah tugas ----------------------------- -->

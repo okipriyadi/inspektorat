@@ -52,8 +52,9 @@ class Task extends CI_Controller {
 		// 	'tasks' => $tasks
 		// );
 		// $this->load->view('index_all', $data);
-		$status = $this->task_model->getSatatusByProjectId(12);
-		$task = $this->task_model->getAllTask();
+		//$status = $this->task_model->getSatatusByProjectId(20);
+		$status = $this->task_model->getTaskState();
+		$task = $this->task_model->getAllTaskGroupByTask();
 		$history = $this->task_model->get_history(20);
 		$users = $this->user_model->getAllUser();
 		// echo "<pre>";
@@ -75,6 +76,13 @@ class Task extends CI_Controller {
 
 	public function perproyek()
 	{
+		if($this->session->userdata('login_iman') != true){
+			$data = array(
+			 'content'=>'login_dulu.php',
+			 'judul'=>'Harap Login Terlebih Dahulu',
+		 );
+		 $this->load->view('index_all', $data);
+		}else {
 			$proyeks = $this->task_model->getAllProject();
 			$jumlah_proyek =  count($proyeks);
 			$history = $this->task_model->get_history($jumlah_proyek);
@@ -98,10 +106,18 @@ class Task extends CI_Controller {
 				"hitungan_proyeks"=>$hitungan_proyeks
 			);
 			$this->load->view('index_all', $data);
+		}
 	}
 
 	public function proyek($id_project)
 	{
+		if($this->session->userdata('login_iman') != true){
+			$data = array(
+			 'content'=>'login_dulu.php',
+			 'judul'=>'Harap Login Terlebih Dahulu',
+		 );
+		 $this->load->view('index_all', $data);
+		}else {
 			$proyek = $this->task_model->getProjectById($id_project);
 			$status = $this->task_model->getSatatusByProjectId($id_project);
 			$task = $this->task_model->getTaskByProject($id_project);
@@ -121,6 +137,7 @@ class Task extends CI_Controller {
 				'users' => $users
 			);
 			$this->load->view('index_all', $data);
+		}
 	}
 
 	public function editlampiran($id){
@@ -135,24 +152,24 @@ class Task extends CI_Controller {
 	public function add_lampiran(){
 		// Count total files
 		$countfiles = count($_FILES['lampiran']['name']);
-	 
+
 		// Looping all files
 		$this->task_model->updateTask($this->input->post('id_task_detail'),array('title'=>$this->input->post('title'),'description'=>$this->input->post('description'),'start_date'=>$this->input->post('start_date'),'end_date'=>$this->input->post('end_date')));
 		$task_details = $this->task_model->getTaskByTaskId($this->input->post('id_task_detail'));
 		$task_detail = isset($task_details)?$task_details:[];
 		for($i=0;$i<$countfiles;$i++){
-   
+
 		  if(!empty($_FILES['lampiran']['name'][$i])){
-   
+
 			// Define new $_FILES array - $_FILES['file']
 			$_FILES['file']['name'] = $_FILES['lampiran']['name'][$i];
 			$_FILES['file']['type'] = $_FILES['lampiran']['type'][$i];
 			$_FILES['file']['tmp_name'] = $_FILES['lampiran']['tmp_name'][$i];
 			$_FILES['file']['error'] = $_FILES['lampiran']['error'][$i];
 			$_FILES['file']['size'] = $_FILES['lampiran']['size'][$i];
-  
+
 			// Set preference
-			$config['upload_path'] = 'assets/task/id_detail_'.$task_detail['id_detail']; 
+			$config['upload_path'] = 'assets/task/id_detail_'.$task_detail['id_detail'];
 			$config['allowed_types'] = '*';
 			$config['max_size'] = '20000'; // max_size in kb
 			$config['encrypt_name'] = TRUE;
@@ -160,8 +177,8 @@ class Task extends CI_Controller {
 				mkdir($config['upload_path'],0777, true);
 			}
 			//Load upload library
-			$this->load->library('upload',$config); 
-   
+			$this->load->library('upload',$config);
+
 			// File upload
 			if($this->upload->do_upload('file')){
 			  // Get data about the file
@@ -172,14 +189,14 @@ class Task extends CI_Controller {
 			  if($filename!=""){
 				$this->task_model->create_lampiran(array('link'=>$filename,'id_task_detail'=>$this->input->post('id_task_detail')));
 			  }
-			  
+
 			}
 			else{
 				echo "error";
 				print_r($_FILES['file']);
 			}
 		  }
-   
+
 		}
 		$link = explode(",",$this->input->post('link'));
 		foreach ($link as $key => $value) {
@@ -232,7 +249,7 @@ class Task extends CI_Controller {
 		$user = $this->task_model->getTaskByTaskId($id);
 		$petugas = $this->task_model->getPetugasTask($id);
 		// var_dump($id);
-		
+
 		// exit;
 		$data = array(
 			'user'=>$user,
@@ -297,7 +314,7 @@ class Task extends CI_Controller {
 			"id_project" => $result,
 			"id_state" => 3
 		));
-		
+
 
 		if($result){
 			$data_history = array(
@@ -340,13 +357,13 @@ class Task extends CI_Controller {
 
 	public function tambah_tugas($id_proyek)
 	{
-		
+
 		$id_user = $this->session->userdata()['user_id_iman'];
 		$nama_user = $this->session->userdata()['nama_iman'];
 		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
 		//print_r($petugas["nama"]);
 		//die();
-		
+
 		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
 			"description" => $_POST["description"],
