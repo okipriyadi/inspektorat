@@ -21,6 +21,16 @@ class User_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function getUserTask(){
+        $this->db->select('*');
+        $this->db->join('user_task_detail','user.user_id = user_task_detail.id_user');
+        $query = $this->db->get('user');
+        if($query->num_rows() < 1){
+            return [];
+        }
+        return $query->result_array();
+    }
+
     public function getUserEmail($username){
         $login = false;
         $query = $this->db->get_where('user',array('email'=>$this->input->post('username')));

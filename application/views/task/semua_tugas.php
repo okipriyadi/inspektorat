@@ -107,10 +107,18 @@
 																			<br><br>
 																			<?php
 																			$user_task_detail = $this->task_model->getUserTaskDetail($taskRow['id_detail']) ;
-																			foreach ($user_task_detail as $key => $value) {
-																			?>
-																				<img src="<?php echo base_url("assets/template/img/crew/".$value['foto'])?>" title="<?= $value['nama']?>"  style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="onClickModalUser(<?php echo $taskRow['id_detail'];?>)" data-toggle="modal">
+																			if($user_task_detail){
+																				foreach ($user_task_detail as $key => $value) {
+																					?>
+																						<img src="<?php echo base_url("assets/template/img/crew/".$value['foto'])?>" title="<?= $value['nama']?>"  style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="" data-toggle="modal">
+																					<?php
+																					}
+																					?>
 																			<?php
+																			}else{
+																				?>
+																				<img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" title=""  style="display: inline-block; position: relative; height:25px; border-radius: 50%; " href="#modal_task" onclick="" data-toggle="modal">
+																				<?php
 																			}
 																			?>
 																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>

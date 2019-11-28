@@ -66,6 +66,15 @@ class Task_model extends CI_Model{
       return $query->result_array();
     }
 
+    public function getAllProjectOrderEndDate(){
+      $this->db->select('*');
+      $this->db->join('user','user.user_id= task_project.id_creator','left');
+      // $this->db->order_by("created_at", "desc");
+      $this->db->order_by("end_date", "desc");
+      $query = $this->db->get("task_project");
+      return $query->result_array();
+    }
+
     public function getSatatusByProjectId($id_project){
       $this->db->select('*');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');

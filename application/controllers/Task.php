@@ -74,6 +74,40 @@ class Task extends CI_Controller {
 
 	}
 
+	public function semuaTugasTabel(){
+		$status = $this->task_model->getTaskState();
+		$task = $this->task_model->getAllTaskGroupByTask();
+		$history = $this->task_model->get_history(20);
+		$users = $this->user_model->getAllUser();
+		$userTask = $this->user_model->getUserTask();
+		$projects = $this->task_model->getAllProjectOrderEndDate();
+		$tasks = [];
+		foreach ($projects as $key => $value) {
+			# code...
+			$tasks[$value['id_project']] = $this->task_model->getTaskByProject($value['id_project']);
+		}
+		foreach ($task as $key => $value) {
+			# code...
+			$userT[$value['id_detail']]=[];
+		}
+		foreach ($userTask as $key => $value) {
+			# code...
+			array_push($userT[$value['id_task_detail']],$value);
+		}
+		$data = array(
+			'content'=>'task/semua_tugas_tabel.php',
+			'id_proyek'=>12,
+			'judul'=>"Semua Tugas",
+			'status'=> $status,
+			'task' => $task,
+			'tasks' => $tasks,
+			'histories' => $history,
+			'users' => $users,
+			'userT'=>$userT
+		);
+		$this->load->view('index_all', $data);
+	}
+
 	public function perproyek()
 	{
 		if($this->session->userdata('login_iman') != true){
