@@ -80,11 +80,34 @@ class Task extends CI_Controller {
 		$history = $this->task_model->get_history(20);
 		$users = $this->user_model->getAllUser();
 		$userTask = $this->user_model->getUserTask();
-		$projects = $this->task_model->getAllProjectOrderEndDate();
+		$projectspos = $this->task_model->getAllProjectOrderEndDate('pos');
+		$projectsneg = $this->task_model->getAllProjectOrderEndDate('neg');
 		$tasks = [];
-		foreach ($projects as $key => $value) {
+		foreach ($projectsneg as $key => $value) {
 			# code...
 			$tasks[$value['id_project']] = $this->task_model->getTaskByProject($value['id_project']);
+			foreach ($tasks[$value['id_project']] as $tkey => $tvalue) {
+				# code...
+				$lampiran = $this->task_model->getLampiranTask($tvalue['id_detail']);
+				if($lampiran){
+					$tasks[$value['id_project']][$tkey]['link'] = $lampiran;
+				}else{
+					$tasks[$value['id_project']][$tkey]['link'] = [];
+				}
+			}
+		}
+		foreach ($projectspos as $key => $value) {
+			# code...
+			$tasks[$value['id_project']] = $this->task_model->getTaskByProject($value['id_project']);
+			foreach ($tasks[$value['id_project']] as $tkey => $tvalue) {
+				# code...
+				$lampiran = $this->task_model->getLampiranTask($tvalue['id_detail']);
+				if($lampiran){
+					$tasks[$value['id_project']][$tkey]['link'] = $lampiran;
+				}else{
+					$tasks[$value['id_project']][$tkey]['link'] = [];
+				}
+			}
 		}
 		foreach ($task as $key => $value) {
 			# code...

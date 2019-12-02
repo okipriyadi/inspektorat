@@ -52,6 +52,12 @@
                                                     echo '-'.$diff->days.' hari';
                                                 }
                                             }
+                                            if(!empty($tvalue['link'])){
+                                                foreach ($tvalue['link'] as $lkey => $lvalue) {
+                                                    # code...
+                                                    echo '<a href="'.$lvalue['link'].'">L '.(1+$lkey).'</a> ';
+                                                }
+                                            }
                                             ?>
                                         </td>
                                         <!-- <td class="text-center"><button class="btn btn-info">Detail</button></td> -->

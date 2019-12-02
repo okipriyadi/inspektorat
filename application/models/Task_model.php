@@ -66,11 +66,22 @@ class Task_model extends CI_Model{
       return $query->result_array();
     }
 
-    public function getAllProjectOrderEndDate(){
+    public function getAllProjectOrderEndDate($set = null){
       $this->db->select('*');
       $this->db->join('user','user.user_id= task_project.id_creator','left');
       // $this->db->order_by("created_at", "desc");
-      $this->db->order_by("end_date", "desc");
+      if(isset($set)&& $set=="pos"){
+        $this->db->where('datediff(CURRENT_TIMESTAMP, task_project.end_date) > 0');
+      }elseif(isset($set)&& $set=="neg"){
+        $this->db->where('datediff(CURRENT_TIMESTAMP, task_project.end_date) <= 0');
+      }
+      // $this->db->where('datediff(CURRENT_TIMESTAMP, task_project.end_date) > 0');
+      if(isset($set)&& $set=="pos"){
+        $this->db->order_by("DATEDIFF(task_project.end_date, CURRENT_TIMESTAMP) DESC");
+      }elseif(isset($set)&& $set=="neg"){
+        $this->db->order_by("DATEDIFF(task_project.end_date, CURRENT_TIMESTAMP) ASC");
+      }
+      // $this->db->order_by("DATEDIFF(task_project.end_date, CURRENT_TIMESTAMP) ASC");
       $query = $this->db->get("task_project");
       return $query->result_array();
     }
