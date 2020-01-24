@@ -21,6 +21,7 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+
     public function getAllTaskGroupByTask(){
         $this->db->select('*');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');

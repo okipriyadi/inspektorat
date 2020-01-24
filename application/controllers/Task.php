@@ -110,12 +110,12 @@ class Task extends CI_Controller {
 			}
 		}
 		foreach ($task as $key => $value) {
-			# code...
 			$userT[$value['id_detail']]=[];
 		}
 		foreach ($userTask as $key => $value) {
-			# code...
-			array_push($userT[$value['id_task_detail']],$value);
+			if(isset( $userT[$value['id_task_detail']] )){
+				array_push($userT[$value['id_task_detail']],$value);
+			}
 		}
 		$data = array(
 			'content'=>'task/semua_tugas_tabel.php',
@@ -157,7 +157,7 @@ class Task extends CI_Controller {
 
 			$data = array(
 			 	'content'=>'task/perproyek.php',
-			 	'judul'=>'Task Perproyek',
+			 	'judul'=>'Task Kategori',
 			 	'proyeks' => $proyeks,
 				'histories' => $history,
 				"hitungan_proyeks"=>$hitungan_proyeks
@@ -261,7 +261,8 @@ class Task extends CI_Controller {
 			if($value!="")
 			{$this->task_model->create_lampiran_link(array('link'=>$value,'id_task_detail'=>$this->input->post('id_task_detail')));}
 		}
-		return redirect(base_url()."index.php/task/perproyek");
+		$task_status = $this->task_model->getStatusByStatusId($task_detail["id_status"]);
+		return redirect(base_url()."index.php/task/proyek/".$task_status["id_project"]);
 	}
 
 	public function hapuslampiran(){

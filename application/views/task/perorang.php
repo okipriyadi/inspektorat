@@ -161,7 +161,11 @@
 		 }
 		 .listwoy{
 			 list-style-type: decimal;
-			 margin-left:20px
+			 margin-left:20px;
+		 }
+		 .listwoy a{
+			text-decoration: underline;
+			color:blue;
 		 }
 		 .hr-stylewoy{
 			 border-bottom-color: rgba(0, 0, 0, 0.1);
@@ -242,7 +246,7 @@
 																echo '<h3> Todo : </h3>';
 																echo "<ol>";
 														}
-														echo "<li class='listwoy'>". $task["title"] ."<a href=". base_url("index.php/task/proyek/".$task["id_project"]) ."> #".$task["project_name"]. "</a></li>";
+														echo "<li class='listwoy'>". $task["title"] ."| <a href=". base_url("index.php/task/proyek/".$task["id_project"]) ."> #".$task["project_name"]. "</a></li>";
 														if ($inc_todo ==  $hitungan_proyeks[$user['nama']]["todo"]["jml"] ){
 																echo "</ol>";
 																echo "<hr>";

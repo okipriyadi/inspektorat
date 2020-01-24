@@ -23,11 +23,11 @@
             </div>
         </div>
     </div>
-    <?php 
+    <?php
     if($task_lampiran){?>
         <div class="row" style="padding:4px;">
             <div class="col-sm-3">
-            Lampiran : 
+            Lampiran :
             </div>
         </div>
         <div id="lampir" style="padding:4px;">
@@ -36,7 +36,7 @@
                     File
                 </div>
             </div>
-        <?php 
+        <?php
         foreach ($task_lampiran as $key => $value) {
             # code...
             ?>
@@ -86,9 +86,9 @@
                 </div>
             </div>
             <div class="row" style="padding:4px;">
-                <div class="col-sm-4">Url</div>
+                <div class="col-sm-4">Keterangan :</div>
                 <div class="col-sm-8">
-                    <input type="text" name="link" id="" class="form-control">
+                    <textarea name="link"  rows="4" cols="30" placeholder="Keterangan Pengerjaan Tugas"></textarea>
                 </div>
             </div>
         </div>

@@ -5,7 +5,8 @@ class User_model extends CI_Model{
     }
 
     public function login($username, $password){
-        $query = $this->db->get_where('user',array('username'=>$username,'password'=>md5($password)));
+
+        $query = $this->db->get_where('user',array('username'=>$username,'password'=>md5 ( crypt ( $password, md5 ( $username ) ) )));
 		return $query;
     }
 
