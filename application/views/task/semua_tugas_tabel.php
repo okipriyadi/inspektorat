@@ -7,7 +7,7 @@
                         <table class="table table-hover table-bordered table-stripped">
                             <thead>
                                 <th>No</th>
-                                <th width="20%">Project Name</th>
+                                <th width="20%">Kategori</th>
                                 <th width="30%">Kegiatan</th>
                                 <th width="15%">Mulai</th>
                                 <th width="15%">Selesai</th>
@@ -96,7 +96,7 @@ foreach ($userT as $key => $value) {
                 <button type="button" class="btn btn-primary" style="background:#fff;color:black;" data-dismiss="modal">Batal</button>
             </div>
         </div>
-    </div>                
+    </div>
     <?php
     }
 }
