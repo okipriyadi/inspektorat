@@ -14,11 +14,11 @@
             <div class ="row">
                 <div class="col-md-6">
                 <label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
-                <input type="date" class="form-control" name="start_date" value="<?php echo date("Y-m-d",strtotime($task['start_date'])); ?>">
+                <input type="date" class="form-control" name="start_date" value="<?php echo date("Y-m-d",strtotime($task['mlai'])); ?>">
                 </div>
                 <div class="col-md-6">
                 <label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
-                <input type="date" class="form-control" name="end_date" value="<?php echo date("Y-m-d",strtotime($task['end_date'])); ?>">
+                <input type="date" class="form-control" name="end_date" value="<?php echo date("Y-m-d",strtotime($task['slesai'])); ?>">
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                 ?>
                 <div class="row" style="margin-bottm:4px;">
                     <div class="col-sm-8">
-                    <a href="<?php echo $value['link'];?>">Lampiran <?php echo 1+$key;?></a>
+                    <a href="<?php echo $value['link'];?>">Lampiran <?php echo 1+$key;?> (<?php echo $value['link'];?>)</a>
                     </div>
                     <div class="col-sm-4">
                     <button class="btn btn-danger" type="button" onclick="hapusLampiranLink(<?php echo $value['id_task_lampiran_link'];?>,<?php echo $value['id_task_detail'];?>)">Hapus</button>

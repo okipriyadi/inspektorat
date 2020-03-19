@@ -1,24 +1,29 @@
 <div class="gazette-welcome-post">
     <!-- Post Tag -->
     <div class="gazette-post-tag">
-        <a href="#">BPK</a>
+        <a href="#">APIP</a>
     </div>
-    <h2 class="font-pt">Kementerian PANRB Raih WTP Kelima Kali</h2>
+    <h2 class="font-pt">Cegah Radikalisme ASN, Kementerian PANRB Adakan Dialog Kebangsaan</h2>
     <p class="gazette-post-date">March 29, 2016</p>
     <!-- Post Thumbnail -->
     <div class="blog-post-thumbnail my-5">
-        <img src="<?php echo base_url() ?>assets/template/img/bg-img/1.jpg" alt="post-thumb">
+        <img src="https://www.menpan.go.id/site/images/berita/2019/20191217_-_Cegah_Radikalisme_ASN_Kementerian_PANRB_Adakan_Dialog_Kebangsaan_3.jpeg" alt="post-thumb">
     </div>
     <!-- Post Excerpt -->
-    <p>Untuk kelima kalinya, Kementerian Pendayagunaan Aparatur Negara dan Reformasi Birokrasi (PANRB) berhasil meraih predikat Wajar Tanpa Pengecualian (WTP) untuk Laporan Hasil Pemeriksaan (LHP) atas Laporan Keuangan Kementerian/Lembaga (LKKL) tahun 2018 dari Badan Pemeriksa Keuangan (BPK) RI. Opini WTP sudah diraih sejak tahun 2014, sedangkan tahun 2013 Kementerian PANRB mendapat predikat Wajar Tanpa Pengecualian Dengan Paragraf Penjelasan (WTP-DPP).
+    <p>
+	JAKARTA - Paham radikalisme menjadi ancaman nyata bagi seluruh lapisan masyarakat. Untuk mencegah paham tersebut masuk kepada aparatur sipil negara (ASN), Kementerian Pendayagunaan Aparatur Negara dan Reformasi Birokrasi mengadakan dialog kebangsaan. Pancasila sebagai dasar Negara Indonesia, harus bisa mereduksi paham lain yang tidak sejalan.
 
-BPK RI menyerahkan LHP LKKL tahun 2018 kepada 38 Kementerian/Lembaga. LHP diserahkan oleh Anggota III BPK Achsanul Qosasi yang didampingi oleh Auditor Utama Keuangan Negara II Blucer Rajagukguk, kepada Menteri PANRB Syafruddin, dalam acara Penyerahan LHP atas LKKL, di Auditorium BPK, Jakarta, Senin (17/06).
+Dialog ini bekerja sama dengan Badan Nasional Penanggulangan Terorisme (BNPT) dan Badan Pembinaan Ideologi Pancasila (BPIP), yang diadakan di Kantor Kementerian PANRB, Selasa (17/12).
 
-Atas hasil itu, Menteri Syafruddin mengucapkan terima kasih kepada BPK karena sudah membantu memberi solusi berkaitan dengan laporan keuangan. “Terima kasih karena BPK cukup memberi masukan dan solusi kepada kementerian dan lembaga, dalam hal laporan keuangan, sehingga memberikan stimulus yang besar bagi kemajuan bangsa dan negara,” ujar Menteri Syafruddin, usai acara tersebut.
+Kementerian PANRB sebagai lokomotif para ASN harus mampu menjadi role model bagi instansi-instansi lain untuk mengimplementasikan nilai-nilai Pancasila dalam setiap sendi kehidupan, baik dalam kehidupan sehari-hari, bermasyarakat, maupun di dalam penyelenggaraan pemerintahan. Selain segala hal yang berhubungan dengan birokrasi, ASN harus memahami empat hal penting, yaitu membumikan Pancasila, radikalisme dan terorisme, bahaya narkoba, serta memahami area rawan korupsi.
 
-Opini WTP diberikan jika tidak ditemukan kesalahan secara keseluruhan dari laporan keuangan. Jika meraih predikat ini, artinya auditor meyakini berdasarkan bukti-bukti yang dikumpulkan, instansi tersebut dianggap telah menyelenggarakan prinsip akuntansi yang berlaku umum dengan baik, dan jika terjadi kesalahan, dianggap tidak material serta tak berpengaruh signifikan terhadap pengambilan keputusan.
+Terkait dengan hal membumikan ideologi Pancasila, Menteri PANRB Tjahjo Kumolo menekankan pentingnya menanamkan nilai-nilai Pancasila di pikiran dan tindakan setiap ASN. “Kalau pikiran kita sudah pasti, maka dalam mengambil keputusan apapun di semua lini harus mampu mengamalkan nilai-nilai Pancasila,” jelas Menteri Tjahjo dalam acara Dialog Kebangsaaan.
 
-Opini merupakan pernyataan profesional pemeriksa mengenai kewajaran atas laporan keuangan yang didasarkan pada empat kriteria, yaitu kesesuaian dengan standar akuntansi, kecukupan pengungkapan, kepatuhan terhadap perundang-undangan, dan efektivitas sistem pengendalian intern.
+Kedepannya, jelas Menteri Tjahjo, pemerintah akan menyiapkan konsep pendidikan awal Pancasila bagi para calon abdi negara. Sebelum diangkat menjadi ASN, mereka akan diberikan penanaman nilai-nilai Pancasila. "Kami ingin para ASN jadi motor penggerak dan mengorganisir di lingkungan dia bekerja, termasuk di masyarakat yang luas," ungkapnya.
+
+ 
+
+
 
 </p>
     <!-- Reading More -->

@@ -29,9 +29,8 @@
 																					</td>
 																						<td><a href="<?= base_url("index.php/task/proyek/".$value["id_project"]) ?>" style="font-weight:normal">
 		                                        <?= $value["project_name"]?></a></td>
-		                                        <td><?= date('d-m-Y', strtotime($value['start_date']))?></td>
-
-																						<td><?= date('d-F-Y', strtotime($value['end_date']))?></td>
+		                                        <td><?= date('d-F-Y', strtotime($value['start_date']))?></td>
+		                                        <td><?= date('d-F-Y', strtotime($value['end_date']))?></td>
 		                                        <td class="<?php echo $value['id_state']==1?'table-primary':'';echo $value['id_state']==2?'table-warning':'';echo $value['id_state']==3?'table-success':''?>"><?= $value['status_name']?></td>
 		                                        <td>
 		                                            <?php

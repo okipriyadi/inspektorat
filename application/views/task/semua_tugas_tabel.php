@@ -55,7 +55,13 @@
                                             if(!empty($tvalue['link'])){
                                                 foreach ($tvalue['link'] as $lkey => $lvalue) {
                                                     # code...
-                                                    echo '<a href="'.$lvalue['link'].'">L '.(1+$lkey).'</a> ';
+                                                    echo '<a href="'.base_url().$lvalue['link'].'" target="_blank">L '.(1+$lkey).'</a> ';
+                                                }
+                                            }
+											if(!empty($tvalue['linkurl'])){
+                                                foreach ($tvalue['linkurl'] as $lkey => $lvalue) {
+                                                    # code...
+                                                    echo '<a href="'.$lvalue['link'].'" target="_blank">URL '.(1+$lkey).'</a> ';
                                                 }
                                             }
                                             ?>

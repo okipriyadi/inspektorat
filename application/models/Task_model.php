@@ -120,7 +120,7 @@ class Task_model extends CI_Model{
 
 
     public function getTaskByProject($id_project){
-      $this->db->select('*');
+      $this->db->select('task_status.*,task_project.*,user.*,task_detail.id_detail,task_detail.title,task_detail.description,task_detail.id_creator,task_detail.id_petugas,task_detail.id_status,task_detail.created_at,task_detail.start_date as mlai, task_detail.end_date as slesai, task_detail.last_update');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
@@ -137,7 +137,7 @@ class Task_model extends CI_Model{
     }
 
     public function getTaskByTaskId($id_task){
-      $this->db->select('*');
+      $this->db->select('task_status.*,task_project.*,user.*,task_detail.id_detail,task_detail.title,task_detail.description,task_detail.id_creator,task_detail.id_petugas,task_detail.id_status,task_detail.created_at,task_detail.start_date as mlai, task_detail.end_date as slesai, task_detail.last_update');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
