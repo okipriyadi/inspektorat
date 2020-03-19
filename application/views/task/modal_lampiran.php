@@ -14,20 +14,20 @@
             <div class ="row">
                 <div class="col-md-6">
                 <label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
-                <input type="date" class="form-control" name="start_date" value="<?php echo date("Y-m-d",strtotime($task['start_date'])); ?>">
+                <input type="date" class="form-control" name="start_date" value="<?php echo date("Y-m-d",strtotime($task['mlai'])); ?>">
                 </div>
                 <div class="col-md-6">
                 <label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
-                <input type="date" class="form-control" name="end_date" value="<?php echo date("Y-m-d",strtotime($task['end_date'])); ?>">
+                <input type="date" class="form-control" name="end_date" value="<?php echo date("Y-m-d",strtotime($task['slesai'])); ?>">
                 </div>
             </div>
         </div>
     </div>
-    <?php 
+    <?php
     if($task_lampiran){?>
         <div class="row" style="padding:4px;">
             <div class="col-sm-3">
-            Lampiran : 
+            Lampiran :
             </div>
         </div>
         <div id="lampir" style="padding:4px;">
@@ -36,7 +36,7 @@
                     File
                 </div>
             </div>
-        <?php 
+        <?php
         foreach ($task_lampiran as $key => $value) {
             # code...
             ?>
@@ -66,7 +66,7 @@
                 ?>
                 <div class="row" style="margin-bottm:4px;">
                     <div class="col-sm-8">
-                    <a href="<?php echo $value['link'];?>">Lampiran <?php echo 1+$key;?></a>
+                    <a href="<?php echo $value['link'];?>">Lampiran <?php echo 1+$key;?> (<?php echo $value['link'];?>)</a>
                     </div>
                     <div class="col-sm-4">
                     <button class="btn btn-danger" type="button" onclick="hapusLampiranLink(<?php echo $value['id_task_lampiran_link'];?>,<?php echo $value['id_task_detail'];?>)">Hapus</button>
@@ -86,9 +86,9 @@
                 </div>
             </div>
             <div class="row" style="padding:4px;">
-                <div class="col-sm-4">Url</div>
+                <div class="col-sm-4">Keterangan :</div>
                 <div class="col-sm-8">
-                    <input type="text" name="link" id="" class="form-control">
+                    <textarea name="link"  rows="4" cols="30" placeholder="Keterangan Pengerjaan Tugas"></textarea>
                 </div>
             </div>
         </div>

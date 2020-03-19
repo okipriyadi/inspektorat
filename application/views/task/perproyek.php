@@ -128,14 +128,14 @@
 					    <!-- Modal content-->
 					    <div class="modal-content">
 					      <div class="modal-header" style="background:#007bff; ">
-									<h4 class="modal-title" style="color:white">Tambah Proyek</h4>
+									<h4 class="modal-title" style="color:white">Tambah Kategori</h4>
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 
 					      </div>
 								<form  action="<?=base_url()?>index.php/task/tambah_proyek" method="POST">
 							      <div class="modal-body biru-langit" style="">
 											  <div class="form-group ">
-											    <label ><b>Nama Proyek:</b></label> &nbsp;&nbsp;
+											    <label ><b>Nama Kategori:</b></label> &nbsp;&nbsp;
 											    <input type="text" class="form-control" name="nama_proyek">
 											  </div>
 												<div class="form-group">
@@ -164,7 +164,7 @@
 					<div class="col-md-9">
 						<div class="row">
 							<div class="col-md-5">
-								<button type="button" class="btn btn-primary btn-lg btn-tambah" data-toggle="modal" data-target="#myModal">Tambah Proyek</button>
+								<button type="button" class="btn btn-primary btn-lg btn-tambah" data-toggle="modal" data-target="#myModal">Tambah Kategori</button>
 								<!--<a href="<?=base_url()?>index.php/task/tambah_proyek" class="btn-primary btn-tambah"> &nbsp; Tambah Proyek &nbsp;</a>-->
 							</div>
 						</div>
@@ -207,7 +207,7 @@
 												<td><?= $proyek["nama"]?></td>
 												<td style="text-align:center">
 														Edit | Hapus <br>
-														<a href="<?= base_url('index.php/task/proyek/'.$proyek["id_project"])?>" class="btn btn-primary">Lihat Proyek</a>
+														<a href="<?= base_url('index.php/task/proyek/'.$proyek["id_project"])?>" class="btn btn-primary">Tambah/Edit Tugas Pada Kategori Ini</a>
 
 												</td>
 											</tr>

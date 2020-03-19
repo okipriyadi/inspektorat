@@ -2,22 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Task extends CI_Controller {
-
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
 		$users = $this->user_model->get_user_by_role("insp");
@@ -75,6 +59,17 @@ class Task extends CI_Controller {
 	}
 
 	public function semuaTugasTabel(){
+		$tasks = $this->task_model->getAllTaskOrderDate();
+		$data = array(
+			'content'=>'task/semua_tugas_tabel0.php',
+			'judul'=>"Semua Tugas",
+			'tasks' =>$tasks
+		);
+		$this->load->view('index_all', $data);
+
+	}
+	/*
+	public function semuaTugasTabel(){
 		$status = $this->task_model->getTaskState();
 		$task = $this->task_model->getAllTaskGroupByTask();
 		$history = $this->task_model->get_history(20);
@@ -110,12 +105,12 @@ class Task extends CI_Controller {
 			}
 		}
 		foreach ($task as $key => $value) {
-			# code...
 			$userT[$value['id_detail']]=[];
 		}
 		foreach ($userTask as $key => $value) {
-			# code...
-			array_push($userT[$value['id_task_detail']],$value);
+			if(isset( $userT[$value['id_task_detail']] )){
+				array_push($userT[$value['id_task_detail']],$value);
+			}
 		}
 		$data = array(
 			'content'=>'task/semua_tugas_tabel.php',
@@ -130,6 +125,7 @@ class Task extends CI_Controller {
 		);
 		$this->load->view('index_all', $data);
 	}
+	*/
 
 	public function perproyek()
 	{
@@ -157,7 +153,7 @@ class Task extends CI_Controller {
 
 			$data = array(
 			 	'content'=>'task/perproyek.php',
-			 	'judul'=>'Task Perproyek',
+			 	'judul'=>'Task Kategori',
 			 	'proyeks' => $proyeks,
 				'histories' => $history,
 				"hitungan_proyeks"=>$hitungan_proyeks
@@ -261,7 +257,8 @@ class Task extends CI_Controller {
 			if($value!="")
 			{$this->task_model->create_lampiran_link(array('link'=>$value,'id_task_detail'=>$this->input->post('id_task_detail')));}
 		}
-		return redirect(base_url()."index.php/task/perproyek");
+		$task_status = $this->task_model->getStatusByStatusId($task_detail["id_status"]);
+		return redirect(base_url()."index.php/task/proyek/".$task_status["id_project"]);
 	}
 
 	public function hapuslampiran(){

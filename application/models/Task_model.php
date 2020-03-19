@@ -21,6 +21,31 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+    public function getAllTaskOrderDate(){
+        $this->db->select('
+          id_detail,
+          id_state,
+          status_name,
+          id_task_detail,
+          task_project.id_project,
+          project_name,
+          task_detail.title,
+          task_detail.description,
+          id_petugas,
+          task_detail.id_status,
+          task_detail.start_date,
+          task_detail.end_date
+          ');
+        $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+        $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+        $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+        $this->db->order_by("task_detail.end_date", "desc");
+        $this->db->group_by('id_detail');
+        $query = $this->db->get_where('task_detail',array());
+		    return $query->result_array();
+    }
+
+
     public function getAllTaskGroupByTask(){
         $this->db->select('*');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
@@ -95,7 +120,7 @@ class Task_model extends CI_Model{
 
 
     public function getTaskByProject($id_project){
-      $this->db->select('*');
+      $this->db->select('task_status.*,task_project.*,user.*,task_detail.id_detail,task_detail.title,task_detail.description,task_detail.id_creator,task_detail.id_petugas,task_detail.id_status,task_detail.created_at,task_detail.start_date as mlai, task_detail.end_date as slesai, task_detail.last_update');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
@@ -112,7 +137,7 @@ class Task_model extends CI_Model{
     }
 
     public function getTaskByTaskId($id_task){
-      $this->db->select('*');
+      $this->db->select('task_status.*,task_project.*,user.*,task_detail.id_detail,task_detail.title,task_detail.description,task_detail.id_creator,task_detail.id_petugas,task_detail.id_status,task_detail.created_at,task_detail.start_date as mlai, task_detail.end_date as slesai, task_detail.last_update');
       $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
       $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
       $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
@@ -170,7 +195,7 @@ class Task_model extends CI_Model{
       if($query->num_rows() > 0){
         return $query->result_array();
       }
-      return false;
+      return array();
     }
 
     public function getLampiranLinkTask($id){

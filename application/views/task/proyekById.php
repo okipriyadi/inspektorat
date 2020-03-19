@@ -158,7 +158,7 @@
 																				<?php
 																			}
 																			?>
-																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["end_date"]));?> &nbsp;</span>
+																			<span style=" display: inline-block; margin-left:auto; margin-right:0px ; float:right; padding-top:3px"><i class="fa fa-fire fa-lg" style="font-size:18px;color:red"></i> <?= date('d:m:Y', strtotime($taskRow["slesai"]));?> &nbsp;</span>
 																 </li>
 															 <?php
 																}
@@ -224,7 +224,7 @@
 											 </div>
 											 <div class="form-group ">
 												 <label>Ditugaskan kepada</label>
-												 <select name="id_petugas[]" class="form-control" multiple>
+												 <select name="id_petugas[]" class="form-control" multiple style="height:140px;">
 													 <?php
 														 foreach ($users as $user) {
 													 ?>

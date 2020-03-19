@@ -7,7 +7,7 @@
     <input type="hidden" name="id_task_detail" value="<?php echo $id_task_detail;?>">
         <div class="row" style="padding:4px;">
             <div class="col-sm-3">
-            Dibuat Oleh : 
+            Dibuat Oleh :
             </div>
         </div>
         <div class="row" style="padding:4px;">
@@ -18,7 +18,7 @@
         <hr>
         <div class="row" style="padding:4px;">
             <div class="col-sm-3">
-            Petugas : 
+            Petugas :
             </div>
         </div>
         <div class="row" style="padding:4px;">
@@ -26,8 +26,6 @@
                 <?php
                 if($petugas){
                 foreach ($petugas as $key => $value) {
-                    # code...
-                    
                     ?>
                     <div class="row">
                         <div class="col-sm-8">
@@ -54,7 +52,6 @@
                 <?php
                 if($petugas){
                 foreach ($petugas as $pkey => $pvalue) {
-                    # code...
                     if($pvalue['user_id']==$value['user_id']){
                         $ketemu=true;
                         ?>
@@ -70,7 +67,7 @@
                 ?>
             </div>
         </div>
-        <?php 
+        <?php
         }
         ?>
         </div>
@@ -78,6 +75,5 @@
     <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
     <button type="submit" class="btn btn-default">Simpan</button>
 </div>
-</form>    								
+</form>
 </div>
-
