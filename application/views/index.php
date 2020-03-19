@@ -17,6 +17,7 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/core-style.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/style.css">
+    
 
     <!-- Responsive CSS -->
     <link href="<?php echo base_url() ?>assets/template/css/responsive.css" rel="stylesheet">
@@ -103,6 +104,7 @@
     <?php
       include "jquery_footer.php";
     ?>
+    
 </body>
 
 </html>

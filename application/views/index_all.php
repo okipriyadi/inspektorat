@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/core-style.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/jquery-ui.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/style.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/plugin/datatable/datatables.min.css">
 
 
     <!-- Responsive CSS -->

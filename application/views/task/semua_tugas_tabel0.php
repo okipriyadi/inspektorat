@@ -4,7 +4,7 @@
             <div class="offset-1 col-md-10" style="box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;">
                 <div class=" task-board">
                     <div class="table-responsive p-2">
-                        <table class="table table-hover table-bordered table-stripped">
+                        <table class="table table-hover table-bordered table-stripped" id="datatable">
                             <thead>
                                 <th>No</th>
                                 <th width="20%">Kegiatan</th>
@@ -96,4 +96,13 @@ foreach ($userT as $key => $value) {
     }
 }
 */
+function custom_footer(){
+    ?>
+    <script>
+        $("#datatable").DataTable({
+            "pageLength":20
+        });
+    </script>
+    <?php
+}
 ?>
