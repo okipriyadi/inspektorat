@@ -19,13 +19,19 @@
             <?php
             }
             ?>
-            <div id="login-form" style="display:none; position:relative; color:white; float:right;margin-left:auto; margin-right:0 ; margin-top:25px;">
+            <div id="login-form" style="<?php if(!isset($pesan)){ echo "display:none ;" ;} ?>; position:relative; color:white; float:right;margin-left:auto; margin-right:0 ; margin-top:25px;">
               <form action="<?= base_url()?>index.php/welcome/do_login" method="post">
                 <input type="text" placeholder="Username" id="username" name="username">
                 <input type="password" placeholder="Password" name="password">
                 <input type="submit" class="btn btn-primary" value="Login" name="login">
+                <?php
+                  if(isset($pesan)){
+                    echo "<p style='color:red;font-weight:bold'>".$pesan."</p>";
+                  }
+                ?>
               </form>
             </div>
+
         </div>
     </div>
 </div>

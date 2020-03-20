@@ -59,11 +59,30 @@ class Task extends CI_Controller {
 	}
 
 	public function semuaTugasTabel(){
-		$tasks = $this->task_model->getAllTaskOrderDate();
+		print_r($_POST);
+		if(!empty($_POST)){
+			print_r("isset");
+			$queryAll = "Select * from ";
+			$queryArrPic = array();
+			$queryTanggalAwal = "";
+			$queryTanggalAkhir = "";
+			$search = "";
+
+			(isset($_POST["pic"]))?$queryArrPic = $_POST["pic"]:'';
+			(isset($_POST["start_date"]))?$queryTanggalAwal = $_POST["start_date"]:"";
+			(isset($_POST["end_date"]))?$queryTanggalAkhir = $_POST["end_date"]:"";
+			(isset($_POST["search"]))?$search = $_POST["search"]:"";
+			$tasks = $this->task_model->getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search);
+		}else{
+				$tasks = $this->task_model->getAllTaskOrderDate();
+		}
+
+		$pics = $this->user_model->getAllUser();
 		$data = array(
 			'content'=>'task/semua_tugas_tabel0.php',
 			'judul'=>"Semua Tugas",
-			'tasks' =>$tasks
+			'tasks' =>$tasks,
+			'pics' => $pics
 		);
 		$this->load->view('index_all', $data);
 
