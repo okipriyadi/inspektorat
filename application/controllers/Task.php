@@ -215,17 +215,20 @@ class Task extends CI_Controller {
 		  if(!empty($_FILES['lampiran']['name'][$i])){
 
 			// Define new $_FILES array - $_FILES['file']
+			$nama = explode(" ",$this->session->userdata()['nama_iman']);
 			$_FILES['file']['name'] = $_FILES['lampiran']['name'][$i];
 			$_FILES['file']['type'] = $_FILES['lampiran']['type'][$i];
 			$_FILES['file']['tmp_name'] = $_FILES['lampiran']['tmp_name'][$i];
 			$_FILES['file']['error'] = $_FILES['lampiran']['error'][$i];
 			$_FILES['file']['size'] = $_FILES['lampiran']['size'][$i];
+			$file_ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
 			// Set preference
 			$config['upload_path'] = 'assets/task/id_detail_'.$task_detail['id_detail'];
 			$config['allowed_types'] = '*';
 			$config['max_size'] = '20000'; // max_size in kb
-			$config['encrypt_name'] = TRUE;
+			//$config['encrypt_name'] = TRUE;
+			$config['file_name'] = $nama[0]."_".md5(uniqid(mt_rand())).".".$file_ext;
 			if(is_dir($config['upload_path'])===false){
 				mkdir($config['upload_path'],0777, true);
 			}
@@ -235,6 +238,7 @@ class Task extends CI_Controller {
 			// File upload
 			if($this->upload->do_upload('file')){
 			  // Get data about the file
+			  
 			  $uploadData = $this->upload->data();
 			  $filename = $config['upload_path'].'/'.$uploadData['file_name'];
 

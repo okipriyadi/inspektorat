@@ -46,7 +46,7 @@
 		                                            <?php
 
 																									$lampirans = $this->task_model->getLampiranTask($value["id_task_detail"]);
-																									$nolampiran = 0;
+																									$nolampiran = 1;
 																									foreach ($lampirans as $ukey => $uvalue) {
 		                                        					echo "<a href='". base_url($uvalue['link']) ."'> Lampiran-". $nolampiran++ ."</a>";
 		                                            	}
