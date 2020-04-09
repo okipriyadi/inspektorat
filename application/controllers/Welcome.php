@@ -54,12 +54,12 @@ class Welcome extends CI_Controller {
 				redirect('welcome');
 			}else{
 				$component = array(
-					"pesan" => "Periksa Kembali Username dan Password"
+					"pesan" => "Periksa Kembali Username dan Password Anda"
 				);
-				$this->load->view('login', $component);
+				$this->load->view("index", $component);
 			}
 		}else{
-			$this->load->view('login');
+			$this->load->view("index");
 		}
 	}
 

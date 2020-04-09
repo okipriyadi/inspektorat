@@ -16,7 +16,7 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/core-style.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/style.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/plugin/datatable/datatables.min.css">
 
@@ -59,7 +59,7 @@
 	  .form-control {
         border : 1px solid #ced4da;
       }
-	  
+
 	  select.form-control:not([size]):not([multiple]) {
 		height: calc(3rem + 6px);
 	}

@@ -45,6 +45,35 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+    public function getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search){
+        $queryWhere = array();
+        $this->db->select('
+          id_detail,
+          id_state,
+          status_name,
+          id_task_detail,
+          task_project.id_project,
+          project_name,
+          task_detail.title,
+          task_detail.description,
+          id_petugas,
+          task_detail.id_status,
+          task_detail.start_date,
+          task_detail.end_date
+          ');
+        $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+        $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+        $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+        $this->db->group_by('id_detail');
+        (!empty($queryArrPic))?$this->db->where_in('user_task_detail.id_user',$queryArrPic):"";
+        (!empty($queryTanggalAwal))?$this->db->where('task_detail.start_date >=', $queryTanggalAwal):"";
+        (!empty($queryTanggalAkhir))?$this->db->where('task_detail.end_date <=', $queryTanggalAkhir):"";
+        (!empty($search))?$this->db->like('task_detail.title', $search):"";
+        $this->db->order_by("task_detail.end_date", "desc");
+        $query = $this->db->get('task_detail');
+        return $query->result_array();
+    }
+
 
     public function getAllTaskGroupByTask(){
         $this->db->select('*');

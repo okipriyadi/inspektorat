@@ -1,10 +1,91 @@
-<div class="row body-low-bg pb-4">
+
+
 	<div class="col-md-12 content-dalam">
 		<div class="row">
             <div class="offset-1 col-md-10" style="box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;">
-                <div class=" task-board">
+								<div class=" task-board">
                     <div class="table-responsive p-2">
-                        <table class="table table-hover table-bordered table-stripped" id="datatable">
+												<br/>
+												<div class="form-group">
+													<form action="?" method="post">
+
+															<div class ="row" style="background:#9bdaeb; border:solid 2px;">
+
+																<div class="col-md-2">
+																	<div class="form-group">
+
+																			     <div class="button-group">
+																							 Nama PIC
+																							   <!-- Basic dropdown -->
+																							   <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+																							           aria-haspopup="true" aria-expanded="false" ><span class="fa fa-users fa-2x "></span></button>
+
+																							   <div class="dropdown-menu" style=" height: auto; max-height: 200px; overflow-x: hidden;">
+																									 <?php
+																									 foreach($pics as $key => $value){
+																											 ?>
+																											 <a class="dropdown-item">
+																									       <!-- Default unchecked -->
+																									       <div class="custom-control custom-checkbox" data-value="<?=$value["user_id"]?>" >
+																									         <input type="checkbox" class="custom-control-input" value="<?=$value["user_id"]?>" name="pic[]">
+																													 <img src="<?php echo base_url("assets/template/img/crew/".$value['foto'])?>" title="<?= $value['nama']?>" class="img-fluid rounded" width="10%">
+																													 <label class="custom-control-label" for="checkbox1"><?=$value["nama"]?></label>
+																									       </div>
+																									     </a>
+																											 <?php
+																									 }
+																									 ?>
+																							   </div>
+																						</div>
+																  </div>
+																</div>
+
+																<div class="col-md-6">
+																	<div class="row">
+																		<div class="col-md-5">
+																			<div class="row">
+																					<label >Tanggal Mulai:</label>
+																					<input type="date" class="form-control" name="start_date">
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																		</div>
+																		<div class="col-md-5">
+																			<div class="row">
+																					<label >Tanggal Akhir:</label>
+																					<input type="date" class="form-control" name="end_date">
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<label >&nbsp</label><br/>
+
+																		</div>
+
+																	</div>
+																</div>
+
+
+
+
+																<div class="col-md-4" >
+																	<label >Search</label><br/>
+																	<div class="row">
+																		<div class="col-md-7">
+																			<input type="text" class="form-control" name="search"> </input>
+																		</div>
+																		<div class="col-md-4">
+																			<button class="btn btn-success"><span class="fa fa-filter"> </span> Filter</button>
+																		</div>
+
+																		<div class="col-md-1">
+																		</div>
+																	</div>
+																	</div>
+																</div>
+															</div>
+												</form>
+												</div>
+                                                <table class="table table-hover table-bordered table-stripped" id="datatable">
                             <thead>
                                 <th>No</th>
                                 <th width="20%">Kegiatan</th>
@@ -68,7 +149,44 @@
     </div>
 </div>
 
+
 <?php
+
+function custom_footer(){
+?>
+<script>
+var options = [];
+
+$( '.dropdown-menu div' ).on( 'click', function( event ) {
+
+   var $target = $( event.currentTarget ),
+       val = $target.attr( 'data-value' ),
+       $inp = $target.find( 'input' ),
+       idx;
+
+   if ( ( idx = options.indexOf( val ) ) > -1 ) {
+      options.splice( idx, 1 );
+      setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+   } else {
+      options.push( val );
+      setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+   }
+
+   $( event.target ).blur();
+
+   console.log( options );
+   return false;
+});
+</script>
+<script>
+        $("#datatable").DataTable({
+            "pageLength":20
+        });
+    </script>
+
+
+<?php
+}
 /*
 foreach ($userT as $key => $value) {
     # code...
@@ -96,13 +214,4 @@ foreach ($userT as $key => $value) {
     }
 }
 */
-function custom_footer(){
-    ?>
-    <script>
-        $("#datatable").DataTable({
-            "pageLength":20
-        });
-    </script>
-    <?php
-}
 ?>
