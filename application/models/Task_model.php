@@ -41,7 +41,10 @@ class Task_model extends CI_Model{
         $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
         $this->db->order_by("task_detail.end_date", "desc");
         $this->db->group_by('id_detail');
-        $query = $this->db->get_where('task_detail',array());
+        if($this->session->userdata('role_iman') == 'insp' ){
+          $this->db->where('task_detail.id_creator',$this->session->userdata('user_id_iman'))->or_where("user_task_detail.id_user",$this->session->userdata('user_id_iman'));
+        }
+        $query = $this->db->get('task_detail');
 		    return $query->result_array();
     }
 
@@ -69,7 +72,9 @@ class Task_model extends CI_Model{
         (!empty($queryTanggalAwal))?$this->db->where('task_detail.start_date >=', $queryTanggalAwal):"";
         (!empty($queryTanggalAkhir))?$this->db->where('task_detail.end_date <=', $queryTanggalAkhir):"";
         (!empty($search))?$this->db->like('task_detail.title', $search):"";
+        
         $this->db->order_by("task_detail.end_date", "desc");
+
         $query = $this->db->get('task_detail');
         return $query->result_array();
     }
