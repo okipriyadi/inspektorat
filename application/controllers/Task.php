@@ -59,7 +59,7 @@ class Task extends CI_Controller {
 	}
 
 	public function semuaTugasTabel(){
-		print_r($_POST);
+		// print_r($_POST);
 		if(!empty($_POST)){
 			print_r("isset");
 			$queryAll = "Select * from ";
@@ -440,6 +440,8 @@ class Task extends CI_Controller {
 		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
 		//print_r($petugas["nama"]);
 		//die();
+		// print_r($this->input->post());
+		
 
 		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
@@ -456,9 +458,11 @@ class Task extends CI_Controller {
 		foreach ($this->input->post('id_petugas') as $key => $value) {
 			# code...
 			$this->task_model->create_petugas(array('id_task_detail'=>$result,'id_user'=>$value));
+			// print_r($value);
 			$nama .= $this->user_model->get_user_by_id($value)['nama'].", ";
 		}
-
+		// print_r($nama);
+		// exit;
 		if($result){
 			$data_history = array(
 				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $nama  ,
