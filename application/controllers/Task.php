@@ -2,149 +2,99 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Task extends CI_Controller {
+
+
+
+
 	public function index()
 	{
-		$users = $this->user_model->get_user_by_role("insp");
-		$tasks = $this->task_model->getAllTask();
-		$hitungan_proyeks = array();
-		foreach ($users as $user ) {
-			$hitungan_proyeks[$user["nama"]] = array(
-				"todo"=> $this->task_model->count_status_by_user(1, $user["user_id"]),
-				"progress"=>$this->task_model->count_status_by_user(2, $user["user_id"]),
-				"done"=>$this->task_model->count_status_by_user(3, $user["user_id"])
-			);
-		};
-		$data = array(
-			'content'=>'task/perorang.php',
-			'judul'=>'Task Perorang',
-			'hitungan_proyeks'=>$hitungan_proyeks,
-			'tasks' => $tasks,
-			'users'=>$users,
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+				$users = $this->user_model->get_user_by_role("insp");
+				$tasks = $this->task_model->getAllTask();
+				$hitungan_proyeks = array();
+				foreach ($users as $user ) {
+					$hitungan_proyeks[$user["nama"]] = array(
+						"todo"=> $this->task_model->count_status_by_user(1, $user["user_id"]),
+						"progress"=>$this->task_model->count_status_by_user(2, $user["user_id"]),
+						"done"=>$this->task_model->count_status_by_user(3, $user["user_id"])
+					);
+				};
+				$data = array(
+					'content'=>'task/perorang.php',
+					'judul'=>'Task Perorang',
+					'hitungan_proyeks'=>$hitungan_proyeks,
+					'tasks' => $tasks,
+					'users'=>$users,
 
-		);
-		$this->load->view('index_all', $data);
+				);
+				$this->load->view('index_all', $data);
+		}
 	}
 
 	public function semuaTugas()
 	{
-		// $statusResult = $this->task_model->getAllStatus();
-		// $tasks = $this->task_model->getAllTask();
-		// $data = array(
-		// 	'content'=>'task/semua_tugas.php',
-		// 	'judul'=>'Task Pertugas',
-		// 	'statusResult'=>$statusResult,
-		// 	'tasks' => $tasks
-		// );
-		// $this->load->view('index_all', $data);
-		//$status = $this->task_model->getSatatusByProjectId(20);
-		$status = $this->task_model->getTaskState();
-		$task = $this->task_model->getAllTaskGroupByTask();
-		$history = $this->task_model->get_history(20);
-		$users = $this->user_model->getAllUser();
-		// echo "<pre>";
-		// print_r($task);
-		// echo "</pre>";
-		// die();
-		$data = array(
-			'content'=>'task/semua_tugas.php',
-			'id_proyek'=>12,
-			'judul'=>"Semua Tugas",
-			'status'=> $status,
-			'task' => $task,
-			'histories' => $history,
-			'users' => $users
-		);
-		$this->load->view('index_all', $data);
-
-	}
-
-	public function semuaTugasTabel(){
-		// print_r($_POST);
-		if(!empty($_POST)){
-			print_r("isset");
-			$queryAll = "Select * from ";
-			$queryArrPic = array();
-			$queryTanggalAwal = "";
-			$queryTanggalAkhir = "";
-			$search = "";
-
-			(isset($_POST["pic"]))?$queryArrPic = $_POST["pic"]:'';
-			(isset($_POST["start_date"]))?$queryTanggalAwal = $_POST["start_date"]:"";
-			(isset($_POST["end_date"]))?$queryTanggalAkhir = $_POST["end_date"]:"";
-			(isset($_POST["search"]))?$search = $_POST["search"]:"";
-			$tasks = $this->task_model->getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search);
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
 		}else{
-				$tasks = $this->task_model->getAllTaskOrderDate();
-		}
-
-		$pics = $this->user_model->getAllUser();
-		$data = array(
-			'content'=>'task/semua_tugas_tabel0.php',
-			'judul'=>"Semua Tugas",
-			'tasks' =>$tasks,
-			'pics' => $pics
-		);
-		$this->load->view('index_all', $data);
-
+				$status = $this->task_model->getTaskState();
+				$task = $this->task_model->getAllTaskGroupByTask();
+				$history = $this->task_model->get_history(20);
+				$users = $this->user_model->getAllUser();
+				$data = array(
+					'content'=>'task/semua_tugas.php',
+					'id_proyek'=>12,
+					'judul'=>"Semua Tugas",
+					'status'=> $status,
+					'task' => $task,
+					'histories' => $history,
+					'users' => $users
+				);
+				$this->load->view('index_all', $data);
+			}
 	}
-	/*
+
 	public function semuaTugasTabel(){
-		$status = $this->task_model->getTaskState();
-		$task = $this->task_model->getAllTaskGroupByTask();
-		$history = $this->task_model->get_history(20);
-		$users = $this->user_model->getAllUser();
-		$userTask = $this->user_model->getUserTask();
-		$projectspos = $this->task_model->getAllProjectOrderEndDate('pos');
-		$projectsneg = $this->task_model->getAllProjectOrderEndDate('neg');
-		$tasks = [];
-		foreach ($projectsneg as $key => $value) {
-			# code...
-			$tasks[$value['id_project']] = $this->task_model->getTaskByProject($value['id_project']);
-			foreach ($tasks[$value['id_project']] as $tkey => $tvalue) {
-				# code...
-				$lampiran = $this->task_model->getLampiranTask($tvalue['id_detail']);
-				if($lampiran){
-					$tasks[$value['id_project']][$tkey]['link'] = $lampiran;
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+				if(!empty($_POST)){
+					$queryAll = "Select * from ";
+					$queryArrPic = array();
+					$queryTanggalAwal = "";
+					$queryTanggalAkhir = "";
+					$search = "";
+					(isset($_POST["pic"]))?$queryArrPic = $_POST["pic"]:'';
+					(isset($_POST["start_date"]))?$queryTanggalAwal = $_POST["start_date"]:"";
+					(isset($_POST["end_date"]))?$queryTanggalAkhir = $_POST["end_date"]:"";
+					(isset($_POST["search"]))?$search = $_POST["search"]:"";
+					$tasks = $this->task_model->getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search);
 				}else{
-					$tasks[$value['id_project']][$tkey]['link'] = [];
+						$tasks = $this->task_model->getAllTaskOrderDate();
 				}
-			}
+				$pics = $this->user_model->getAllUser();
+				$data = array(
+					'content'=>'task/semua_tugas_tabel0.php',
+					'judul'=>"Semua Tugas",
+					'tasks' =>$tasks,
+					'pics' => $pics
+				);
+				$this->load->view('index_all', $data);
 		}
-		foreach ($projectspos as $key => $value) {
-			# code...
-			$tasks[$value['id_project']] = $this->task_model->getTaskByProject($value['id_project']);
-			foreach ($tasks[$value['id_project']] as $tkey => $tvalue) {
-				# code...
-				$lampiran = $this->task_model->getLampiranTask($tvalue['id_detail']);
-				if($lampiran){
-					$tasks[$value['id_project']][$tkey]['link'] = $lampiran;
-				}else{
-					$tasks[$value['id_project']][$tkey]['link'] = [];
-				}
-			}
-		}
-		foreach ($task as $key => $value) {
-			$userT[$value['id_detail']]=[];
-		}
-		foreach ($userTask as $key => $value) {
-			if(isset( $userT[$value['id_task_detail']] )){
-				array_push($userT[$value['id_task_detail']],$value);
-			}
-		}
-		$data = array(
-			'content'=>'task/semua_tugas_tabel.php',
-			'id_proyek'=>12,
-			'judul'=>"Semua Tugas",
-			'status'=> $status,
-			'task' => $task,
-			'tasks' => $tasks,
-			'histories' => $history,
-			'users' => $users,
-			'userT'=>$userT
-		);
-		$this->load->view('index_all', $data);
 	}
-	*/
 
 	public function perproyek()
 	{
@@ -213,12 +163,20 @@ class Task extends CI_Controller {
 	}
 
 	public function editlampiran($id){
-		$task_detail = $this->task_model->getTaskByTaskId($id);
-		$data = array(
-			'content'=>'task/tambah_lampiran.php',
-			'judul'=> "Tambah Lampiran"
-		);
-		$this->load->view('index_all', $data);
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+				$task_detail = $this->task_model->getTaskByTaskId($id);
+				$data = array(
+					'content'=>'task/tambah_lampiran.php',
+					'judul'=> "Tambah Lampiran"
+				);
+				$this->load->view('index_all', $data);
+		}
 	}
 
 	public function add_lampiran(){
@@ -366,70 +324,94 @@ class Task extends CI_Controller {
 
 	public function tambah_proyek()
 	{
-		$id_user = $this->session->userdata()['user_id_iman'];
-		$nama_user = $this->session->userdata()['nama_iman'];
-		$nama_proyek= $_POST["nama_proyek"];
-		$data = array(
-			"project_name" => $nama_proyek,
-			"id_creator" => $id_user,
-			"start_date" => $_POST["start_date"],
-			"end_date" => $_POST["end_date"],
-		);
-		$result = $this->task_model->create_proyek($data);
-		$this->task_model->create_status(array(
-			"status_name" => "To Do" ,
-			"id_project" => $result,
-			"id_state" => 1
-		));
-		$this->task_model->create_status(array(
-			"status_name" => "In Progress" ,
-			"id_project" => $result,
-			"id_state" => 2
-		));
-		$this->task_model->create_status(array(
-			"status_name" => "Done" ,
-			"id_project" => $result,
-			"id_state" => 3
-		));
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+				$id_user = $this->session->userdata()['user_id_iman'];
+				$nama_user = $this->session->userdata()['nama_iman'];
+				$nama_proyek= $_POST["nama_proyek"];
+				$data = array(
+					"project_name" => $nama_proyek,
+					"id_creator" => $id_user,
+					"start_date" => $_POST["start_date"],
+					"end_date" => $_POST["end_date"],
+				);
+				$result = $this->task_model->create_proyek($data);
+				$this->task_model->create_status(array(
+					"status_name" => "To Do" ,
+					"id_project" => $result,
+					"id_state" => 1
+				));
+				$this->task_model->create_status(array(
+					"status_name" => "In Progress" ,
+					"id_project" => $result,
+					"id_state" => 2
+				));
+				$this->task_model->create_status(array(
+					"status_name" => "Done" ,
+					"id_project" => $result,
+					"id_state" => 3
+				));
 
 
-		if($result){
-			$data_history = array(
-				"history_name" => $nama_user." membuat proyek '".$_POST["nama_proyek"] ."'" ,
-				"id_creator" => $id_user,
-				"id_project" => $result,
-			);
-			$this->task_model->create_history($data_history);
+				if($result){
+					$data_history = array(
+						"history_name" => $nama_user." membuat proyek '".$_POST["nama_proyek"] ."'" ,
+						"id_creator" => $id_user,
+						"id_project" => $result,
+					);
+					$this->task_model->create_history($data_history);
+				}
+
+				redirect(base_url("index.php/task/perproyek"));
 		}
-
-		redirect(base_url("index.php/task/perproyek"));
 	}
 
 	public function tambah_status($id_proyek)
 	{
-		$id_user = $this->session->userdata()['user_id_iman'];
-		$nama_user = $this->session->userdata()['nama_iman'];
-		$result = $this->task_model->create_status(array(
-			"status_name" => $_POST["nama_status"] ,
-			"id_project" => $id_proyek,
-			"id_state" => $_POST["id_state"]
-		));
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+				$id_user = $this->session->userdata()['user_id_iman'];
+				$nama_user = $this->session->userdata()['nama_iman'];
+				$result = $this->task_model->create_status(array(
+					"status_name" => $_POST["nama_status"] ,
+					"id_project" => $id_proyek,
+					"id_state" => $_POST["id_state"]
+				));
 
-		if($result){
-			$data_history = array(
-				"history_name" => $nama_user." menambah status ".$_POST["nama_status"] ,
-				"id_creator" => $id_user,
-				"id_project" => $id_proyek,
-			);
-			$this->task_model->create_history($data_history);
-		}
+				if($result){
+					$data_history = array(
+						"history_name" => $nama_user." menambah status ".$_POST["nama_status"] ,
+						"id_creator" => $id_user,
+						"id_project" => $id_proyek,
+					);
+					$this->task_model->create_history($data_history);
+				}
 
-		redirect(base_url("index.php/task/proyek/".$id_proyek));
+				redirect(base_url("index.php/task/proyek/".$id_proyek));
+			}
 	}
 
 	public function hapus_task(){
-		$this->task_model->remove_task($this->input->post('id_task_detail'));
-		redirect(base_url("index.php/task/perproyek"));
+		if($this->session->userdata('login_iman') != true){
+				$data = array(
+					'content'=>'login_dulu.php',
+					'judul'=>'Harap Login Terlebih Dahulu',
+				);
+				$this->load->view('index_all', $data);
+		}else{
+			$this->task_model->remove_task($this->input->post('id_task_detail'));
+			redirect(base_url("index.php/task/perproyek"));
+		}
 	}
 
 	public function tambah_tugas($id_proyek)
@@ -451,7 +433,9 @@ class Task extends CI_Controller {
 			"id_status" => $_POST["id_status"],
 			"start_date" => $_POST["start_date"],
 			"end_date" => $_POST["end_date"],
+
 		));
+
 		// var_dump($result);
 		// exit;
 		$nama ='';
