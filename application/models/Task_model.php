@@ -10,6 +10,8 @@ class Task_model extends CI_Model{
 		    return $query->result_array();
     }
 
+
+
     public function getAllTask(){
         $this->db->select('*');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
@@ -26,6 +28,8 @@ class Task_model extends CI_Model{
           id_detail,
           id_state,
           status_name,
+          nama_sasaran_kegiatan,
+          nama_indikator_kinerja,
           id_task_detail,
           task_project.id_project,
           project_name,
@@ -39,6 +43,8 @@ class Task_model extends CI_Model{
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
         $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
         $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+        $this->db->join('task_indikator_kinerja', 'task_indikator_kinerja.id_indikator_kinerja = task_detail.id_indikator_kinerja','left');
+        $this->db->join('task_sasaran_kegiatan', 'task_indikator_kinerja.id_sasaran_kegiatan = task_sasaran_kegiatan.id_sasaran_kegiatan','left');
         $this->db->order_by("task_detail.end_date", "desc");
         $this->db->group_by('id_detail');
         if($this->session->userdata('role_iman') == 'insp' ){
@@ -72,7 +78,7 @@ class Task_model extends CI_Model{
         (!empty($queryTanggalAwal))?$this->db->where('task_detail.start_date >=', $queryTanggalAwal):"";
         (!empty($queryTanggalAkhir))?$this->db->where('task_detail.end_date <=', $queryTanggalAkhir):"";
         (!empty($search))?$this->db->like('task_detail.title', $search):"";
-        
+
         $this->db->order_by("task_detail.end_date", "desc");
 
         $query = $this->db->get('task_detail');
@@ -298,6 +304,8 @@ class Task_model extends CI_Model{
         return $insert_id;
     }
 
+
+
     public function create_history($data_history){
         $this->db->insert("task_history",$data_history);
         $insert_id = $this->db->insert_id();
@@ -316,6 +324,24 @@ class Task_model extends CI_Model{
         return $insert_id;
       }
       return NULL;
+    }
+
+    public function create_komentar($data){
+      $ins = $this->db->insert("task_comment",$data);
+      if($ins){
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+      }
+      return NULL;
+    }
+
+    public function get_comment($id_task){
+      $this->db->select('*');
+      $this->db->join('user', 'user.user_id = task_comment.id_user');
+      $this->db->order_by("task_comment.created_at", "desc");
+      $query = $this->db->get_where('task_comment',array('id_task_detail'=>$id_task));
+
+      return $query->result_array();
     }
 
     public function create_lampiran_link($data){
@@ -361,6 +387,18 @@ class Task_model extends CI_Model{
         return true;
       }
       return NULL;
+    }
+
+    public function getAllSasaranKegiatan(){
+        $this->db->select('*');
+        $query = $this->db->get_where('task_sasaran_kegiatan',array());
+		    return $query->result_array();
+    }
+
+    public function getAllIndikatorKinerja(){
+        $this->db->select('*');
+        $query = $this->db->get_where('task_indikator_kinerja',array());
+		    return $query->result_array();
     }
 }
 ?>

@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/jquery-ui.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/style.css">
 
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/fa/css/fontawesome.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/fa/css/brands.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/template/css/fa/css/solid.css">
 
     <!-- Responsive CSS -->
     <link href="<?php echo base_url() ?>assets/template/css/responsive.css" rel="stylesheet">
