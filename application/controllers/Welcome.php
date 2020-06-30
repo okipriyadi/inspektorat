@@ -20,12 +20,34 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('index');
+		$this->load->model('bahan_model');
+		$bahan = $this->bahan_model->get(array('kategori'=>1));
+		$this->load->view('index',array('bahan'=>$bahan));
 	}
 
 	public function sop_isma()
 	{
 		$data = array('content'=>'dokumen/sop_isma.php', 'judul'=>'SOP ISMA' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function sop_inspektorat(){
+		$data = array('content'=>'dokumen/sop.php', 'judul'=>'SOP Inspektorat' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function proses_bisnis(){
+		$data = array('content'=>'dokumen/probis.php', 'judul'=>'Proses Bisnis Inspektorat' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function informasi_kecuali(){
+		$data = array('content'=>'dokumen/informasi_kecuali.php', 'judul'=>'Informasi yang dikecualikan' );
+		$this->load->view('index_all', $data);
+	}
+
+	public function maklumat_pelayanan(){
+		$data = array('content'=>'dokumen/makluman_pelayanan.php', 'judul'=>'Maklumat Pelayanan' );
 		$this->load->view('index_all', $data);
 	}
 
@@ -63,7 +85,25 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	function logout(){
+	public function tutorial_bahan($aksi = null){
+		$this->load->model('bahan_model');
+		if($aksi == null || $aksi == 'tutorial'){
+			$bahan = $this->bahan_model->get(array('kategori'=>0));
+		}else{
+			$bahan = $this->bahan_model->get(array('kategori'=>1));
+		}
+		$this->load->view('index_all.php',array('content'=> 'dokumen/bahan.php', 'bahan'=>$bahan, 'judul'=>$aksi == null || $aksi == 'tutorial' ? 'Tutorial' : 'Bahan Paparan'));
+	}
+
+	public function rekap_survei(){
+		$this->load->view('index_all.php',array('content'=> 'dokumen/hasil_survei_kepuasan.php', 'judul'=>'Rekap Survei Kepuasan Inspektorat'));
+	}
+
+	public function profil_organisasi(){
+		$this->load->view('index_all.php', array('content'=>'profil.php','judul'=>'Profil Organisasi'));
+	}
+
+	public function logout(){
 		$this->session->unset_userdata('login_iman');
 		$this->session->unset_userdata('user_id_iman');
 		$this->session->unset_userdata('role_iman');
