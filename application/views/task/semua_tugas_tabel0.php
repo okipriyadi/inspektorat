@@ -153,42 +153,116 @@
 
 <?php
 
-function custom_footer()
-{
+function custom_footer(){
+	 $ci =& get_instance();
 ?>
-	<script>
-		var options = [];
+<script>
+var options = [];
+$( '.tambah-komentar-button' ).on( 'click', function( event ) {
+	$('.tambah-komentar').show();
+	$('.tambah-komentar-button').hide();
+});
 
-		$('.dropdown-menu div').on('click', function(event) {
+$("#id_sasaran_kegiatan").change(function(){
+  var id_sasaran_kegiatan = $("#id_sasaran_kegiatan").val();
+	var id_sasaran_kegiatanNo = ".indikatorKinerjaNo"+id_sasaran_kegiatan ;
+	$(".indikatorKinerja").hide();
+	$(id_sasaran_kegiatanNo).show();
+});
 
-			var $target = $(event.currentTarget),
-				val = $target.attr('data-value'),
-				$inp = $target.find('input'),
-				idx;
-
-			if ((idx = options.indexOf(val)) > -1) {
-				options.splice(idx, 1);
-				setTimeout(function() {
-					$inp.prop('checked', false)
-				}, 0);
-			} else {
-				options.push(val);
-				setTimeout(function() {
-					$inp.prop('checked', true)
-				}, 0);
-			}
-
-			$(event.target).blur();
-
-			console.log(options);
-			return false;
+$("#id_kategori").change(function(){
+		var id_kategori =   $('#id_kategori').val() ;
+		$.ajax({url: "<?php echo base_url('index.php/task/get_category') ?>",
+			type: "POST",
+			data: {
+				id_project : id_kategori
+			},
+			success: function(result){
+			 		var data2 =  JSON.parse(result);
+			    $('#id_status').empty();
+          for (var i = 0; i < data2.length; i++) {
+							$('#id_status').append($('<option>', {
+									 value: data2[i].id_status ,
+									 text : data2[i].status_name
+							 }));
+          }
+  		},
+			fail: function(xhr, textStatus, errorThrown){
+				alert('gagal koneksi ke server');
+	 		}
 		});
-	</script>
-	<script>
-		$("#datatable").DataTable({
-			"pageLength": 20
+});
+
+$(".lihatSemuaKomentar").click(function(){
+	var id_task_detail =   $(this).attr("placeholder") ;
+	var targetClass = '.komentarTaskId' + id_task_detail ;
+	$(targetClass).show();
+	$(this).hide();
+});
+
+$(".kirim-komentar").click(function(){
+	var id_task_detail =   $(this).attr("placeholder") ;
+	var idTarget = '#textareaKomentar' + id_task_detail;
+	var komentar = $(idTarget).val();
+  $.ajax({url: "<?php echo base_url('index.php/task/tambahKomentar') ?>",
+			type: "POST",
+			beforeSend: function() {
+				$('.loading-tambah-komentar').show();
+		    $('#loadingResponse').text(komentar);
+		  },
+			data: {
+				komentar: komentar,
+				id_user : <?php echo $ci->session->userdata('user_id_iman') ?> ,
+				id_task_detail : id_task_detail
+			},
+			success: function(result){
+				var kolomKomentarId = '.kolom-komentar' + id_task_detail;
+				$('.loading-tambah-komentar').hide();
+				$('.tambah-komentar').hide();
+				$('.tambah-komentar-button').show();
+				$(kolomKomentarId).prepend( `
+						<div class='row'>
+								<div class='col-md-1'>
+									<img src='`+ "<?= base_url("assets/template/img/crew/".$ci->session->userdata('foto_iman')) ?>" +`' class='img-fluid rounded-circle'>
+								</div>
+								<div class='col-md-8'>
+										<p class='media-comment' style='color:black; position: relative; background: #dad1d1; font-size: 12px; border-radius: 7px; padding: 10px'>
+											`+ $.datepicker.formatDate('dd/mm/yy', new Date()) +`<br/>
+											`+ komentar +`
+										</p>
+								</div>
+								<div class='col-md-1'>
+								</div>
+						</div>
+						`);
+  		},
+			fail: function(xhr, textStatus, errorThrown){
+				alert('kirim komentar gagal');
+	 		}
 		});
-	</script>
+});
+
+$( '.dropdown-menu div' ).on( 'click', function( event ) {
+
+   var $target = $( event.currentTarget ),
+       val = $target.attr( 'data-value' ),
+       $inp = $target.find( 'input' ),
+       idx;
+
+   if ( ( idx = options.indexOf( val ) ) > -1 ) {
+      options.splice( idx, 1 );
+      setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+   } else {
+      options.push( val );
+      setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+   }
+
+   $( event.target ).blur();
+
+   console.log( options );
+   return false;
+});
+</script>
 
 
 <?php

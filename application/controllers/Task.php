@@ -86,10 +86,16 @@ class Task extends CI_Controller {
 						$tasks = $this->task_model->getAllTaskOrderDate();
 				}
 				$pics = $this->user_model->getAllUser();
+				$sasaranKegiatans = $this->task_model->getAllSasaranKegiatan();
+				$indikatorKinerjas = $this->task_model->getAllIndikatorKinerja();
 				$data = array(
 					'content'=>'task/semua_tugas_tabel0.php',
 					'judul'=>"Semua Tugas",
+					'sasaranKegiatans' => $sasaranKegiatans,
+					'indikatorKinerjas' => $indikatorKinerjas,
 					'tasks' =>$tasks,
+					'categories' => $this->task_model->getAllProject(),
+					'users' => $this->user_model->getAllUser(),
 					'pics' => $pics
 				);
 				$this->load->view('index_all', $data);
@@ -414,6 +420,90 @@ class Task extends CI_Controller {
 		}
 	}
 
+	public function tambah_task()
+	{
+
+		$id_user = $this->session->userdata()['user_id_iman'];
+		$nama_user = $this->session->userdata()['nama_iman'];
+		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
+		//print_r($petugas["nama"]);
+		//die();
+
+		$result = $this->task_model->create_tugas(array(
+			"title" => $_POST["title"] ,
+			"description" => $_POST["description"],
+			"id_creator" => $id_user,
+			"id_petugas" => '',
+			"id_status" => $_POST["id_status"],
+			"start_date" => $_POST["start_date"],
+			"end_date" => $_POST["end_date"],
+
+		));
+
+		// var_dump($result);
+		// exit;
+		$nama ='';
+		foreach ($this->input->post('id_petugas') as $key => $value) {
+			# code...
+			$this->task_model->create_petugas(array('id_task_detail'=>$result,'id_user'=>$value));
+			$nama .= $this->user_model->get_user_by_id($value)['nama'].", ";
+		}
+
+		if($result){
+			$data_history = array(
+				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $nama  ,
+				"id_creator" => $id_user,
+				"id_project" => $id_proyek,
+				"id_task" => $_POST["id_status"]
+			);
+			$this->task_model->create_history($data_history);
+		}
+
+		redirect(base_url("index.php/task/proyek/".$id_proyek));
+	}
+
+	public function tambah_task_baru()
+	{
+
+		$id_user = $this->session->userdata()['user_id_iman'];
+		$nama_user = $this->session->userdata()['nama_iman'];
+		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
+		//print_r($petugas["nama"]);
+		//die();
+
+		$result = $this->task_model->create_tugas(array(
+			"title" => $_POST["title"] ,
+			"description" => $_POST["description"],
+			"id_creator" => $id_user,
+			"id_petugas" => '',
+			"id_status" => $_POST["id_status"],
+			"start_date" => $_POST["start_date"],
+			"end_date" => $_POST["end_date"],
+			"id_indikator_kinerja" => $_POST["id_indikator_kinerja"]
+		));
+
+		// var_dump($result);
+		// exit;
+		$nama ='';
+		foreach ($this->input->post('id_petugas') as $key => $value) {
+			# code...
+			$this->task_model->create_petugas(array('id_task_detail'=>$result,'id_user'=>$value));
+			$nama .= $this->user_model->get_user_by_id($value)['nama'].", ";
+		}
+
+		if($result){
+			$data_history = array(
+				"history_name" => $nama_user." membuat pekerjaan '".$_POST["title"] ."' yang ditugaskan kepada ". $nama  ,
+				"id_creator" => $id_user,
+				"id_project" => $_POST["id_kategori"],
+				"id_task" => $_POST["id_status"]
+			);
+			$this->task_model->create_history($data_history);
+		}
+
+		redirect(base_url("index.php/task/semuaTugasTabel"));
+	}
+
 	public function tambah_tugas($id_proyek)
 	{
 
@@ -459,5 +549,18 @@ class Task extends CI_Controller {
 
 		redirect(base_url("index.php/task/proyek/".$id_proyek));
 	}
+
+	public function tambahKomentar(){
+    // POST data
+    $postData = $this->input->post();
+		$this->task_model->create_komentar($postData);
+		echo json_encode($postData);
+  }
+
+	public function get_category(){
+    $postData = $this->input->post();
+		$data = $this->task_model->getSatatusByProjectId($_POST["id_project"]);
+		echo json_encode($data);
+  }
 
 }
