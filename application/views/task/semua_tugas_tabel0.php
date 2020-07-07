@@ -87,6 +87,7 @@
 													<div class="col-md-12 text-center" >
 														<button class="btn btn-primary fa-sm" style="" data-toggle="modal" data-target="#modal_tambah_tugas"><i class="fa fa-plus-circle"> Tambah Tugas</i></button>
 														<!-- <button class="btn btn-warning fa-sm" style="" data-toggle="modal" data-target="#modal_tambah_kategori"><i class="fa fa-plus-circle"> Tambah Kategori</i></button> -->
+														 <button class="btn btn-warning fa-sm " style="" data-toggle="modal" data-target="#modal_print_laporan"><i class="fa fa-print"> Print Laporan</i></button>
 													</div>
 												</div>
 
@@ -196,6 +197,44 @@
 													</div>
 												</div>
 												<!-- ------------------------------------ modal end ---------------------------- -->
+
+
+
+												<!-- Modal print laporan ----------------------------- -->
+												<div id="modal_print_laporan" class="modal fade " role="dialog">
+													<div class="modal-dialog modal-lg ">
+
+														<!-- Modal content-->
+														<div class="modal-content">
+															<div class="modal-header" style="background:#007bff; ">
+																<h4 class="modal-title" style="color:white">Print Laporan </h4>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+															</div>
+															<form  action="<?=base_url('index.php/taskPrint/cetakLaporan2/')?>" method="POST" target="_blank">
+																	<div class="modal-body biru-langit" style="">
+																		<div class="form-group ">
+																			<div class ="row">
+																				<div class="col-md-6">
+																					<label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
+																					<input type="date" class="form-control" name="start_date">
+																				</div>
+																				<div class="col-md-6">
+																					<label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
+																					<input type="date" class="form-control" name="end_date">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer " style="background:#007bff">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+																		<input type="submit" class="btn btn-default" value="Print">
+																	</div>
+																</form>
+														</div>
+													</div>
+												</div>
+												<!-- ------------------------------------ modal print laporan end ---------------------------- -->
 
                         <table class="table table-hover table-bordered table-stripped">
                             <thead>
