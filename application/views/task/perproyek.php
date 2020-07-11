@@ -5,7 +5,7 @@
 		 }
 		 .biru-langit{
 			 background: #a6d9ec;
-			 //text-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;
+			 /* //text-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2; */
 
 		 }
 
@@ -29,7 +29,7 @@
 		 }
 
 		 .table-proyek{
-				//background: #a6d9ec;
+				/* background: #a6d9ec; */
 				box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;
 
 				/*border-radius: 5px;
@@ -42,7 +42,7 @@
 					display: inline-block;
 					padding: 12px;
 					border-radius: 3px;
-					//width: 550px;
+					/* //width: 550px; */
 					white-space: nowrap;
 					overflow: auto;
 					min-height: 300px;

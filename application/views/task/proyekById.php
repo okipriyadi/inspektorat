@@ -5,7 +5,7 @@
 					display: inline-block;
 					padding: 12px;
 					border-radius: 3px;
-					//width: 550px;
+					/* //width: 550px; */
 					white-space: nowrap;
 					overflow: auto;
 					min-height: 300px;
