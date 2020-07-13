@@ -86,8 +86,8 @@ class Task extends CI_Controller {
 						$tasks = $this->task_model->getAllTaskOrderDate();
 				}
 				$pics = $this->user_model->getAllUser();
-				$sasaranKegiatans = $this->task_model->getAllSasaranKegiatan();
-				$indikatorKinerjas = $this->task_model->getAllIndikatorKinerja();
+				$sasaranKegiatans = $this->skp_model->getAllSasaranKegiatan();
+				$indikatorKinerjas = $this->skp_model->getAllIndikatorKinerja();
 				$data = array(
 					'content'=>'task/semua_tugas_tabel0.php',
 					'judul'=>"Semua Tugas",

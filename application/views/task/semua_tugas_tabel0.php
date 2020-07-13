@@ -273,7 +273,7 @@
 									                                    						<?= $value['title']?></a>
 																														</td>
 																															<td><i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <?= $value["nama_sasaran_kegiatan"]; ?> <br/>
-																																	<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> <?= $value["nama_indikator_kinerja"]; ?> <br/>
+																																	<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> <?= $value["nama_indikator_kinerja"]; ?> (Target :  <?= $value["target"]; ?>) <br/>
 																																	<i class="fas fa-tasks text-primary"> Kategori :</i>
 																																		<a href="<?= base_url("index.php/task/proyek/".$value["id_project"]) ?>" style="font-weight:normal">
 											                                        				<?= $value["project_name"]?>

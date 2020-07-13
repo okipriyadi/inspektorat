@@ -30,6 +30,7 @@ class Task_model extends CI_Model{
           status_name,
           nama_sasaran_kegiatan,
           nama_indikator_kinerja,
+          target,
           id_task_detail,
           task_project.id_project,
           project_name,
@@ -59,22 +60,29 @@ class Task_model extends CI_Model{
     public function getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search){
         $queryWhere = array();
         $this->db->select('
-          id_detail,
-          id_state,
-          status_name,
-          id_task_detail,
-          task_project.id_project,
-          project_name,
-          task_detail.title,
-          task_detail.description,
-          id_petugas,
-          task_detail.id_status,
-          task_detail.start_date,
-          task_detail.end_date
+            id_detail,
+            id_state,
+            status_name,
+            nama_sasaran_kegiatan,
+            nama_indikator_kinerja,
+            target,
+            id_task_detail,
+            task_project.id_project,
+            project_name,
+            task_detail.title,
+            task_detail.description,
+            id_petugas,
+            task_detail.id_status,
+            task_detail.start_date,
+            task_detail.end_date,
+            task_detail.no_ST,
+            task_detail.link_ST
           ');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
         $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
         $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+        $this->db->join('task_indikator_kinerja', 'task_indikator_kinerja.id_indikator_kinerja = task_detail.id_indikator_kinerja','left');
+        $this->db->join('task_sasaran_kegiatan', 'task_indikator_kinerja.id_sasaran_kegiatan = task_sasaran_kegiatan.id_sasaran_kegiatan','left');
         $this->db->group_by('id_detail');
         (!empty($queryArrPic))?$this->db->where_in('user_task_detail.id_user',$queryArrPic):"";
         (!empty($queryTanggalAwal))?$this->db->where('task_detail.start_date >=', $queryTanggalAwal):"";
@@ -409,16 +417,6 @@ class Task_model extends CI_Model{
       return NULL;
     }
 
-    public function getAllSasaranKegiatan(){
-        $this->db->select('*');
-        $query = $this->db->get_where('task_sasaran_kegiatan',array());
-		    return $query->result_array();
-    }
 
-    public function getAllIndikatorKinerja(){
-        $this->db->select('*');
-        $query = $this->db->get_where('task_indikator_kinerja',array());
-		    return $query->result_array();
-    }
 }
 ?>
