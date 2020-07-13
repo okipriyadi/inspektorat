@@ -31,24 +31,42 @@ thead {
 												$j=1;
 												$indikatorKinerjas = $this->skp_model->getAllIndikatorKinerjaByIdSasaran($sasaranKegiatan["id_sasaran_kegiatan"]);
 												$counterColspan = count($indikatorKinerjas);
+                        if ($counterColspan==0){
+                          ?>
+                                  <tr>
+                                    <?php
+                                        echo '<td >'. $i .'</td>';
+                                        echo '<td >'. $sasaranKegiatan["nama_sasaran_kegiatan"].' </td>';
 
-												foreach ($indikatorKinerjas as $key => $indikatorKinerja) {
-										?>
-														<tr>
-															<?php
-															 	if($j==1){
-																	echo '<td rowspan="'.$counterColspan .'">'. $i .'</td>';
-																	echo '<td rowspan="'.$counterColspan .'">'. $sasaranKegiatan["nama_sasaran_kegiatan"].' </td>';
-																}
-															 ?>
+                                     ?>
 
-															<td><?= $j ?></td>
-															<td><?= $indikatorKinerja["nama_indikator_kinerja"] ?> </td>
-															<td><?= $indikatorKinerja["target"]?></td>
-														</tr>
-										<?php
-													$j++;
-												}
+                                    <td>-</td>
+                                    <td>- </td>
+                                    <td>-</td>
+                                  </tr>
+                          <?php
+                                $j++;
+                              
+
+                        }else{
+          												foreach ($indikatorKinerjas as $key => $indikatorKinerja) {
+          										?>
+          														<tr>
+          															<?php
+          															 	if($j==1){
+          																	echo '<td rowspan="'.$counterColspan .'">'. $i .'</td>';
+          																	echo '<td rowspan="'.$counterColspan .'">'. $sasaranKegiatan["nama_sasaran_kegiatan"].' </td>';
+          																}
+          															 ?>
+
+          															<td><?= $j ?></td>
+          															<td><?= $indikatorKinerja["nama_indikator_kinerja"] ?> </td>
+          															<td><?= $indikatorKinerja["target"]?></td>
+          														</tr>
+          										<?php
+          													$j++;
+          												}
+                          }
 												$sasaranKegiatanChilds = $this->skp_model->getSasaranKegiatanById($sasaranKegiatan["id_sasaran_kegiatan"]);
 												//foreach ($sasaranKegiatanChilds as $key => $sasaranKegiatanChild) {
 										?>

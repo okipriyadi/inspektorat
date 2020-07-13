@@ -469,7 +469,7 @@ class Task extends CI_Controller {
 		$nama_user = $this->session->userdata()['nama_iman'];
 		$path = 'assets/task/ST/';
 		$fileLink = '';
-		$noST = $_POST["no_ST"];
+		$noST = $this->input->post("no_ST");
 		if(is_dir($path)===false){
 			mkdir($path,0777, true);
 		}
