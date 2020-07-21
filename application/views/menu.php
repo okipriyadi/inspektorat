@@ -66,6 +66,9 @@
                                         <a class="dropdown-item" href="<?php echo base_url() ?>task/semuaTugas">Semua Tugas</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>task">Perorang</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>task/perproyek">Tambah/Edit Tugas</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>skp/tambah_sasaran_kegiatan">Tambah Sasaran Kegiatan</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>skp/tambah_indikator_kinerja">Tambah Indikator Kinerja</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>skp">Perjanjian Kinerja</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">

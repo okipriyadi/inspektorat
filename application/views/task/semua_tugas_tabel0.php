@@ -1,6 +1,6 @@
 <div class="col-md-12 content-dalam">
 	<div class="row">
-		<div class="offset-1 col-md-10" style="box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;">
+		<div class=" col-md-12" style="box-shadow: 2px 2px 8px #000000,  0 0 5px #b5cdf2;">
 			<div class=" task-board">
 				<div class="table-responsive p-2">
 					<br />
@@ -36,6 +36,7 @@
 										</div>
 									</div>
 								</div>
+
 
 								<div class="col-md-6">
 									<div class="row">
@@ -81,67 +82,317 @@
 							</div>
 					</div>
 					</form>
+					<div class="row">
+						<div class="col-md-12 text-center" >
+							<button class="btn btn-primary fa-sm" style="" data-toggle="modal" data-target="#modal_tambah_tugas"><i class="fa fa-plus-circle"> Tambah Tugas</i></button>
+							<!-- <button class="btn btn-warning fa-sm" style="" data-toggle="modal" data-target="#modal_tambah_kategori"><i class="fa fa-plus-circle"> Tambah Kategori</i></button> -->
+							 <button class="btn btn-warning fa-sm " style="" data-toggle="modal" data-target="#modal_print_laporan"><i class="fa fa-print"> Print Laporan</i></button>
+						</div>
+					</div>
 				</div>
-				<table class="table table-hover table-bordered table-stripped" id="datatable">
-					<thead>
-						<th>No</th>
-						<th width="20%">Kegiatan</th>
-						<th width="30%">Kategori</th>
-						<th width="15%">Mulai</th>
-						<th width="15%">Selesai</th>
-						<th>Status</th>
-						<th width="15%">PIC</th>
-						<th>Keterangan</th>
-						<!-- <th>Aksi</th> -->
-					</thead>
-					<tbody>
-						<?php
-						$no = 1;
-						foreach ($tasks as $key => $value) {
-						?>
-							<tr>
 
-								<td class="text-center"><?php echo $no++; ?></td>
-								<td><a href="<?= base_url("index.php/task/proyek/" . $value["id_project"]) ?>" style="font-weight:normal">
-										<?= $value['title'] ?></a>
-								</td>
-								<td><a href="<?= base_url("index.php/task/proyek/" . $value["id_project"]) ?>" style="font-weight:normal">
-										<?= $value["project_name"] ?></a></td>
-								<td><?= date('d-F-Y', strtotime($value['start_date'])) ?></td>
-								<td><?= date('d-F-Y', strtotime($value['end_date'])) ?></td>
-								<td class="<?php echo $value['id_state'] == 1 ? 'table-primary' : '';
-											echo $value['id_state'] == 2 ? 'table-warning' : '';
-											echo $value['id_state'] == 3 ? 'table-success' : '' ?>"><?= $value['status_name'] ?></td>
-								<td>
-									<?php
-									$users = $this->task_model->getUserTaskDetail($value["id_task_detail"]);
-									if ($users) {
-										foreach ($users as $ukey => $uvalue) {
-									?>
-											<img src="<?php echo base_url("assets/template/img/crew/" . $uvalue['foto']) ?>" title="<?= $uvalue['nama'] ?>" class="img-fluid rounded" width="30%">
-									<?php
-										}
-									}
-									?>
-								</td>
-								<td class="<?php echo (new DateTime('now') > new DateTime($value['end_date'])) && $value['id_state'] != 3 ? 'table-danger' : '' ?>">
-									<?php
 
-									$lampirans = $this->task_model->getLampiranTask($value["id_task_detail"]);
-									$nolampiran = 1;
-									foreach ($lampirans as $ukey => $uvalue) {
-										echo "<a href='" . base_url($uvalue['link']) . "'> Lampiran-" . $nolampiran++ . "</a>";
-									}
-									?>
 
-								</td>
 
-							</tr>
+												</div>
 
-						<?php
-						}
-						?>
-					</tbody>
+												<!-- Modal tambah tugas ----------------------------- -->
+												<div id="modal_tambah_tugas" class="modal fade " role="dialog">
+													<div class="modal-dialog modal-lg ">
+
+														<!-- Modal content-->
+														<div class="modal-content">
+															<div class="modal-header" style="background:#007bff; ">
+																<h4 class="modal-title" style="color:white">Tambah Tugas</h4>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+															</div>
+															<form  action="<?=base_url('index.php/task/tambah_task_baru/')?>" method="POST" enctype="multipart/form-data">
+																	<div class="modal-body biru-langit" style="">
+																			<div class="form-group ">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<label ><b>Sasaran Kegiatan :</b></label> &nbsp;&nbsp;
+																						<select id="id_sasaran_kegiatan" name="id_sasaran_kegiatan" class="form-control" style="height:2.5rem">
+																							 <option disabled selected value> -- Pilih Sasaran Kegiatan -- </option>
+																							<?php
+																								foreach ($sasaranKegiatans as $sasaranKegiatan) {
+																							?>
+																									<option value="<?= $sasaranKegiatan["id_sasaran_kegiatan"]?>" ><?= $sasaranKegiatan["nama_sasaran_kegiatan"]?></option>
+																							<?php
+																								}
+																							?>
+																						</select>
+																					</div>
+																					<div class="col-md-6">
+																						<label ><b>indikator kinerja:</b></label> &nbsp;&nbsp;
+																						<select id="id_indikator_kinerja" name="id_indikator_kinerja" class="form-control" style="height:2.5rem" >
+																							 <option disabled selected value> -- Pilih Indikator kinerja -- </option>
+																							<?php
+																								foreach ($indikatorKinerjas as $indikatorKinerja) {
+																							?>
+																									<option value="<?= $indikatorKinerja["id_indikator_kinerja"]?>" class="indikatorKinerja indikatorKinerjaNo<?= $indikatorKinerja["id_sasaran_kegiatan"]?>" style="display:none"><?= $indikatorKinerja["nama_indikator_kinerja"]?></option>
+																							<?php
+																								}
+																							?>
+																						</select>
+																					</div>
+																				</div>
+																				<label ><b>Nama Tugas:</b></label> &nbsp;&nbsp;
+																				<input type="text" class="form-control" name="title">
+																				<label ><b>Deskripsi Tugas:</b></label> &nbsp;&nbsp;
+																				<input type="text" class="form-control" name="description">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<label ><b>No ST:</b></label> &nbsp;&nbsp;
+																						<input type="text" class="form-control" name="no_ST">
+																					</div>
+																					<div class="col-md-6">
+																						<label ><b>Lampiran ST:</b></label> &nbsp;&nbsp;
+																						<input type="file" id="fileST" name="fileST" >
+																					</div>
+																				</div>
+																				<div class="row">
+																					<div class="col-md-6">
+																						<label ><b>Kategori :</b></label> &nbsp;&nbsp;
+																						<select id="id_kategori" name="id_kategori" class="form-control" style="height:2.5rem">
+																							 <option disabled selected value> -- Pilih Kategori -- </option>
+																							<?php
+																								foreach ($categories as $category) {
+																							?>
+																									<option value="<?= $category["id_project"]?>" ><?= $category["project_name"]?></option>
+																							<?php
+																								}
+																							?>
+																						</select>
+																					</div>
+																					<div class="col-md-6">
+																							<label><b>Status</b></label>
+																							<select id="id_status" name="id_status" class="form-control" style="height:2.5rem">
+
+																							</select>
+																					</div>
+																				</div>
+																				<div class="form-group">
+																					<div class ="row">
+																						<div class="col-md-6">
+																					    <label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
+																					    <input type="date" class="form-control" name="start_date">
+																						</div>
+																						<div class="col-md-6">
+																					    <label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
+																					    <input type="date" class="form-control" name="end_date">
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																		 <div class="form-group ">
+																			 <label>Ditugaskan kepada</label>
+																			 <select name="id_petugas[]" class="form-control" multiple style="height:140px;">
+																				 <?php
+																					 foreach ($users as $user) {
+																				 ?>
+																						 <option value="<?= $user["user_id"]?>"><?= $user	["nama"]?></option>
+
+																				 <?php
+																					 }
+																				 ?>
+																			 </select>
+																		</div>
+																	</div>
+																	<div class="modal-footer " style="background:#007bff">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+																		<input type="submit" class="btn btn-default" value="Simpan">
+																	</div>
+																</form>
+														</div>
+													</div>
+												</div>
+												<!-- ------------------------------------ modal end ---------------------------- -->
+
+
+
+												<!-- Modal print laporan ----------------------------- -->
+												<div id="modal_print_laporan" class="modal fade " role="dialog">
+													<div class="modal-dialog modal-lg ">
+
+														<!-- Modal content-->
+														<div class="modal-content">
+															<div class="modal-header" style="background:#007bff; ">
+																<h4 class="modal-title" style="color:white">Print Laporan </h4>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+															</div>
+															<form  action="<?=base_url('index.php/taskPrint/cetakLaporan2/')?>" method="POST" target="_blank">
+																	<div class="modal-body biru-langit" style="">
+																		<div class="form-group ">
+																			<div class ="row">
+																				<div class="col-md-6">
+																					<label ><b>Tanggal Mulai Tugas:</b></label> &nbsp;&nbsp;
+																					<input type="date" class="form-control" name="start_date">
+																				</div>
+																				<div class="col-md-6">
+																					<label ><b>Tanggal Akhir Tugas:</b></label> &nbsp;&nbsp;
+																					<input type="date" class="form-control" name="end_date">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer " style="background:#007bff">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+																		<input type="submit" class="btn btn-default" value="Print">
+																	</div>
+																</form>
+														</div>
+													</div>
+												</div>
+												<!-- ------------------------------------ modal print laporan end ---------------------------- -->
+
+                        <table class="table table-hover table-bordered table-stripped">
+                            <thead>
+                                <th>No</th>
+                                <th width="20%">Kegiatan</th>
+                                <th width="30%">Kategori</th>
+                                <th width="15%">Mulai</th>
+                                <th width="15%">Selesai</th>
+                                <th width="15%">PIC</th>
+                                <th>Keterangan</th>
+																<th>Status</th>
+                                <!-- <th>Aksi</th> -->
+                            </thead>
+														<tbody>
+									                                <?php
+									                                $no = 1;
+									                                foreach ($tasks as $key => $value) {
+																									?>
+									                                    <tr>
+
+																													<td rowspan="2" class="text-center"><?php echo $no++;?></td>
+																													<td><a href="<?= base_url("index.php/task/proyek/".$value["id_project"]) ?>" style="font-weight:normal">
+									                                    						<?= $value['title']?></a>
+																														</td>
+																															<td><i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <?= $value["nama_sasaran_kegiatan"]; ?> <br/>
+																																	<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> <?= $value["nama_indikator_kinerja"]; ?> (Target :  <?= $value["target"]; ?>) <br/>
+																																	<i class="fas fa-tasks text-primary"> Kategori :</i>
+																																		<a href="<?= base_url("index.php/task/proyek/".$value["id_project"]) ?>" style="font-weight:normal">
+											                                        				<?= $value["project_name"]?>
+																																		</a>
+																															</td>
+											                                        <td><i class="fas fa-calendar-plus  text-primary"></i> <?= date('d/m/Y', strtotime($value['start_date']))?></td>
+											                                        <td><i class="fas fa-calendar-check  text-primary"></i> <?= date('d/m/Y', strtotime($value['end_date']))?></td>
+											                                        <td>
+											                                            <?php
+																																		$photopro = "";
+																																		$users = $this->task_model->getUserTaskDetail($value["id_task_detail"]);
+												                                            foreach ($users as $ukey => $uvalue) {
+											                                            ?>
+											                                                <img src="<?php echo base_url("assets/template/img/crew/".$uvalue['foto'])?>" title="<?= $uvalue['nama']?>" class="img-fluid rounded" width="30%">
+											                                            <?php
+																																			$photopro = base_url("assets/template/img/crew/".$uvalue['foto']);
+											                                            	}
+											                                            ?>
+											                                        </td>
+											                                        <td class="<?php echo (new DateTime('now') > new DateTime($value['end_date']))&&$value['id_state']!=3?'table-danger':''?>">
+																															<i class="fa fa-file-text text-primary" aria-hidden="true">	No ST :</i> <a href="<?= base_url().$value["link_ST"]?>" target="_blank"><?= $value["no_ST"]; ?></a><br>
+																															<i class="fa fa-folder-open text-primary" aria-hidden="true"></i>  <br/>
+											                                            <?php
+
+																																		$lampirans = $this->task_model->getLampiranTask($value["id_task_detail"]);
+																																		$nolampiran = 1;
+																																		foreach ($lampirans as $ukey => $uvalue) {
+											                                        					echo "<a href='". base_url($uvalue['link']) ."'> Lampiran". $nolampiran++ ."</a>";
+											                                            	}
+											                                            ?>
+
+											                                        </td>
+
+											                                        <td rowspan="2" class="<?php echo $value['id_state']==1?'table-primary':'';echo $value['id_state']==2?'table-warning':'';echo $value['id_state']==3?'table-success':''?>"><?= $value['status_name']?></td>
+									                                    	</tr>
+																												<tr>
+																													<?php
+																														$query_komentars =$this->task_model->get_comment($value["id_task_detail"]);
+																													?>
+																													<td >
+																															<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fas fa-edit"></i> </button>
+																															<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fas fa-trash-alt"></i></i></button>
+																													</td>
+																													<td colspan="5">
+																														<div class="row">
+																															<div class="col-md-4">
+																																<i class="fas fa-comments  text-primary"></i> Komentar (<?= count($query_komentars)?>)
+																															</div>
+																															<div class="col-md-8" style="text-align:right">
+																																<?php if(count($query_komentars) >0 ){?>
+																																		<button type="button" class="btn btn-warning btn-sm lihatSemuaKomentar" placeholder="<?= $value["id_task_detail"]?>"><i class="fas fa-eye"> </i> Lihat Seluruh komentar </button>
+																																<?php } ?>
+																																<button type="button" class="btn btn-primary btn-sm tambah-komentar-button" placeholder="<?= $value["id_task_detail"]?>"><i class="fas fa-plus-circle"> </i> Tambah komentar </button>
+																															</div>
+																														</div>
+																														<div class="row loading-tambah-komentar" style="display:none">
+																															<div class="col-md-12">
+																																<p id="loadingResponse"></p>
+																															</div>
+																														</div>
+																														<div class="row tambah-komentar<?= $value["id_task_detail"]?>" style="display:none">
+																																<div class="col-md-12">
+																																	<form id="formKomentar<?= $value["id_task_detail"]?>" method="post" action="contact_me.php">
+																																			<label ><b>Tambah Komentar Baru:</b></label> &nbsp;&nbsp;
+																																			<textarea id="textareaKomentar<?= $value["id_task_detail"]?>" rows="2" class="form-control" name="komentar" style="height:4em;"></textarea>
+																																			<input type="file" id="file<?= $value["id_task_detail"]?>_attach" name="file_attach[]" multiple/>
+																																			<input type="hidden" id="idTask<?= $value["id_task_detail"]?>_attach" name="id_task_detail" value="<?= $value["id_task_detail"]?>"/>
+																																			<input type="hidden" id="idUser<?= $value["id_task_detail"]?>_attach" name="id_user" value="<?php echo $this->session->userdata('user_id_iman')?>"/>
+																																			<a  class="btn btn-success btn-sm kirim-komentar" placeholder="<?= $value["id_task_detail"]?>" style="float:right"><i class="fas fa-paper-plane"> </i> Kirim </a>
+																																	</form>
+																																</div>
+																														</div>
+																														<br/>
+																														<div class="kolom-komentar<?= $value["id_task_detail"]?>">
+																														<?php
+																																	$i = 1;
+																														 		  foreach ($query_komentars as $key3 => $komentar) {
+																														?>
+
+																																						<div class="row komentarTaskId<?= $value["id_task_detail"]?>" style="display:none" <?php if($i > 1) echo 'style="display:none"'; ?>>
+																																								<div class="col-md-1">
+																																									<img src="<?php  echo  base_url("assets/template/img/crew/".$komentar['foto']); ; ?>" class="img-fluid rounded-circle">
+																																								</div>
+																																								<div class="col-md-8">
+																																										<p class="media-comment" style="color:black; position: relative; background: #dad1d1; font-size: 12px; border-radius: 7px; padding: 10px">
+																																											<?= date('d/m/Y | h:m', strtotime($komentar['created_at']))?> <br/>
+																																											<?= $komentar['komentar'] ?>
+
+
+																																											<?php
+																																												$data = $this->task_model->get_lampiran_comment($komentar["id_komentar"]) ;
+																																												if($data){
+																																													?>
+																																														<br/><br/>Lampiran : <br/>
+																																													<?php
+																																												}
+																																												foreach ($data as $key4 => $lampiran) {
+																																													echo '<a href="'. base_url().$lampiran["link"] .'" target="_blank">'.$lampiran["nama_file"].'</a><br/>';
+																																												}
+																																											?>
+																																										</p>
+																																								</div>
+																																								<div class="col-md-1">
+																																								</div>
+																																						</div>
+																														<?php
+																																	$i++;
+																																	}
+																														?>
+																														</div>
+
+																													</td>
+																												</tr>
+
+									                                    <?php
+									                                }
+									                                ?>
+									                            </tbody>
+									                        </table>
 				</table>
 			</div>
 		</div>
@@ -159,14 +410,17 @@ function custom_footer(){
 <script>
 var options = [];
 $( '.tambah-komentar-button' ).on( 'click', function( event ) {
-	$('.tambah-komentar').show();
-	$('.tambah-komentar-button').hide();
+	var id_task_detail =   $(this).attr("placeholder") ;
+	var targetClass = '.tambah-komentar' + id_task_detail ;
+	$(targetClass).show();
+	$(this).hide();
 });
 
 $("#id_sasaran_kegiatan").change(function(){
   var id_sasaran_kegiatan = $("#id_sasaran_kegiatan").val();
 	var id_sasaran_kegiatanNo = ".indikatorKinerjaNo"+id_sasaran_kegiatan ;
 	$(".indikatorKinerja").hide();
+	$("#id_indikator_kinerja").val("");
 	$(id_sasaran_kegiatanNo).show();
 });
 
@@ -201,45 +455,117 @@ $(".lihatSemuaKomentar").click(function(){
 });
 
 $(".kirim-komentar").click(function(){
+	var allowed_file_size 	= "5048576"; //1 MB allowed file size
+	var allowed_file_types 	= [ 'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg',
+							'application/x-zip-compressed', 'application/pdf', 'application/msword',
+							'application/vnd.openxmlformats-officedocument.wordprocessingml.document',//docx
+							'application/vnd.ms-excel', //xls
+							'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', //xlsx
+							'application/vnd.ms-powerpoint', //ppt
+							'application/vnd.ms-powerpoint', //pps
+							'application/vnd.openxmlformats-officedocument.presentationml.presentation',//pptx
+							'application/vnd.openxmlformats-officedocument.presentationml.slideshow' //ppsx
+							]; //Allowed file types
+	var border_color 		= "#C2C2C2"; //initial input border color
+	var maximum_files 		= 3; //Maximum number of files allowed
+
 	var id_task_detail =   $(this).attr("placeholder") ;
 	var idTarget = '#textareaKomentar' + id_task_detail;
+	var formKomentar = '#formKomentar' + id_task_detail;
+	var idFiles = '#file' + id_task_detail + "_attach";
+
 	var komentar = $(idTarget).val();
-  $.ajax({url: "<?php echo base_url('index.php/task/tambahKomentar') ?>",
-			type: "POST",
-			beforeSend: function() {
-				$('.loading-tambah-komentar').show();
-		    $('#loadingResponse').text(komentar);
-		  },
-			data: {
-				komentar: komentar,
-				id_user : <?php echo $ci->session->userdata('user_id_iman') ?> ,
-				id_task_detail : id_task_detail
-			},
-			success: function(result){
-				var kolomKomentarId = '.kolom-komentar' + id_task_detail;
-				$('.loading-tambah-komentar').hide();
-				$('.tambah-komentar').hide();
-				$('.tambah-komentar-button').show();
-				$(kolomKomentarId).prepend( `
-						<div class='row'>
-								<div class='col-md-1'>
-									<img src='`+ "<?= base_url("assets/template/img/crew/".$ci->session->userdata('foto_iman')) ?>" +`' class='img-fluid rounded-circle'>
-								</div>
-								<div class='col-md-8'>
-										<p class='media-comment' style='color:black; position: relative; background: #dad1d1; font-size: 12px; border-radius: 7px; padding: 10px'>
-											`+ $.datepicker.formatDate('dd/mm/yy', new Date()) +`<br/>
-											`+ komentar +`
-										</p>
-								</div>
-								<div class='col-md-1'>
-								</div>
-						</div>
-						`);
-  		},
-			fail: function(xhr, textStatus, errorThrown){
-				alert('kirim komentar gagal');
-	 		}
-		});
+
+
+
+		 proceed = true;
+
+
+		 //check file size and type before upload, works in all modern browsers
+		 if(window.File && window.FileReader && window.FileList && window.Blob){
+			 var total_files_size = 0;
+			 if($(idFiles).get(0).files.length > maximum_files){
+							 alert( "Can not select more than "+maximum_files+" file(s)");
+							 proceed = false;
+			 }
+
+			 $($(idFiles).get(0).files).each(function(i, ifile){
+				 if(ifile.value !== ""){ //continue only if file(s) are selected
+									 if(allowed_file_types.indexOf(ifile.type) === -1){ //check unsupported file
+											 alert( ifile.name + " is not allowed!");
+											 proceed = false;
+									 }
+								total_files_size = total_files_size + ifile.size; //add file size to total size
+				 }
+			 });
+					if(total_files_size > allowed_file_size){
+							 alert( "Mohon pastikan lampiran data kurang dari 5 MB!");
+							 proceed = false;
+					 }
+		 }
+
+	 	 var form_data = new FormData($(formKomentar)[0]); //Creates new FormData object
+
+		 //if everything's ok, continue with Ajax form submit
+		 if(proceed){
+			 $.ajax({ //ajax form submit
+				 url : "<?php echo base_url('index.php/task/tambahKomentar') ?>",
+				 type: "POST",
+				 beforeSend: function() {
+		 				$('.loading-tambah-komentar').show();
+		 		    $('#loadingResponse').text(komentar);
+	 		   },
+				 data : form_data,
+				 dataType : "json",
+				 contentType: false,
+				 cache: false,
+				 processData:false,
+				 success: function(result){
+					//var data = $.parseJSON(result);
+					//alert(data);
+					var lampiranJadi = "";
+					for (var i = 0; i < result.length; i++) {
+						if(i==0){
+							lampiranJadi=`<br/><br/>Lampiran :<br/>`
+						}
+            lampiranJadi += '<a href="<?= base_url() ?>'+ result[i]["link"] +'" target="_blank">' + result[i]["nama_file"] +'</a><br>';
+        	}
+	 				var kolomKomentarId = '.kolom-komentar' + id_task_detail;
+	 				$('.loading-tambah-komentar').hide();
+	 				$('.tambah-komentar'+id_task_detail).hide();
+	 				$('.tambah-komentar-button').show();
+
+
+	 				$(kolomKomentarId).prepend( `
+	 						<div class='row'>
+	 								<div class='col-md-1'>
+	 									<img src='`+ "<?= base_url("assets/template/img/crew/".$ci->session->userdata('foto_iman')) ?>" +`' class='img-fluid rounded-circle'>
+	 								</div>
+	 								<div class='col-md-8'>
+	 										<p class='media-comment' style='color:black; position: relative; background: #dad1d1; font-size: 12px; border-radius: 7px; padding: 10px'>
+	 											`+ $.datepicker.formatDate('dd/mm/yy', new Date()) +`<br/>
+	 											`+ komentar +
+											 lampiranJadi
+											 +
+											`</p>
+	 								</div>
+	 								<div class='col-md-1'>
+	 								</div>
+	 						</div>
+	 						`);
+	   		},
+	 			fail: function(xhr, textStatus, errorThrown){
+	 				alert('kirim komentar gagal');
+	 	 		}
+			 }).done(function(res){ //fetch server "json" messages when done
+				 if(res.type == "error"){
+					 $("#contact_results").html('<div class="error">'+ res.text +"</div>");
+				 }
+				 if(res.type == "done"){
+					 $("#contact_results").html('<div class="success">'+ res.text +"</div>");
+				 }
+			 });
+		 }
 });
 
 $( '.dropdown-menu div' ).on( 'click', function( event ) {
@@ -267,31 +593,4 @@ $( '.dropdown-menu div' ).on( 'click', function( event ) {
 
 <?php
 }
-/*
-foreach ($userT as $key => $value) {
-    # code...
-    if(!empty($value)){
-    ?>
-    <div id="list_user_<?php echo $key;?>" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-header" style="background:#007bff;">
-                <h4 style="color:white;">PIC</h4>
-            </div>
-            <ul class="list-group">
-                <?php
-            foreach ($value as $ukey => $uvalue) {
-                # code...
-            ?>
-                <li class="list-group-item"><?=$uvalue['nama']?></li>
-            <?php }?>
-            </ul>
-            <div class="modal-footer" style="background:#007bff;">
-                <button type="button" class="btn btn-primary" style="background:#fff;color:black;" data-dismiss="modal">Batal</button>
-            </div>
-        </div>
-    </div>
-    <?php
-    }
-}
-*/
 ?>

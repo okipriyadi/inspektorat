@@ -30,6 +30,7 @@ class Task_model extends CI_Model{
           status_name,
           nama_sasaran_kegiatan,
           nama_indikator_kinerja,
+          target,
           id_task_detail,
           task_project.id_project,
           project_name,
@@ -38,14 +39,16 @@ class Task_model extends CI_Model{
           id_petugas,
           task_detail.id_status,
           task_detail.start_date,
-          task_detail.end_date
+          task_detail.end_date,
+          task_detail.no_ST,
+          task_detail.link_ST
           ');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
         $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
         $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
         $this->db->join('task_indikator_kinerja', 'task_indikator_kinerja.id_indikator_kinerja = task_detail.id_indikator_kinerja','left');
         $this->db->join('task_sasaran_kegiatan', 'task_indikator_kinerja.id_sasaran_kegiatan = task_sasaran_kegiatan.id_sasaran_kegiatan','left');
-        $this->db->order_by("task_detail.end_date", "desc");
+        $this->db->order_by("task_detail.created_at", "desc");
         $this->db->group_by('id_detail');
         if($this->session->userdata('role_iman') == 'insp' ){
           $this->db->where('task_detail.id_creator',$this->session->userdata('user_id_iman'))->or_where("user_task_detail.id_user",$this->session->userdata('user_id_iman'));
@@ -57,22 +60,29 @@ class Task_model extends CI_Model{
     public function getTaskFilter($queryArrPic, $queryTanggalAwal, $queryTanggalAkhir, $search){
         $queryWhere = array();
         $this->db->select('
-          id_detail,
-          id_state,
-          status_name,
-          id_task_detail,
-          task_project.id_project,
-          project_name,
-          task_detail.title,
-          task_detail.description,
-          id_petugas,
-          task_detail.id_status,
-          task_detail.start_date,
-          task_detail.end_date
+            id_detail,
+            id_state,
+            status_name,
+            nama_sasaran_kegiatan,
+            nama_indikator_kinerja,
+            target,
+            id_task_detail,
+            task_project.id_project,
+            project_name,
+            task_detail.title,
+            task_detail.description,
+            id_petugas,
+            task_detail.id_status,
+            task_detail.start_date,
+            task_detail.end_date,
+            task_detail.no_ST,
+            task_detail.link_ST
           ');
         $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
         $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
         $this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+        $this->db->join('task_indikator_kinerja', 'task_indikator_kinerja.id_indikator_kinerja = task_detail.id_indikator_kinerja','left');
+        $this->db->join('task_sasaran_kegiatan', 'task_indikator_kinerja.id_sasaran_kegiatan = task_sasaran_kegiatan.id_sasaran_kegiatan','left');
         $this->db->group_by('id_detail');
         (!empty($queryArrPic))?$this->db->where_in('user_task_detail.id_user',$queryArrPic):"";
         (!empty($queryTanggalAwal))?$this->db->where('task_detail.start_date >=', $queryTanggalAwal):"";
@@ -352,6 +362,24 @@ class Task_model extends CI_Model{
       }
       return NULL;
     }
+
+    public function create_lampiran_comment($data){
+      $ins = $this->db->insert("task_lampiran_comment",$data);
+      if($ins){
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+      }
+      return NULL;
+    }
+
+    public function get_lampiran_comment($id_komentar){
+      $this->db->select('*');
+      $query = $this->db->get_where('task_lampiran_comment',array('id_komentar'=>$id_komentar));
+
+      return $query->result_array();
+    }
+
+
     public function create_petugas($data){
       $ins = $this->db->insert("user_task_detail",$data);
       if($ins){
@@ -389,16 +417,6 @@ class Task_model extends CI_Model{
       return NULL;
     }
 
-    public function getAllSasaranKegiatan(){
-        $this->db->select('*');
-        $query = $this->db->get_where('task_sasaran_kegiatan',array());
-		    return $query->result_array();
-    }
 
-    public function getAllIndikatorKinerja(){
-        $this->db->select('*');
-        $query = $this->db->get_where('task_indikator_kinerja',array());
-		    return $query->result_array();
-    }
 }
 ?>

@@ -86,8 +86,8 @@ class Task extends CI_Controller {
 						$tasks = $this->task_model->getAllTaskOrderDate();
 				}
 				$pics = $this->user_model->getAllUser();
-				$sasaranKegiatans = $this->task_model->getAllSasaranKegiatan();
-				$indikatorKinerjas = $this->task_model->getAllIndikatorKinerja();
+				$sasaranKegiatans = $this->skp_model->getAllSasaranKegiatan();
+				$indikatorKinerjas = $this->skp_model->getAllIndikatorKinerja();
 				$data = array(
 					'content'=>'task/semua_tugas_tabel0.php',
 					'judul'=>"Semua Tugas",
@@ -221,7 +221,7 @@ class Task extends CI_Controller {
 			// File upload
 			if($this->upload->do_upload('file')){
 			  // Get data about the file
-			  
+
 			  $uploadData = $this->upload->data();
 			  $filename = $config['upload_path'].'/'.$uploadData['file_name'];
 
@@ -467,9 +467,27 @@ class Task extends CI_Controller {
 
 		$id_user = $this->session->userdata()['user_id_iman'];
 		$nama_user = $this->session->userdata()['nama_iman'];
-		// $petugas = $this->user_model->get_user_by_id($_POST["id_petugas"]);
-		//print_r($petugas["nama"]);
-		//die();
+		$path = 'assets/task/ST/';
+		$fileLink = '';
+		$noST = $this->input->post("no_ST");
+		if(is_dir($path)===false){
+			mkdir($path,0777, true);
+		}
+		$config = array(
+					 'upload_path'   => $path,
+					 'allowed_types' => '*',
+					 'overwrite'     => 1,
+					 'file_name'		 => $noST
+					);
+
+		$this->load->library('upload', $config);
+		// File upload
+		if($this->upload->do_upload('fileST')){
+				// Get data about the file
+				$uploadData = $this->upload->data();
+				$fileLink = $config['upload_path'].'/'.$uploadData['file_name'];
+		}
+
 
 		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
@@ -479,7 +497,9 @@ class Task extends CI_Controller {
 			"id_status" => $_POST["id_status"],
 			"start_date" => $_POST["start_date"],
 			"end_date" => $_POST["end_date"],
-			"id_indikator_kinerja" => $_POST["id_indikator_kinerja"]
+			"id_indikator_kinerja" => $_POST["id_indikator_kinerja"],
+			"no_ST" => $noST,
+			"link_ST"=>$fileLink
 		));
 
 		// var_dump($result);
@@ -513,7 +533,7 @@ class Task extends CI_Controller {
 		//print_r($petugas["nama"]);
 		//die();
 		// print_r($this->input->post());
-		
+
 
 		$result = $this->task_model->create_tugas(array(
 			"title" => $_POST["title"] ,
@@ -553,8 +573,70 @@ class Task extends CI_Controller {
 	public function tambahKomentar(){
     // POST data
     $postData = $this->input->post();
-		$this->task_model->create_komentar($postData);
-		echo json_encode($postData);
+		$idKomentar = $this->task_model->create_komentar($postData);
+		$attachments = $_FILES['file_attach'];
+		$idTask = $_POST['id_task_detail'];
+		$file_count = count($attachments['name']); //count total files attached
+		$path = 'assets/task/id_detail_'.$idTask;
+		if(is_dir($path)===false){
+			mkdir($path,0777, true);
+		}
+
+		// Set preference
+		$config = array(
+					 'upload_path'   => $path,
+					 'allowed_types' => '*',
+					 'overwrite'     => 1,
+				 	);
+
+		$this->load->library('upload', $config);
+
+		for ($x = 0; $x < $file_count; $x++){
+            if(!empty($attachments['name'][$x])){
+                if($attachments['error'][$x]>0) //exit script and output error if we encounter any
+                {
+                    $mymsg = array(
+                    1=>"The uploaded file exceeds the upload_max_filesize directive in php.ini",
+                    2=>"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
+                    3=>"The uploaded file was only partially uploaded",
+                    4=>"No file was uploaded",
+                    6=>"Missing a temporary folder" );
+                    print  json_encode( array('type'=>'error',$mymsg[$attachments['error'][$x]]));
+										exit;
+                }
+
+                //get file info
+                $file_name = $attachments['name'][$x];
+                $file_size = $attachments['size'][$x];
+                $file_type = $attachments['type'][$x];
+
+								$_FILES['file']['name'] =$file_name;
+								$_FILES['file']['type'] = $file_type;
+								$_FILES['file']['tmp_name'] = $attachments['tmp_name'][$x];
+								$_FILES['file']['error'] = $attachments['error'][$x];
+								$_FILES['file']['size'] = $file_size;
+
+								$file_ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+								$config['file_name'] = $file_name;
+								$this->upload->initialize($config);
+
+								// File upload
+								if($this->upload->do_upload('file')){
+										// Get data about the file
+
+										$uploadData = $this->upload->data();
+										$filename = $config['upload_path'].'/'.$uploadData['file_name'];
+										// Initialize array
+										if($filename!=""){
+											$this->task_model->create_lampiran_comment(array('link'=>$filename,'id_komentar'=>$idKomentar, 'nama_file'=>$file_name));
+										}
+								}
+						}
+    }
+
+		$data = $this->task_model->get_lampiran_comment($idKomentar) ;
+
+		echo json_encode($data);
   }
 
 	public function get_category(){
