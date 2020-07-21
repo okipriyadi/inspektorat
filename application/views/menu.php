@@ -45,7 +45,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url() ?>event">Publikasi</a>
                                 </li>
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>index.php/welcome/sop_tl">SOP Pemantauan TL</a> -->
