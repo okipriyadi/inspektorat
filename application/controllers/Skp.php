@@ -39,29 +39,26 @@ class Skp extends CI_Controller {
 
 	public function proses_sasaran_kegiatan()
 	{
-				$sasaranKegiatan = array(
-						"nama_sasaran_kegiatan" => $this->input->post('nama_sasaran_kegiatan'),
-						"id_parent" => $this->input->post('id_parent')
-				);
-				$this->skp_model->create_sasaran_kegiatan($sasaranKegiatan);
-
-				redirect(base_url("index.php/skp"));
-
-
+		for($i=0; $i<count($this->input->post('nama_sasaran_kegiatan')) ; $i++ ){
+			$sasaranKegiatan = array(
+					"nama_sasaran_kegiatan" => $this->input->post('nama_sasaran_kegiatan')[$i],
+					"id_parent" => $this->input->post('id_parent')
+			);
+			$this->skp_model->create_sasaran_kegiatan($sasaranKegiatan);
+		}
+		redirect(base_url("index.php/skp"));
 	}
 
-	public function tambah_indikator_kinerja()
+	public function edit_indikator_kinerja()
 	{
-				$sasaranKegiatans = $this->skp_model->getAllSasaranKegiatan();
-				$indikatorKinerjas = $this->skp_model->getAllIndikatorKinerja();
-				$data = array(
-					'content'=>'skp/tambah_indikator_kinerja.php',
-					'judul'=>'Tambah Indikator Kinerja',
-					'sasaranKegiatans'=>$sasaranKegiatans,
-					'indikatorKinerjas' => $indikatorKinerjas
-				);
-				$this->load->view('index_all', $data);
+
+				$postData = $this->input->post(NULL, TRUE);// Null true  to return data filtered through the XSS filter.
+        $id_indikator_kinerja=$this->input->post("id_indikator_kinerja");
+        $this->skp_model->update($id_indikator_kinerja,$postData);
+        return redirect(base_url('skp'));
 	}
+
+
 
 	public function proses_indikator_kinerja()
 	{

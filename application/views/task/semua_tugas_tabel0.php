@@ -249,6 +249,60 @@
 												</div>
 												<!-- ------------------------------------ modal print laporan end ---------------------------- -->
 
+
+
+												<!-- Modal Cascading ----------------------------- -->
+												<div id="modal_show_cascading" class="modal fade " role="dialog">
+													<div class="modal-dialog modal-lg ">
+
+														<!-- Modal content-->
+														<div class="modal-content">
+															<div class="modal-header" style="background:#007bff; ">
+																<h4 class="modal-title" style="color:white">Cascading </h4>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+															</div>
+															<form  action="<?=base_url('index.php/taskPrint/cetakLaporan2/')?>" method="POST" target="_blank">
+																	<div class="modal-body biru-langit" style="">
+																		<div class="form-group ">
+																			<div class ="row" id="masukanCascadingDisini">
+																				<div class="col-md-12">
+																					<div style="background:#d0c86b; padding:10px;">
+																					<i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <br/>
+																					<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i>  (Target :  ) <br/>
+																					</div>
+																				</div>
+																				<div class="col-md-12 text-center">
+																					<i class ="fas fa-arrow-circle-down text-right fa-lg"></i>
+																				</div>
+																				<div class="col-md-12" style="padding-left:70px;">
+																					<div style="background:#d0c86b; padding:10px;">
+																							<i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <br/>
+																							<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i>  (Target :  ) <br/>
+																					</div>
+																				</div>
+																				<div class="col-md-12 text-center">
+																					<i class ="fas fa-arrow-circle-down text-right fa-lg"></i>
+																				</div>
+																				<div class="col-md-12" style="padding-left:140px;">
+																					<div style="background:#d0c86b; padding:10px;">
+																							<i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <br/>
+																							<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i>  (Target :  ) <br/>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer " style="background:#007bff">
+																		<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+																		<input type="submit" class="btn btn-default" value="Print">
+																	</div>
+																</form>
+														</div>
+													</div>
+												</div>
+												<!-- ------------------------------------ modal Cascading END ---------------------------- -->
+
                         <table class="table table-hover table-bordered table-stripped">
                             <thead>
                                 <th>No</th>
@@ -273,11 +327,14 @@
 									                                    						<?= $value['title']?></a>
 																														</td>
 																															<td><i class="fas fa-dot-circle text-primary" > Sasaran Kegiatan :</i> <?= $value["nama_sasaran_kegiatan"]; ?> <br/>
-																																	<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> <?= $value["nama_indikator_kinerja"]; ?> (Target :  <?= $value["target"]; ?>) <br/>
+																																	<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> <?= $value["nama_indikator_kinerja"]; ?> <br/>
+																																	<i class="fas fa-bullseye text-primary"> Target :</i>  <?= $value["target"]; ?> <br/>
+																																	<i class="fas fa-poll text-primary"> Realisasi :</i> <?= $value["realisasi"]; ?> <br/>
 																																	<i class="fas fa-tasks text-primary"> Kategori :</i>
 																																		<a href="<?= base_url("index.php/task/proyek/".$value["id_project"]) ?>" style="font-weight:normal">
 											                                        				<?= $value["project_name"]?>
 																																		</a>
+																																	 <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal_show_cascading"><i class="fas fa-share-alt "></i> Show Cascading</a>
 																															</td>
 											                                        <td><i class="fas fa-calendar-plus  text-primary"></i> <?= date('d/m/Y', strtotime($value['start_date']))?></td>
 											                                        <td><i class="fas fa-calendar-check  text-primary"></i> <?= date('d/m/Y', strtotime($value['end_date']))?></td>
@@ -285,12 +342,14 @@
 											                                            <?php
 																																		$photopro = "";
 																																		$users = $this->task_model->getUserTaskDetail($value["id_task_detail"]);
-												                                            foreach ($users as $ukey => $uvalue) {
-											                                            ?>
-											                                                <img src="<?php echo base_url("assets/template/img/crew/".$uvalue['foto'])?>" title="<?= $uvalue['nama']?>" class="img-fluid rounded" width="30%">
-											                                            <?php
-																																			$photopro = base_url("assets/template/img/crew/".$uvalue['foto']);
-											                                            	}
+																																		if($users){
+														                                            foreach ($users as $ukey => $uvalue) {
+													                                            ?>
+													                                                <img src="<?php echo base_url("assets/template/img/crew/".$uvalue['foto'])?>" title="<?= $uvalue['nama']?>" class="img-fluid rounded" width="30%">
+													                                            <?php
+																																					$photopro = base_url("assets/template/img/crew/".$uvalue['foto']);
+													                                            	}
+																																			}
 											                                            ?>
 											                                        </td>
 											                                        <td class="<?php echo (new DateTime('now') > new DateTime($value['end_date']))&&$value['id_state']!=3?'table-danger':''?>">
@@ -359,7 +418,7 @@
 																																								</div>
 																																								<div class="col-md-8">
 																																										<p class="media-comment" style="color:black; position: relative; background: #dad1d1; font-size: 12px; border-radius: 7px; padding: 10px">
-																																											<?= date('d/m/Y | h:m', strtotime($komentar['created_at']))?> <br/>
+																																											<?= date('d/m/Y | H:i', strtotime($komentar['created_at']))?> <br/>
 																																											<?= $komentar['komentar'] ?>
 
 
@@ -523,6 +582,8 @@ $(".kirim-komentar").click(function(){
 				 success: function(result){
 					//var data = $.parseJSON(result);
 					//alert(data);
+					$(idTarget).val('');
+					$(idFiles).val('');
 					var lampiranJadi = "";
 					for (var i = 0; i < result.length; i++) {
 						if(i==0){
