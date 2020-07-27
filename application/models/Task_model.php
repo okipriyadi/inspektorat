@@ -32,6 +32,7 @@ class Task_model extends CI_Model{
           nama_sasaran_kegiatan,
           task_indikator_kinerja.id_indikator_kinerja,
           nama_indikator_kinerja,
+          realisasi,
           target,
           id_task_detail,
           task_project.id_project,
@@ -52,7 +53,7 @@ class Task_model extends CI_Model{
         $this->db->join('task_sasaran_kegiatan', 'task_indikator_kinerja.id_sasaran_kegiatan = task_sasaran_kegiatan.id_sasaran_kegiatan','left');
         $this->db->order_by("task_detail.created_at", "desc");
         $this->db->group_by('id_detail');
-        if($this->session->userdata('role_iman') == 'insp' ){
+        if($this->session->userdata('role_iman') == 'insp' ){ //"insp" itu role untuk anggota kalau pak inspektur rolenya "inspektur"
           $this->db->where('task_detail.id_creator',$this->session->userdata('user_id_iman'))->or_where("user_task_detail.id_user",$this->session->userdata('user_id_iman'));
         }
         $query = $this->db->get('task_detail');
@@ -423,6 +424,22 @@ class Task_model extends CI_Model{
         return true;
       }
       return NULL;
+    }
+
+    public function get_Laporan_tugas($id_state,$id_user, $start_date, $end_date){
+      $this->db->select('task_status.*,task_project.*,user.*,task_detail.id_detail,task_detail.title,task_detail.description,task_detail.id_creator,task_detail.id_petugas,task_detail.id_status,task_detail.created_at,task_detail.start_date as mlai, task_detail.end_date as slesai, task_detail.last_update');
+      $this->db->join('task_status', 'task_detail.id_status = task_status.id_status','left');
+      $this->db->join('task_project', 'task_project.id_project = task_status.id_project','left');
+      $this->db->join('user', 'task_detail.id_petugas = user.user_id','left');
+      //$this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+      //$this->db->join('user_task_detail', 'user_task_detail.id_task_detail = task_detail.id_detail','left');
+      $this->db->order_by("task_status.id_status"); //order ini tidak boleh berubah karena digunakan sepaket dengan view agar tersusun dengan benar
+      $this->db->where('last_update >=', $start_date);
+      $this->db->where('last_update <=', $start_date);
+      //$this->db->where("task_status.id_state", $id_state);
+      //$this->db->where("user_task_detail.id_user",$id_user);
+      $query = $this->db->get("task_detail");
+      return $query->result_array();
     }
 
 

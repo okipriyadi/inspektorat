@@ -67,4 +67,11 @@ class Skp_model extends CI_Model
     }
     return NULL;
   }
+    public function update($id,$data){
+        if($this->db->update("task_indikator_kinerja", $data, "id_indikator_kinerja =".$id)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

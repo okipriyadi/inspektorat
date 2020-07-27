@@ -594,7 +594,7 @@ class Task extends CI_Controller {
 
 	public function tambahKomentar(){
     // POST data
-    $postData = $this->input->post();
+    $postData = $this->input->post(NULL, TRUE);// Null true  to return data filtered through the XSS filter.
 		$idKomentar = $this->task_model->create_komentar($postData);
 		$attachments = $_FILES['file_attach'];
 		$idTask = $_POST['id_task_detail'];

@@ -16,28 +16,42 @@ class TaskPrint extends CI_Controller {
 
 	public function cetakLaporan2()
 	{
-		$judul = "<h1>Laporan Kerja Tanggal .... sampai Tanggal ....</h1>";
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
+
+		$judul = "<h1>Laporan Kerja Tanggal ". date('d/m/Y', strtotime($start_date)) . " sampai Tanggal ". date('d/m/Y', strtotime($end_date))."</h1>";
 		$head ="
 		<table class='table table-hover table-bordered table-stripped'>
 				<thead>
 				<th width='10%'>No</th>
 				<th width='15%'>PIC</th>
 				<th width='15%'>Status</th>
-				<th width='60%'>Kegiatan</th>
+				<th width='60%'>Kegiatan Telah Selesai</th>
 				</thead>
 				<tbody>
 						" ;
 
 		$tr = "";
+		$users = $this->user_model->getAllUser();
 		$no = 1;
-		for($a=1; $a<10; $a++ ){
+		foreach ($users as $user) {
+					if($user["nama"] == "Budi Prawira, S.E."){
+						continue;
+					}
+
+					$jmlTodo = $this->task_model->count_status_by_user(1, $user["user_id"]);
+					$jmlInprogress = $this->task_model->count_status_by_user(2, $user["user_id"]);
+					$jmlDone = $this->task_model->count_status_by_user(3, $user["user_id"]);
+
+					$tugasSelesai = $this->task_model->get_Laporan_tugas(3, $user["user_id"] ,$start_date, $end_date);
+					print_r($tugasSelesai);
 					$tr .= "
 						<tr>
 							<td>". $no ."</td>
-							<td>Nama</td>
-							<td>	Todo:<br/>
-							 			In Progress : <br/>
-										Done :
+							<td>". $user["nama"] ."</td>
+							<td>	Todo: ".$jmlTodo["jml"]."<br/>
+							 			In Progress : ".$jmlInprogress["jml"]." <br/>
+										Done : ". $jmlDone["jml"] ."
 							</td>
 							<td>
 										Nama Tugas : <br/>
