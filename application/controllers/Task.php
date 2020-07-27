@@ -168,6 +168,28 @@ class Task extends CI_Controller {
 		}
 	}
 
+	public function edit_task($id_detail){
+		$id_user = $this->session->userdata()['user_id_iman'];
+		$nama_user = $this->session->userdata()['nama_iman'];
+		$task = $this->task_model->getTaskByTaskId($id_detail);
+		$result = $this->task_model->update_tugas(array(
+			"title" => $_POST["title"] ,
+			"id_indikator_kinerja" => $_POST["id_indikator_kinerja"],
+		), $id_detail);
+
+		if($result){
+			$data_history = array(
+				"history_name" => $nama_user." mengedit pekerjaan '".$_POST["title"] ."'"  ,
+				"id_creator" => $id_user,
+				"id_project" => $task["id_project"],
+				"id_task" => $task["id_status"]
+			);
+			$this->task_model->create_history($data_history);
+		}
+
+		redirect(base_url("index.php/task/semuaTugasTabel"));
+	}
+
 	public function editlampiran($id){
 		if($this->session->userdata('login_iman') != true){
 				$data = array(

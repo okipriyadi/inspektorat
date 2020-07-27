@@ -28,7 +28,9 @@ class Task_model extends CI_Model{
           id_detail,
           id_state,
           status_name,
+          task_sasaran_kegiatan.id_sasaran_kegiatan,
           nama_sasaran_kegiatan,
+          task_indikator_kinerja.id_indikator_kinerja,
           nama_indikator_kinerja,
           realisasi,
           target,
@@ -314,6 +316,12 @@ class Task_model extends CI_Model{
         $insert_id = $this->db->insert_id();
         return $insert_id;
     }
+
+    public function update_tugas($data, $id_tugas){
+      $this->db->update("task_detail",$data, array('id_detail'=>$id_tugas));
+      $insert_id = $id_tugas;
+      return $insert_id;
+  }
 
 
 
