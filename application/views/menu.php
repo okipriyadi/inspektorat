@@ -40,6 +40,7 @@
                                         <a class="dropdown-item" href="<?= base_url() ?>assets/dokumen/Permenpan 25 2019 OTK Kemenpanrb.pdf">OTK Inspektorat</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>assets/dokumen/MR Inspektorat.pdf">Manajemen Risiko 2019</a>
                                         <a class="dropdown-item" href="<?= base_url() ?>index.php/welcome/maklumat_pelayanan">Maklumat Pelayanan</a>
+                                        <a class="dropdown-item" href="<?= base_url() ?>index.php/welcome/rekap_survei">Survei Kepuasan Masyarakat</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -54,7 +55,7 @@
                                         <a class="dropdown-item" href="<?php echo base_url() ?>isma">Audit</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>manajemen-risiko">Manajemen Risiko & Benturan Kepentingan</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>survei">SURVEI</a>
-                                        <a class="dropdown-item" href="<?php echo base_url() ?>evalsakip" target="_blank">EVALSAKIP</a>
+                                        <a class="dropdown-item" href="http://192.168.201.68/evalsakip/index.php/welcome/do_login" target="_blank">EVALSAKIP</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>apip" target="_blank">PMLKA</a>
                                         <a class="dropdown-item" href="http://wbs.menpan.go.id" target="_blank">WBS</a>
                                     </div>
@@ -69,6 +70,13 @@
                                         <a class="dropdown-item" href="<?php echo base_url() ?>skp/tambah_sasaran_kegiatan">Tambah Sasaran Kegiatan</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>skp/tambah_indikator_kinerja">Tambah Indikator Kinerja</a>
                                         <a class="dropdown-item" href="<?php echo base_url() ?>skp">Perjanjian Kinerja</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorial/ Bahan</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>welcome/tutorial_bahan">Tutorial</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>welcome/tutorial_bahan/bahan">Bahan</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
