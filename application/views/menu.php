@@ -27,7 +27,7 @@
                                     <a class="nav-link" href="#">Profil</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan Informasi</a>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informasi</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                         <!-- <a class="dropdown-item" href="<?= base_url() ?>index.php/welcome/sop_tl">SOP Pemantauan TL</a> -->
@@ -103,6 +103,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 <script>
     function show_login_form() {
