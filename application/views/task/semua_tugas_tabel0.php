@@ -293,8 +293,7 @@
 								</div>
 							</div>
 							<div class="modal-footer " style="background:#007bff">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-								<input type="submit" class="btn btn-default" value="Print">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
 							</div>
 						</form>
 					</div>
@@ -332,8 +331,8 @@
 								<i class="fas fa-tasks text-primary"> Kategori :</i>
 								<a href="<?= base_url("index.php/task/proyek/" . $value["id_project"]) ?>" style="font-weight:normal">
 									<?= $value["project_name"] ?>
-								</a>
-								<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal_show_cascading"><i class="fas fa-share-alt "></i> Show Cascading</a>
+								</a><br/>
+								<a href="#" class="btn btn-info btn-sm showCascading" idIndikatorKinerja="<?=$value["id_indikator_kinerja"]?>"><i class="fas fa-share-alt "></i> Show Cascading</a>
 							</td>
 							<td><i class="fas fa-calendar-plus  text-primary"></i> <?= date('d/m/Y', strtotime($value['start_date'])) ?></td>
 							<td><i class="fas fa-calendar-check  text-primary"></i> <?= date('d/m/Y', strtotime($value['end_date'])) ?></td>
@@ -576,6 +575,71 @@ function custom_footer()
 				}
 			});
 		});
+
+		$( '.showCascading' ).on( 'click', function( event ) {
+		  $('#modal_show_cascading').modal('show');
+		  var idIndikator = $(this).attr('idIndikatorKinerja');
+			$.ajax({ //ajax form submit
+				url: "<?php echo base_url('index.php/task/showCascading') ?>",
+				type: "POST",
+				data: {id_indikator_kinerja: idIndikator},
+				dataType: "json",
+				success: function(result) {
+					$('#masukanCascadingDisini').empty();
+					var paddingLength = 10;
+					for (var i = result.length-1; i >= 0; i--) {
+						if (i != result.length-1){
+								$('#masukanCascadingDisini').append(
+									`
+									<div class="col-md-12 text-center">
+										<i class="fas fa-arrow-circle-down text-right fa-lg"></i>
+									</div>
+									`
+								);
+						}
+						$('#masukanCascadingDisini').append(
+							`
+									<div class="col-md-12" style="padding-left:`+ paddingLength +`px;">
+										<div style="background:#d0c86b; padding:10px;">
+											<i class="fas fa-dot-circle text-primary"> Sasaran Kegiatan :</i> `+ result[i]["nama_sasaran_kegiatan"] +` <br />
+											<i class="fas fa-chart-line text-primary"> Indikator kinerja :</i> `+ result[i]["nama_indikator_kinerja"] +`<br />
+											<i class="fas fa-bullseye text-primary"> Target :</i> `+ result[i]["target"] +` <br />
+											<i class="fas fa-poll text-primary"> Realisasi :</i> `+ result[i]["realisasi"] +` <br />
+
+										</div>
+									</div>
+							`
+						);
+						paddingLength += 70;
+					}
+
+				},
+				fail: function(xhr, textStatus, errorThrown) {
+					alert('server gagal merespon');
+				}
+			}).done(function(res) { //fetch server "json" messages when done
+				if (res.type == "error") {
+
+				}
+				if (res.type == "done") {
+				}
+			});
+
+
+		  /*var idSasaranKegiatan = $(this).parent().parent().prev().prev().attr('idSasaranKegiatan');
+		  var idIndikatorParent = $(this).parent().parent().prev().prev().attr('idIndikatorParent');
+		  var indikator = $(this).parent().parent().prev().prev().text();
+		  var target = $(this).parent().parent().prev().text();
+		  var realisasi = $(this).parent().parent().text();
+		  $('#idIndikatorKinerja').val(idIndikator);
+		  $('#idSasaranKegiatan').val(idSasaranKegiatan);
+		  $('#idIndikatorParent').val(idIndikatorParent);
+		  $('#indikatorKinerja').val($.trim(indikator));//trim untuk menghilangka white space
+		  $('#target').val($.trim(target));
+		  $('#realisasi').val($.trim(realisasi));
+			*/
+		});
+
 
 		$(".lihatSemuaKomentar").click(function() {
 			var id_task_detail = $(this).attr("placeholder");
