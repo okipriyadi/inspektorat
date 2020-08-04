@@ -661,6 +661,21 @@ class Task extends CI_Controller {
 		echo json_encode($data);
   }
 
+	public function showCascading(){
+    // POST data
+    $postData = $this->input->post(NULL, TRUE);// Null true  to return data filtered through the XSS filter.
+		$idIndikatorKinerja = $this->input->post("id_indikator_kinerja");
+		$data = $this->skp_model->getIndikatorKinerjaById($idIndikatorKinerja) ;
+		$i = 0;
+		$result[$i] = $data;
+		while($data->id_indikator_parent>0){
+				$data = $this->skp_model->getIndikatorKinerjaById($data->id_indikator_parent) ;
+				$i++;
+				$result[$i] = $data;
+		}
+		echo json_encode($result);
+  }
+
 	public function get_category(){
     $postData = $this->input->post();
 		$data = $this->task_model->getSatatusByProjectId($_POST["id_project"]);

@@ -44,8 +44,10 @@ class Skp_model extends CI_Model
   public function getIndikatorKinerjaById($idIndikatorKinerja)
   {
     $this->db->select('*');
-    $query = $this->db->get_where('task_sasaran_kegiatan', array("id_indikator_kinerja" => $idIndikatorKinerja));
-    return $query->result_array();
+
+    $this->db->join('task_sasaran_kegiatan', 'task_sasaran_kegiatan.id_sasaran_kegiatan = task_indikator_kinerja.id_sasaran_kegiatan','left');
+    $query = $this->db->get_where('task_indikator_kinerja', array("id_indikator_kinerja" => $idIndikatorKinerja));
+    return $query->row();
   }
 
   public function create_sasaran_kegiatan($data)
