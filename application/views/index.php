@@ -61,6 +61,38 @@
     .marquee-content-items li:nth-child(even) {
       background-color: rgba(5, 0, 84, 1);
     }
+
+    .modal-xl {
+      max-width: 1140px;
+    }
+
+    .back {
+      background: url(http://localhost/etag/assets/template/img/tombol.png);
+    }
+
+    .background-custom {
+      background: url(http://localhost/etag/assets/template/img/lepi_wbs-remove.png) left bottom no-repeat, url(http://localhost/etag/assets/template/img/lepi_wbs-remove.png) right bottom no-repeat, url('http://localhost/etag/assets/template/img/back-gold.png') left center no-repeat, url('http://localhost/etag/assets/template/img/back-red.png') right center no-repeat;
+      background-size: 57% 50%, 45% 45%, 50% 100%, auto;
+    }
+
+
+    .background-logo-insp {
+      background: url(http://localhost/etag/assets/template/img/logo_inspektorat.png) center top no-repeat;
+      background-size: contain;
+      height: 90px;
+    }
+
+    .tulisan-econ {
+      background: url(http://localhost/etag/assets/template/img/tulisan_econ.png) center top no-repeat;
+      background-size: 100% 35%;
+      height: 180px;
+    }
+
+    .tulisan-wbs {
+      background: url(http://localhost/etag/assets/template/img/tulisan_wbs.png) center top no-repeat;
+      background-size: contain;
+      height: 220px;
+    }
   </style>
 
 </head>
@@ -114,6 +146,45 @@
         </div>
       </div>
     </div>
+    <!-- Modal Info -->
+    <div id="nice_info" class="modal fade " role="dialog">
+      <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Pengumuman !</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+          <div class="modal-body">
+            <div class="row m-0 background-custom" style="height: 600px; width:100%;border-radius: 100px;">
+              <div class="col-12">
+
+                <div class="row m-0">
+                  <div class="col-12 background-logo-insp">
+
+                  </div>
+                </div>
+                <div class="row m-0">
+
+                  <div class="col-6 tulisan-econ text-center" style="height: 550px;">
+                    <button class="btn btn-primary" style="margin-top: 19.4em;margin-right: 1.2em; height:5.5em;width:10.8em;">WBS</button>
+                  </div>
+                  <div class="col-6 tulisan-wbs">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------------ modal Info END ---------------------------- -->
     <!-- Main Content Area End -->
 
   </section>
@@ -142,6 +213,11 @@
   <?php
   include "jquery_footer.php";
   ?>
+  <script>
+    $(document).ready(function() {
+      $('#nice_info').modal('show');
+    })
+  </script>
 
 </body>
 

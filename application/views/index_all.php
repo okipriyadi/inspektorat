@@ -161,6 +161,14 @@
     custom_footer();
   }
   ?>
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <script>
+    tinymce.init({
+      selector: 'textarea#berita_c',
+      menubar: false
+    });
+  </script>
 </body>
 
 </html>

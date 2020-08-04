@@ -73,6 +73,14 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin WEB</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>welcome/get_slider">Slider</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>welcome/get_schedule">Schedule</a>
+                                        <a class="dropdown-item" href="<?php echo base_url() ?>welcome/get_news">News</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorial/ Bahan</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="<?php echo base_url() ?>welcome/tutorial_bahan">Tutorial</a>
